@@ -5,10 +5,10 @@
       <!-- Logo -->
       <div class="header__logo" routerLink="/">
         <img src="../../assets/images/logo.png" alt="Vega Stack" class="header__logo-image">
-        <span class="header__logo-text">Vega Stack</span>
+        
       </div>
 
-      <!-- Desktop Navigation -->
+      <!-- Desktop Navigation - Hidden on mobile (768px and below) -->
       <nav class="header__nav hidden-mobile">
         <ul class="header__nav-list">
           <li class="header__nav-item">
@@ -26,17 +26,22 @@
               About
             </a>
           </li>
+          <li class="header__nav-item">
+            <a routerLink="/contact" class="header__nav-link" routerLinkActive="active">
+              Contact
+            </a>
+          </li>
         </ul>
       </nav>
 
-      <!-- CTA Button -->
+      <!-- CTA Button - Hidden on mobile (768px and below) -->
       <div class="header__cta hidden-mobile">
         <button class="btn-primary" (click)="navigateToSection('contact')">
           Get Started
         </button>
       </div>
 
-      <!-- Mobile Menu Button -->
+      <!-- Mobile Menu Button - Only visible on mobile (768px and below) -->
       <button 
         class="header__mobile-toggle visible-mobile"
         (click)="toggleMobileMenu()"
@@ -49,7 +54,7 @@
       </button>
     </div>
 
-    <!-- Mobile Menu -->
+    <!-- Mobile Menu - Only appears when hamburger is clicked on mobile -->
     <div class="header__mobile-menu" [class.open]="isMobileMenuOpen">
       <nav class="header__mobile-nav">
         <ul class="header__mobile-nav-list">
@@ -66,6 +71,11 @@
           <li class="header__mobile-nav-item">
             <a routerLink="/about" class="header__mobile-nav-link" (click)="closeMobileMenu()" routerLinkActive="active">
               About
+            </a>
+          </li>
+          <li class="header__mobile-nav-item">
+            <a routerLink="/contact" class="header__mobile-nav-link" (click)="closeMobileMenu()" routerLinkActive="active">
+              Contact
             </a>
           </li>
           <li class="header__mobile-nav-item">

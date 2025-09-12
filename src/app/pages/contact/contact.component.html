@@ -1,0 +1,287 @@
+<!-- src/app/pages/contact/contact.component.html -->
+
+<!-- Contact Hero Section -->
+<section class="contact-hero">
+  <div class="container">
+    <div class="contact-hero__content">
+      <h1 class="contact-hero__title">Get In <span class="text-gradient">Touch</span></h1>
+      <p class="contact-hero__subtitle">
+        Ready to transform your business with AI-powered solutions? Let's start a conversation 
+        about how Vega Stack can help you achieve your digital transformation goals.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Form & Info Section -->
+<section class="contact-main section-padding">
+  <div class="container">
+    <div class="contact-main__grid">
+      
+      <!-- Contact Form -->
+      <div class="contact-form-section">
+        <div class="contact-form-container animate-on-scroll">
+          <h2 class="contact-form__title">Send Us a Message</h2>
+          <p class="contact-form__subtitle">
+            Fill out the form below and we'll get back to you within 24 hours.
+          </p>
+
+          <!-- Success Message -->
+          <div *ngIf="isSubmitted" class="success-message">
+            <div class="success-message__icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="success-message__content">
+              <h3>Message Sent Successfully!</h3>
+              <p>Thank you for reaching out. We'll get back to you soon.</p>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form" *ngIf="!isSubmitted">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName" class="form-label">First Name *</label>
+                <input 
+                  type="text" 
+                  id="firstName" 
+                  formControlName="firstName"
+                  class="form-input"
+                  [class.error]="isFieldInvalid('firstName')"
+                  placeholder="John"
+                >
+                <span class="form-error" *ngIf="isFieldInvalid('firstName')">
+                  {{ getFieldError('firstName') }}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="lastName" class="form-label">Last Name *</label>
+                <input 
+                  type="text" 
+                  id="lastName" 
+                  formControlName="lastName"
+                  class="form-input"
+                  [class.error]="isFieldInvalid('lastName')"
+                  placeholder="Doe"
+                >
+                <span class="form-error" *ngIf="isFieldInvalid('lastName')">
+                  {{ getFieldError('lastName') }}
+                </span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email" class="form-label">Email *</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  formControlName="email"
+                  class="form-input"
+                  [class.error]="isFieldInvalid('email')"
+                  placeholder="john@example.com"
+                >
+                <span class="form-error" *ngIf="isFieldInvalid('email')">
+                  {{ getFieldError('email') }}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="phone" class="form-label">Phone</label>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  formControlName="phone"
+                  class="form-input"
+                  placeholder="+1 (555) 123-4567"
+                >
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="company" class="form-label">Company *</label>
+                <input 
+                  type="text" 
+                  id="company" 
+                  formControlName="company"
+                  class="form-input"
+                  [class.error]="isFieldInvalid('company')"
+                  placeholder="Your Company"
+                >
+                <span class="form-error" *ngIf="isFieldInvalid('company')">
+                  {{ getFieldError('company') }}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="service" class="form-label">Service Interest *</label>
+                <select 
+                  id="service" 
+                  formControlName="service"
+                  class="form-select"
+                  [class.error]="isFieldInvalid('service')"
+                >
+                  <option value="">Select a service</option>
+                  <option *ngFor="let service of services" [value]="service">{{ service }}</option>
+                </select>
+                <span class="form-error" *ngIf="isFieldInvalid('service')">
+                  {{ getFieldError('service') }}
+                </span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="budget" class="form-label">Project Budget</label>
+                <select id="budget" formControlName="budget" class="form-select">
+                  <option value="">Select budget range</option>
+                  <option value="under-25k">Under $25,000</option>
+                  <option value="25k-50k">$25,000 - $50,000</option>
+                  <option value="50k-100k">$50,000 - $100,000</option>
+                  <option value="100k-250k">$100,000 - $250,000</option>
+                  <option value="over-250k">Over $250,000</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="timeline" class="form-label">Timeline</label>
+                <select id="timeline" formControlName="timeline" class="form-select">
+                  <option value="">Select timeline</option>
+                  <option value="asap">ASAP</option>
+                  <option value="1-3months">1-3 months</option>
+                  <option value="3-6months">3-6 months</option>
+                  <option value="6-12months">6-12 months</option>
+                  <option value="planning">Still planning</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message" class="form-label">Project Details *</label>
+              <textarea 
+                id="message" 
+                formControlName="message"
+                class="form-textarea"
+                [class.error]="isFieldInvalid('message')"
+                placeholder="Tell us about your project, goals, and how we can help..."
+                rows="6"
+              ></textarea>
+              <span class="form-error" *ngIf="isFieldInvalid('message')">
+                {{ getFieldError('message') }}
+              </span>
+            </div>
+
+            <button 
+              type="submit" 
+              class="btn-primary form-submit"
+              [disabled]="isSubmitting"
+              [class.loading]="isSubmitting"
+            >
+              <span *ngIf="!isSubmitting">Send Message</span>
+              <span *ngIf="isSubmitting">Sending...</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="contact-info-section">
+        <div class="contact-info animate-on-scroll">
+          <h3 class="contact-info__title">Get In Touch</h3>
+          <p class="contact-info__subtitle">
+            We're here to help you transform your business with cutting-edge AI solutions.
+          </p>
+
+          <div class="contact-info__items">
+            <div *ngFor="let info of contactInfo" class="contact-info__item">
+              <div class="contact-info__icon" [innerHTML]="info.icon"></div>
+              <div class="contact-info__content">
+                <h4 class="contact-info__item-title">{{ info.title }}</h4>
+                <a [href]="info.href" class="contact-info__item-value">{{ info.value }}</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-info__cta">
+            <h4>Prefer to schedule a call?</h4>
+            <p>Book a free 30-minute consultation to discuss your project.</p>
+            <button class="btn-secondary">
+              Schedule Consultation
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="contact-faq section-padding bg-neutral-light">
+  <div class="container">
+    <div class="contact-faq__header animate-on-scroll">
+      <h2 class="contact-faq__title">Frequently Asked Questions</h2>
+      <p class="contact-faq__subtitle">
+        Quick answers to common questions about working with Vega Stack.
+      </p>
+    </div>
+
+    <div class="faq-grid">
+      <div class="faq-item animate-on-scroll">
+        <h3 class="faq-question">What types of projects do you work on?</h3>
+        <p class="faq-answer">
+          We specialize in AI solutions, cloud infrastructure, mobile and web applications, 
+          data analytics, and custom software development across various industries.
+        </p>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <h3 class="faq-question">How do you approach new projects?</h3>
+        <p class="faq-answer">
+          We start with a discovery phase to understand your needs, then provide a detailed 
+          proposal with timeline and milestones. We use agile methodologies for transparent, 
+          iterative development.
+        </p>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <h3 class="faq-question">What's your typical project timeline?</h3>
+        <p class="faq-answer">
+          Project timelines vary based on complexity. Simple applications may take 2-3 months, 
+          while enterprise AI solutions can range from 6-12 months. We provide accurate estimates 
+          after the discovery phase.
+        </p>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <h3 class="faq-question">Do you provide ongoing support?</h3>
+        <p class="faq-answer">
+          Yes! We offer comprehensive maintenance and support packages including monitoring, 
+          updates, bug fixes, and feature enhancements to ensure your solution continues 
+          to deliver value.
+        </p>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <h3 class="faq-question">How do you ensure project success?</h3>
+        <p class="faq-answer">
+          We use proven methodologies, maintain regular communication, provide transparent 
+          reporting, and involve you throughout the development process to ensure the final 
+          product meets your expectations.
+        </p>
+      </div>
+
+      <div class="faq-item animate-on-scroll">
+        <h3 class="faq-question">Can you work with our existing team?</h3>
+        <p class="faq-answer">
+          Absolutely! We excel at collaborating with in-house teams, providing expertise 
+          where needed while integrating seamlessly with your existing processes and tools.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

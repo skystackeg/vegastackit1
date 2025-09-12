@@ -50,22 +50,16 @@
 .header__logo-image {
   height: 40px;
   width: auto;
+  margin-top: 0.6rem;
+  // Add the following line to scale the logo
+  transform: scale(4); 
 
   @include mobile {
     height: 32px;
   }
 }
 
-.header__logo-text {
-  font-family: $font-family-heading;
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  color: $text-primary;
 
-  @include mobile {
-    font-size: $font-size-lg;
-  }
-}
 
 .header__nav {
   flex: 1;
@@ -230,6 +224,23 @@
   &.active {
     color: $primary;
     background: rgba($primary, 0.05);
+  }
+}
+
+// Responsive Utility Classes
+.hidden-mobile {
+  display: flex;
+
+  @media (max-width: 767px) {
+    display: none !important;
+  }
+}
+
+.visible-mobile {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: flex !important;
   }
 }
 
