@@ -1,0 +1,110 @@
+<!-- src/app/pages/home/home.component.html -->
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <div class="hero__content">
+      <h1 class="hero-title">
+        AI-Driven Digital <span class="text-gradient">Evolution</span>
+      </h1>
+      <p class="hero-subtitle">
+        Transform your enterprise with intelligent AI solutions that accelerate innovation 
+        and drive seamless digital transformation for the modern era.
+      </p>
+      <div class="hero-cta">
+        <button class="btn-primary" routerLink="/services">
+          Explore Solutions
+        </button>
+        <button class="btn-secondary" (click)="scrollToServices()">
+          Learn More
+        </button>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="hero__visual-bg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="services section-padding">
+  <div class="container">
+    <div class="services__header animate-on-scroll">
+      <h2 class="services__title">Our Expertise</h2>
+      <p class="services__subtitle">
+        We deliver cutting-edge technology solutions that fuel innovation and drive 
+        sustainable growth for industry leaders and forward-thinking organizations.
+      </p>
+    </div>
+
+    <div class="services__grid">
+      <app-service-card 
+        *ngFor="let service of services; let i = index"
+        [service]="service"
+        class="service-card"
+      ></app-service-card>
+    </div>
+  </div>
+</section>
+
+<!-- About Preview Section -->
+<section class="about-preview section-padding bg-neutral-light">
+  <div class="container">
+    <div class="about-preview__content">
+      <div class="about-preview__text animate-on-scroll">
+        <h2 class="about-preview__title">About Vega Stack</h2>
+        <p class="about-preview__description">
+          Vega Stack is a pioneering AI-focused company leading the charge in digital transformation. 
+          We deliver intelligent solutions that empower businesses to evolve and thrive in today's 
+          rapidly changing digital landscape.
+        </p>
+        <p class="about-preview__description">
+          Our expert team combines deep expertise in artificial intelligence, machine learning, and 
+          digital strategy to create transformative experiences that drive business growth and 
+          operational excellence across industries.
+        </p>
+        <button class="btn-primary" routerLink="/about">
+          Discover Our Story
+        </button>
+      </div>
+      
+      <div class="about-preview__visual animate-on-scroll">
+        <div class="about-preview__stats">
+          <div class="stat-card">
+            <div class="stat-card__number">50+</div>
+            <div class="stat-card__label">Projects Delivered</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__number">95%</div>
+            <div class="stat-card__label">Client Satisfaction</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__number">24/7</div>
+            <div class="stat-card__label">Support Available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section section-padding">
+  <div class="container">
+    <div class="cta-section__content animate-on-scroll">
+      <h2 class="cta-section__title">Ready to Transform Your Business?</h2>
+      <p class="cta-section__description">
+        Join innovative companies that trust Vega Stack to deliver cutting-edge AI solutions 
+        and drive their digital transformation journey.
+      </p>
+      <div class="cta-section__actions">
+        <button class="btn-primary" id="contact">
+          Start Your Project
+        </button>
+        <button class="btn-secondary" routerLink="/services">
+          View Our Services
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

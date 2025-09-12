@@ -1,0 +1,130 @@
+// src/app/components/service-card/service-card.component.scss
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+.service-card {
+  padding: $spacing-8;
+  cursor: pointer;
+  border: 1px solid rgba($primary, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba($primary, 0.05), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover {
+    border-color: rgba($primary, 0.2);
+    
+    &::before {
+      left: 100%;
+    }
+
+    .service-card__icon {
+      transform: scale(1.1);
+    }
+
+    .service-card__arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($primary, 0.2);
+  }
+
+  @include mobile {
+    padding: $spacing-6;
+  }
+}
+
+.service-card__icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: $spacing-6;
+  transition: transform 0.3s ease;
+
+  :global(svg) {
+    width: 100%;
+    height: 100%;
+    fill: $primary;
+    transition: fill 0.3s ease;
+  }
+
+  @include mobile {
+    width: 50px;
+    height: 50px;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.service-card__content {
+  flex: 1;
+}
+
+.service-card__title {
+  @include heading-3;
+  margin-bottom: $spacing-4;
+  font-size: $font-size-xl;
+  
+  @include mobile {
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-3;
+  }
+}
+
+.service-card__description {
+  @include body-base;
+  margin-bottom: $spacing-6;
+  color: $text-secondary;
+  line-height: 1.6;
+
+  @include mobile {
+    font-size: $font-size-sm;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.service-card__cta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  color: $primary;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: darken($primary, 10%);
+  }
+}
+
+.service-card__cta-text {
+  transition: color 0.3s ease;
+}
+
+.service-card__arrow {
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+// Responsive grid adjustments
+@include mobile {
+  .service-card {
+    text-align: center;
+    
+    .service-card__icon {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}

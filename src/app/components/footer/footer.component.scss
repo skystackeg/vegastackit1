@@ -1,0 +1,224 @@
+// src/app/components/footer/footer.component.scss
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+.footer {
+  background: $gradient-primary;
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(black, 0.1);
+    z-index: 1;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.footer-content {
+  @include section-padding;
+
+  @include mobile {
+    padding: $spacing-12 0;
+  }
+}
+
+.footer__main {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: $spacing-16;
+  margin-bottom: $spacing-12;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: $spacing-10;
+    margin-bottom: $spacing-8;
+  }
+}
+
+.footer__brand {
+  max-width: 400px;
+}
+
+.footer__logo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  margin-bottom: $spacing-6;
+}
+
+.footer__logo-image {
+  height: 40px;
+  width: auto;
+  filter: brightness(0) invert(1);
+
+  @include mobile {
+    height: 32px;
+  }
+}
+
+.footer__logo-text {
+  font-family: $font-family-heading;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: white;
+
+  @include mobile {
+    font-size: $font-size-lg;
+  }
+}
+
+.footer__description {
+  @include body-base;
+  color: rgba(white, 0.9);
+  margin-bottom: $spacing-6;
+  line-height: 1.6;
+
+  @include mobile {
+    font-size: $font-size-sm;
+  }
+}
+
+.footer__social {
+  display: flex;
+  gap: $spacing-4;
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(white, 0.1);
+  border-radius: $border-radius;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(white, 0.2);
+    transform: translateY(-2px);
+  }
+
+  :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.footer__links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-8;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-6;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $spacing-6;
+  }
+}
+
+.footer__column {
+  // No specific styles needed
+}
+
+.footer__column-title {
+  font-family: $font-family-heading;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: white;
+  margin-bottom: $spacing-4;
+
+  @include mobile {
+    font-size: $font-size-base;
+  }
+}
+
+.footer__column-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer__column-list li {
+  margin-bottom: $spacing-2;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.footer__column-link {
+  color: rgba(white, 0.8);
+  text-decoration: none;
+  font-size: $font-size-sm;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: white;
+    text-decoration: underline;
+  }
+}
+
+.footer__column-text {
+  color: rgba(white, 0.7);
+  font-size: $font-size-sm;
+}
+
+.footer__bottom {
+  border-top: 1px solid rgba(white, 0.2);
+  padding-top: $spacing-6;
+}
+
+.footer__bottom-content {
+  @include flex-between;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    gap: $spacing-4;
+    text-align: center;
+  }
+}
+
+.footer__copyright {
+  color: rgba(white, 0.8);
+  font-size: $font-size-sm;
+  margin: 0;
+}
+
+.footer__legal {
+  display: flex;
+  gap: $spacing-6;
+
+  @include mobile {
+    gap: $spacing-4;
+  }
+}
+
+.footer__legal-link {
+  color: rgba(white, 0.7);
+  text-decoration: none;
+  font-size: $font-size-sm;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: white;
+    text-decoration: underline;
+  }
+}

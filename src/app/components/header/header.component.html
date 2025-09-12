@@ -1,0 +1,80 @@
+<!-- src/app/components/header/header.component.html -->
+<header #headerElement class="header">
+  <div class="container">
+    <div class="header-content">
+      <!-- Logo -->
+      <div class="header__logo" routerLink="/">
+        <img src="../../assets/images/logo.png" alt="Vega Stack" class="header__logo-image">
+        <span class="header__logo-text">Vega Stack</span>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="header__nav hidden-mobile">
+        <ul class="header__nav-list">
+          <li class="header__nav-item">
+            <a routerLink="/" class="header__nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+              Home
+            </a>
+          </li>
+          <li class="header__nav-item">
+            <a routerLink="/services" class="header__nav-link" routerLinkActive="active">
+              Services
+            </a>
+          </li>
+          <li class="header__nav-item">
+            <a routerLink="/about" class="header__nav-link" routerLinkActive="active">
+              About
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- CTA Button -->
+      <div class="header__cta hidden-mobile">
+        <button class="btn-primary" (click)="navigateToSection('contact')">
+          Get Started
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        class="header__mobile-toggle visible-mobile"
+        (click)="toggleMobileMenu()"
+        [class.active]="isMobileMenuOpen"
+        aria-label="Toggle mobile menu"
+      >
+        <span class="header__mobile-toggle-line"></span>
+        <span class="header__mobile-toggle-line"></span>
+        <span class="header__mobile-toggle-line"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="header__mobile-menu" [class.open]="isMobileMenuOpen">
+      <nav class="header__mobile-nav">
+        <ul class="header__mobile-nav-list">
+          <li class="header__mobile-nav-item">
+            <a routerLink="/" class="header__mobile-nav-link" (click)="closeMobileMenu()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+              Home
+            </a>
+          </li>
+          <li class="header__mobile-nav-item">
+            <a routerLink="/services" class="header__mobile-nav-link" (click)="closeMobileMenu()" routerLinkActive="active">
+              Services
+            </a>
+          </li>
+          <li class="header__mobile-nav-item">
+            <a routerLink="/about" class="header__mobile-nav-link" (click)="closeMobileMenu()" routerLinkActive="active">
+              About
+            </a>
+          </li>
+          <li class="header__mobile-nav-item">
+            <button class="btn-primary w-full" (click)="navigateToSection('contact')">
+              Get Started
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

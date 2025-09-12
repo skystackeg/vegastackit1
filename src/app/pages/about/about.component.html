@@ -1,0 +1,191 @@
+<!-- src/app/pages/about/about.component.html -->
+
+<!-- About Hero Section -->
+<section class="about-hero">
+  <div class="container">
+    <div class="about-hero__content">
+      <h1 class="about-hero__title">About <span class="text-gradient">Vega Stack</span></h1>
+      <p class="about-hero__subtitle">
+        A pioneering AI-focused company leading the charge in digital transformation, 
+        delivering intelligent solutions that empower businesses to evolve and thrive.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Company Story Section -->
+<section class="company-story section-padding">
+  <div class="container">
+    <div class="company-story__content animate-on-scroll">
+      <div class="company-story__text">
+        <h2 class="company-story__title">Our Story</h2>
+        <p class="company-story__description">
+          Vega Stack emerged from a vision to revolutionize how businesses leverage artificial intelligence 
+          and cutting-edge technology. Founded by industry veterans with deep expertise in AI, machine learning, 
+          and digital strategy, we set out to bridge the gap between complex technology and practical business solutions.
+        </p>
+        <p class="company-story__description">
+          Our expert team combines years of experience in artificial intelligence, machine learning, and 
+          digital strategy to create transformative experiences that drive business growth and operational 
+          excellence across diverse industries including healthcare, fintech, e-commerce, and education.
+        </p>
+      </div>
+      
+      <div class="company-story__stats">
+        <div class="stats-grid">
+          <div *ngFor="let stat of stats" class="stat-card animate-on-scroll">
+            <div class="stat-card__number">{{ stat.number }}</div>
+            <div class="stat-card__label">{{ stat.label }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Vision Section -->
+<section id="vision" class="vision section-padding bg-neutral-light">
+  <div class="container">
+    <div class="vision__content animate-on-scroll">
+      <h2 class="vision__title">Our Vision</h2>
+      <p class="vision__description">
+        As an emerging force in the technology industry, we're focused on revolutionizing how businesses 
+        leverage AI in software development and digital transformation. We aim to serve innovative companies 
+        across healthcare, fintech, e-commerce, and education sectors with our fresh approach and 
+        cutting-edge methodologies.
+      </p>
+      <p class="vision__description">
+        We envision a future where artificial intelligence seamlessly integrates with business processes, 
+        creating more efficient, intelligent, and adaptive organizations that can thrive in an 
+        ever-evolving digital landscape.
+      </p>
+      
+      <div class="vision__highlights">
+        <div class="highlight-card animate-on-scroll">
+          <h3 class="highlight-card__title">Global Impact</h3>
+          <p class="highlight-card__text">
+            Transforming businesses worldwide through intelligent solutions
+          </p>
+        </div>
+        <div class="highlight-card animate-on-scroll">
+          <h3 class="highlight-card__title">Innovation First</h3>
+          <p class="highlight-card__text">
+            Pioneering the next generation of AI-powered business solutions
+          </p>
+        </div>
+        <div class="highlight-card animate-on-scroll">
+          <h3 class="highlight-card__title">Future Ready</h3>
+          <p class="highlight-card__text">
+            Building scalable solutions for tomorrow's challenges
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Approach Section -->
+<section id="approach" class="approach section-padding">
+  <div class="container">
+    <div class="approach__header animate-on-scroll">
+      <h2 class="approach__title">Our Approach</h2>
+      <p class="approach__subtitle">
+        We believe in combining technical excellence with strategic thinking to deliver solutions 
+        that not only solve today's challenges but also prepare businesses for future opportunities.
+      </p>
+    </div>
+
+    <div class="approach__values">
+      <div 
+        *ngFor="let value of values; let i = index" 
+        class="value-card animate-on-scroll"
+        [class.reverse]="i % 2 === 1"
+      >
+        <div class="value-card__icon" [innerHTML]="value.icon"></div>
+        <div class="value-card__content">
+          <h3 class="value-card__title">{{ value.title }}</h3>
+          <p class="value-card__description">{{ value.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team Section -->
+<section class="team section-padding bg-neutral-light">
+  <div class="container">
+    <div class="team__header animate-on-scroll">
+      <h2 class="team__title">Our Expertise</h2>
+      <p class="team__subtitle">
+        Our multidisciplinary team brings together decades of combined experience in artificial intelligence, 
+        software engineering, and digital transformation.
+      </p>
+    </div>
+
+    <div class="team__expertise">
+      <div class="expertise-grid">
+        <div class="expertise-card animate-on-scroll">
+          <div class="expertise-card__icon">
+            <svg viewBox="0 0 64 64" fill="none">
+              <rect x="8" y="16" width="48" height="32" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
+              <rect x="12" y="20" width="40" height="20" rx="2" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.7"/>
+              <path d="M20 28L24 32L20 36M28 36H36" stroke="white" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3 class="expertise-card__title">Technical Leadership</h3>
+          <p class="expertise-card__description">
+            Seasoned engineers and architects with expertise in modern technologies and best practices.
+          </p>
+        </div>
+
+        <div class="expertise-card animate-on-scroll">
+          <div class="expertise-card__icon">
+            <svg viewBox="0 0 64 64" fill="none">
+              <path d="M32 8L56 20V44L32 56L8 44V20L32 8Z" stroke="currentColor" stroke-width="2" fill="none"/>
+              <circle cx="32" cy="32" r="8" stroke="currentColor" stroke-width="2" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3 class="expertise-card__title">AI Specialists</h3>
+          <p class="expertise-card__description">
+            Deep expertise in machine learning, neural networks, and cutting-edge AI technologies.
+          </p>
+        </div>
+
+        <div class="expertise-card animate-on-scroll">
+          <div class="expertise-card__icon">
+            <svg viewBox="0 0 64 64" fill="none">
+              <circle cx="20" cy="20" r="8" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.7"/>
+              <circle cx="44" cy="20" r="8" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.7"/>
+              <circle cx="32" cy="44" r="8" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.7"/>
+            </svg>
+          </div>
+          <h3 class="expertise-card__title">Strategic Advisors</h3>
+          <p class="expertise-card__description">
+            Business strategists who understand how to align technology solutions with business objectives.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section section-padding">
+  <div class="container">
+    <div class="cta-section__content animate-on-scroll">
+      <h2 class="cta-section__title">Ready to Work Together?</h2>
+      <p class="cta-section__description">
+        Let's discuss how Vega Stack can help transform your business with intelligent AI solutions 
+        and cutting-edge technology.
+      </p>
+      <div class="cta-section__actions">
+        <button class="btn-primary">
+          Start a Conversation
+        </button>
+        <button class="btn-secondary">
+          View Our Services
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,333 @@
+// src/app/pages/services/services.component.scss
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+// Services Hero Section
+.services-hero {
+  padding: $spacing-32 0 $spacing-20 0;
+  background: linear-gradient(135deg, rgba($primary, 0.05) 0%, rgba($secondary, 0.05) 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba($secondary, 0.1) 0%, transparent 50%);
+    animation: rotate 30s linear infinite;
+  }
+
+  @include mobile {
+    padding: $spacing-24 0 $spacing-16 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.services-hero__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.services-hero__title {
+  @include heading-1;
+  margin-bottom: $spacing-6;
+  font-size: $font-size-5xl;
+
+  @include tablet {
+    font-size: $font-size-4xl;
+  }
+
+  @include mobile {
+    font-size: $font-size-3xl;
+  }
+}
+
+.services-hero__subtitle {
+  @include body-large;
+  color: $text-secondary;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+// Services Details Section
+.services-details {
+  background: white;
+}
+
+.services-details__grid {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-20;
+
+  @include mobile {
+    gap: $spacing-16;
+  }
+}
+
+.service-detail {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: $spacing-8;
+  align-items: start;
+  padding: $spacing-12;
+  border-radius: $border-radius-xl;
+  background: rgba($neutral-light, 0.5);
+  border: 1px solid rgba($primary, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+    border-color: rgba($primary, 0.2);
+  }
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: $spacing-6;
+    text-align: center;
+    padding: $spacing-8;
+  }
+
+  @include mobile {
+    padding: $spacing-6;
+  }
+
+  // Alternate layout for even items
+  &:nth-child(even) {
+    grid-template-columns: 1fr auto;
+
+    .service-detail__icon {
+      order: 2;
+    }
+
+    .service-detail__content {
+      order: 1;
+    }
+
+    @include tablet {
+      grid-template-columns: 1fr;
+
+      .service-detail__icon {
+        order: 1;
+      }
+
+      .service-detail__content {
+        order: 2;
+      }
+    }
+  }
+}
+
+.service-detail__icon {
+  width: 120px;
+  height: 120px;
+  padding: $spacing-6;
+  background: white;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-lg;
+  @include flex-center;
+  flex-shrink: 0;
+
+  :global(svg) {
+    width: 80px;
+    height: 80px;
+    fill: $primary;
+    stroke: $primary;
+  }
+
+  @include tablet {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+
+    :global(svg) {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  @include mobile {
+    width: 80px;
+    height: 80px;
+
+    :global(svg) {
+      width: 48px;
+      height: 48px;
+    }
+  }
+}
+
+.service-detail__content {
+  min-width: 0;
+}
+
+.service-detail__title {
+  @include heading-2;
+  margin-bottom: $spacing-4;
+  color: $text-primary;
+
+  @include mobile {
+    font-size: $font-size-xl;
+  }
+}
+
+.service-detail__description {
+  @include body-base;
+  margin-bottom: $spacing-8;
+  color: $text-secondary;
+  line-height: 1.7;
+}
+
+.service-detail__features {
+  margin-bottom: $spacing-6;
+}
+
+.service-detail__features-title {
+  font-family: $font-family-heading;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin-bottom: $spacing-3;
+}
+
+.service-detail__features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-2;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+
+  li {
+    position: relative;
+    padding-left: $spacing-6;
+    font-size: $font-size-sm;
+    color: $text-secondary;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      background: $gradient-primary;
+      border-radius: 50%;
+    }
+  }
+}
+
+.service-detail__technologies {
+  margin-bottom: $spacing-8;
+}
+
+.service-detail__technologies-title {
+  font-family: $font-family-heading;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin-bottom: $spacing-3;
+}
+
+.service-detail__tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+}
+
+.tech-tag {
+  display: inline-block;
+  padding: $spacing-2 $spacing-4;
+  background: rgba($primary, 0.1);
+  color: $primary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border-radius: $border-radius-full;
+  border: 1px solid rgba($primary, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: $primary;
+    color: white;
+    transform: translateY(-1px);
+  }
+}
+
+.service-detail__cta {
+  @include button-primary;
+}
+
+// CTA Section
+.cta-section {
+  background: $gradient-primary;
+  color: white;
+  text-align: center;
+}
+
+.cta-section__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-section__title {
+  @include heading-2;
+  color: white;
+  margin-bottom: $spacing-6;
+}
+
+.cta-section__description {
+  @include body-large;
+  color: rgba(white, 0.9);
+  margin-bottom: $spacing-8;
+}
+
+.cta-section__actions {
+  display: flex;
+  gap: $spacing-4;
+  justify-content: center;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-secondary {
+    background: rgba(white, 0.1);
+    border-color: rgba(white, 0.3);
+    color: white;
+
+    &:hover {
+      background: white;
+      color: $primary;
+    }
+  }
+}
+
+// Animations
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Scroll padding for fragment links
+.service-detail {
+  scroll-margin-top: 100px;
+}

@@ -1,0 +1,297 @@
+// src/assets/styles/global.scss
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+// Reset and base styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  font-weight: $font-weight-regular;
+  line-height: 1.6;
+  color: $text-primary;
+  background-color: $background;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: $font-family-heading;
+}
+
+h1 {
+  @include heading-1;
+}
+
+h2 {
+  @include heading-2;
+}
+
+h3 {
+  @include heading-3;
+}
+
+p {
+  margin: 0 0 $spacing-4 0;
+  @include body-base;
+}
+
+a {
+  color: $primary;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: darken($primary, 10%);
+  }
+}
+
+// Utility classes
+.container {
+  @include container;
+}
+
+.section-padding {
+  @include section-padding;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+.flex-between {
+  @include flex-between;
+}
+
+.flex-column {
+  @include flex-column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-4 {
+  gap: $spacing-4;
+}
+
+.gap-6 {
+  gap: $spacing-6;
+}
+
+.gap-8 {
+  gap: $spacing-8;
+}
+
+// Margin utilities
+.mt-8 {
+  margin-top: $spacing-8;
+}
+
+.mb-8 {
+  margin-bottom: $spacing-8;
+}
+
+.mt-12 {
+  margin-top: $spacing-12;
+}
+
+.mb-12 {
+  margin-bottom: $spacing-12;
+}
+
+.mt-16 {
+  margin-top: $spacing-16;
+}
+
+.mb-16 {
+  margin-bottom: $spacing-16;
+}
+
+// Background utilities
+.bg-gradient-primary {
+  background: $gradient-primary;
+}
+
+.bg-gradient-secondary {
+  background: $gradient-secondary;
+}
+
+.bg-neutral-light {
+  background-color: $neutral-light;
+}
+
+// Text utilities
+.text-primary {
+  color: $text-primary;
+}
+
+.text-secondary {
+  color: $text-secondary;
+}
+
+.text-gradient {
+  @include gradient-text;
+}
+
+// Animation classes
+.animate-on-scroll {
+  @include fade-in-up;
+}
+
+.service-card {
+  @include fade-in-up;
+}
+
+// Button utilities
+.btn-primary {
+  @include button-primary;
+}
+
+.btn-secondary {
+  @include button-secondary;
+}
+
+// Grid system
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+  
+  @include tablet {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+  
+  @include desktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include mobile {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.grid-gap-6 {
+  gap: $spacing-6;
+}
+
+.grid-gap-8 {
+  gap: $spacing-8;
+}
+
+// Card utilities
+.card {
+  @include card-base;
+}
+
+.card-hover {
+  @include card-hover;
+}
+
+// Show/hide utilities
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+@include mobile {
+  .hidden-mobile {
+    display: none;
+  }
+  
+  .visible-mobile {
+    display: block;
+  }
+}
+
+@include tablet {
+  .hidden-tablet {
+    display: none;
+  }
+  
+  .visible-tablet {
+    display: block;
+  }
+}
+
+@include desktop {
+  .hidden-desktop {
+    display: none;
+  }
+  
+  .visible-desktop {
+    display: block;
+  }
+}
+
+// Scrollbar styling
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $neutral-light;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $primary;
+  border-radius: $border-radius-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: darken($primary, 10%);
+}
+
+// Selection styling
+::selection {
+  background-color: rgba($primary, 0.2);
+  color: $text-primary;
+}

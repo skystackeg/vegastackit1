@@ -1,0 +1,492 @@
+// src/app/pages/about/about.component.scss
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+// About Hero Section
+.about-hero {
+  padding: $spacing-32 0 $spacing-20 0;
+  background: linear-gradient(135deg, rgba($secondary, 0.05) 0%, rgba($accent, 0.05) 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -30%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba($accent, 0.1) 0%, transparent 50%);
+    animation: float 25s ease-in-out infinite;
+  }
+
+  @include mobile {
+    padding: $spacing-24 0 $spacing-16 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.about-hero__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-hero__title {
+  @include heading-1;
+  margin-bottom: $spacing-6;
+  font-size: $font-size-5xl;
+
+  @include tablet {
+    font-size: $font-size-4xl;
+  }
+
+  @include mobile {
+    font-size: $font-size-3xl;
+  }
+}
+
+.about-hero__subtitle {
+  @include body-large;
+  color: $text-secondary;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+// Company Story Section
+.company-story {
+  background: white;
+}
+
+.company-story__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-16;
+  align-items: center;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: $spacing-12;
+  }
+}
+
+.company-story__title {
+  @include heading-2;
+  margin-bottom: $spacing-6;
+}
+
+.company-story__description {
+  @include body-base;
+  margin-bottom: $spacing-6;
+  line-height: 1.7;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-6;
+
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-4;
+  }
+}
+
+.stat-card {
+  @include card-base;
+  padding: $spacing-6;
+  text-align: center;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  @include mobile {
+    padding: $spacing-4;
+  }
+}
+
+.stat-card__number {
+  font-family: $font-family-heading;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  color: $primary;
+  margin-bottom: $spacing-2;
+
+  @include mobile {
+    font-size: $font-size-2xl;
+  }
+}
+
+.stat-card__label {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  font-weight: $font-weight-medium;
+}
+
+// Vision Section
+.vision {
+  text-align: center;
+}
+
+.vision__title {
+  @include heading-2;
+  margin-bottom: $spacing-6;
+}
+
+.vision__description {
+  @include body-base;
+  max-width: 800px;
+  margin: 0 auto $spacing-6 auto;
+  line-height: 1.7;
+
+  &:last-of-type {
+    margin-bottom: $spacing-12;
+  }
+}
+
+.vision__highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-8;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-6;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $spacing-6;
+  }
+}
+
+.highlight-card {
+  @include card-base;
+  padding: $spacing-8;
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+  }
+
+  @include mobile {
+    padding: $spacing-6;
+  }
+}
+
+.highlight-card__title {
+  @include heading-3;
+  margin-bottom: $spacing-4;
+  font-size: $font-size-lg;
+  color: $primary;
+}
+
+.highlight-card__text {
+  @include body-base;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  line-height: 1.6;
+}
+
+// Approach Section
+.approach {
+  background: white;
+}
+
+.approach__header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto $spacing-16 auto;
+
+  @include tablet {
+    margin-bottom: $spacing-12;
+  }
+}
+
+.approach__title {
+  @include heading-2;
+  margin-bottom: $spacing-6;
+}
+
+.approach__subtitle {
+  @include body-large;
+  color: $text-secondary;
+}
+
+.approach__values {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-12;
+
+  @include mobile {
+    gap: $spacing-8;
+  }
+}
+
+.value-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: $spacing-8;
+  align-items: center;
+  padding: $spacing-10;
+  border-radius: $border-radius-xl;
+  background: rgba($neutral-light, 0.3);
+  border: 1px solid rgba($primary, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+    border-color: rgba($primary, 0.2);
+  }
+
+  &.reverse {
+    grid-template-columns: 1fr auto;
+
+    .value-card__icon {
+      order: 2;
+    }
+
+    .value-card__content {
+      order: 1;
+      text-align: right;
+    }
+
+    @include tablet {
+      grid-template-columns: auto 1fr;
+
+      .value-card__icon {
+        order: 1;
+      }
+
+      .value-card__content {
+        order: 2;
+        text-align: left;
+      }
+    }
+  }
+
+  @include tablet {
+    grid-template-columns: auto 1fr;
+    gap: $spacing-6;
+    padding: $spacing-8;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $spacing-4;
+    padding: $spacing-6;
+    text-align: center;
+
+    &.reverse .value-card__content {
+      text-align: center;
+    }
+  }
+}
+
+.value-card__icon {
+  width: 100px;
+  height: 100px;
+  padding: $spacing-4;
+  background: white;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-lg;
+  @include flex-center;
+  flex-shrink: 0;
+
+  :global(svg) {
+    width: 60px;
+    height: 60px;
+    fill: $primary;
+    stroke: $primary;
+  }
+
+  @include tablet {
+    width: 80px;
+    height: 80px;
+
+    :global(svg) {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  @include mobile {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+  }
+}
+
+.value-card__title {
+  @include heading-3;
+  margin-bottom: $spacing-4;
+  color: $primary;
+}
+
+.value-card__description {
+  @include body-base;
+  color: $text-secondary;
+  line-height: 1.7;
+}
+
+// Team Section
+.team__header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto $spacing-16 auto;
+
+  @include tablet {
+    margin-bottom: $spacing-12;
+  }
+}
+
+.team__title {
+  @include heading-2;
+  margin-bottom: $spacing-6;
+}
+
+.team__subtitle {
+  @include body-large;
+  color: $text-secondary;
+}
+
+.expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-8;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-6;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $spacing-6;
+  }
+}
+
+.expertise-card {
+  @include card-base;
+  padding: $spacing-8;
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+  }
+
+  @include mobile {
+    padding: $spacing-6;
+  }
+}
+
+.expertise-card__icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto $spacing-6 auto;
+  padding: $spacing-4;
+  background: rgba($primary, 0.1);
+  border-radius: $border-radius-xl;
+  @include flex-center;
+
+  :global(svg) {
+    width: 48px;
+    height: 48px;
+    fill: $primary;
+    stroke: $primary;
+  }
+}
+
+.expertise-card__title {
+  @include heading-3;
+  margin-bottom: $spacing-4;
+  font-size: $font-size-lg;
+  color: $primary;
+}
+
+.expertise-card__description {
+  @include body-base;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  line-height: 1.6;
+}
+
+// CTA Section
+.cta-section {
+  background: $gradient-secondary;
+  color: white;
+  text-align: center;
+}
+
+.cta-section__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-section__title {
+  @include heading-2;
+  color: white;
+  margin-bottom: $spacing-6;
+}
+
+.cta-section__description {
+  @include body-large;
+  color: rgba(white, 0.9);
+  margin-bottom: $spacing-8;
+}
+
+.cta-section__actions {
+  display: flex;
+  gap: $spacing-4;
+  justify-content: center;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-secondary {
+    background: rgba(white, 0.1);
+    border-color: rgba(white, 0.3);
+    color: white;
+
+    &:hover {
+      background: white;
+      color: $secondary;
+    }
+  }
+}
+
+// Animations
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(180deg);
+  }
+}
+
+// Scroll padding for fragment links
+#vision,
+#approach {
+  scroll-margin-top: 100px;
+}

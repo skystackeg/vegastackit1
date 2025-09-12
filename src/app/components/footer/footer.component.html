@@ -1,0 +1,80 @@
+<!-- src/app/components/footer/footer.component.html -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <!-- Main Footer Content -->
+      <div class="footer__main">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <img src="assets/images/logo.png" alt="Vega Stack" class="footer__logo-image">
+            <span class="footer__logo-text">Vega Stack</span>
+          </div>
+          <p class="footer__description">
+            Transforming businesses through innovative AI solutions and cutting-edge technology. 
+            We empower organizations to thrive in the digital future.
+          </p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="LinkedIn">
+              <span [innerHTML]="socialIcons.linkedin"></span>
+            </a>
+            <a href="#" class="footer__social-link" aria-label="Twitter">
+              <span [innerHTML]="socialIcons.twitter"></span>
+            </a>
+            <a href="#" class="footer__social-link" aria-label="GitHub">
+              <span [innerHTML]="socialIcons.github"></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__column">
+            <h4 class="footer__column-title">Services</h4>
+            <ul class="footer__column-list">
+              <li><a routerLink="/services" fragment="ai-solutions" class="footer__column-link">AI Solutions</a></li>
+              <li><a routerLink="/services" fragment="cloud-infrastructure" class="footer__column-link">Cloud Infrastructure</a></li>
+              <li><a routerLink="/services" fragment="app-development" class="footer__column-link">App Development</a></li>
+              <li><a routerLink="/services" fragment="software-engineering" class="footer__column-link">Software Engineering</a></li>
+              <li><a routerLink="/services" fragment="data-intelligence" class="footer__column-link">Data Intelligence</a></li>
+              <li><a routerLink="/services" fragment="quality-assurance" class="footer__column-link">Quality Assurance</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4 class="footer__column-title">Company</h4>
+            <ul class="footer__column-list">
+              <li><a routerLink="/about" class="footer__column-link">About Us</a></li>
+              <li><a routerLink="/about" fragment="vision" class="footer__column-link">Our Vision</a></li>
+              <li><a routerLink="/about" fragment="approach" class="footer__column-link">Our Approach</a></li>
+              <li><a href="#" class="footer__column-link">Careers</a></li>
+              <li><a href="#" class="footer__column-link">Blog</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4 class="footer__column-title">Contact</h4>
+            <ul class="footer__column-list">
+              <li><a href="mailto:hello@vegastack.com" class="footer__column-link">hello&#64;vegastack.com</a></li>
+              <li><a href="tel:+1234567890" class="footer__column-link">+1 (234) 567-890</a></li>
+              <li><span class="footer__column-text">Remote-First Company</span></li>
+              <li><span class="footer__column-text">Global Reach</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer__bottom">
+        <div class="footer__bottom-content">
+          <p class="footer__copyright">
+            © {{ currentYear }} Vega Stack. All rights reserved.
+          </p>
+          <div class="footer__legal">
+            <a href="#" class="footer__legal-link">Privacy Policy</a>
+            <a href="#" class="footer__legal-link">Terms of Service</a>
+            <a href="#" class="footer__legal-link">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

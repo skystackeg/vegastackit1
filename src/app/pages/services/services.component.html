@@ -1,0 +1,141 @@
+<!-- src/app/pages/services/services.component.html -->
+
+<!-- Services Hero Section -->
+<section class="services-hero">
+  <div class="container">
+    <div class="services-hero__content">
+      <h1 class="services-hero__title">Our <span class="text-gradient">Services</span></h1>
+      <p class="services-hero__subtitle">
+        We deliver cutting-edge technology solutions that fuel innovation and drive 
+        sustainable growth for industry leaders and forward-thinking organizations.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Services Details -->
+<section class="services-details section-padding">
+  <div class="container">
+    <div class="services-details__grid">
+      <div 
+        *ngFor="let service of services; let i = index" 
+        [id]="service.fragmentId"
+        class="service-detail animate-on-scroll"
+      >
+        <div class="service-detail__icon" [innerHTML]="service.icon"></div>
+        <div class="service-detail__content">
+          <h2 class="service-detail__title">{{ service.title }}</h2>
+          <p class="service-detail__description">{{ service.detailedDescription }}</p>
+          
+          <div class="service-detail__features">
+            <h4 class="service-detail__features-title">Key Features:</h4>
+            <ul class="service-detail__features-list">
+              <li *ngIf="service.id === 'ai-solutions'">Custom AI model development</li>
+              <li *ngIf="service.id === 'ai-solutions'">Generative AI applications</li>
+              <li *ngIf="service.id === 'ai-solutions'">Conversational AI systems</li>
+              <li *ngIf="service.id === 'ai-solutions'">Machine learning integration</li>
+              
+              <li *ngIf="service.id === 'cloud-infrastructure'">Multi-cloud strategies</li>
+              <li *ngIf="service.id === 'cloud-infrastructure'">Infrastructure optimization</li>
+              <li *ngIf="service.id === 'cloud-infrastructure'">Security implementation</li>
+              <li *ngIf="service.id === 'cloud-infrastructure'">Cost optimization</li>
+              
+              <li *ngIf="service.id === 'app-development'">Native iOS/Android development</li>
+              <li *ngIf="service.id === 'app-development'">Cross-platform solutions</li>
+              <li *ngIf="service.id === 'app-development'">UI/UX design</li>
+              <li *ngIf="service.id === 'app-development'">App store optimization</li>
+              
+              <li *ngIf="service.id === 'software-engineering'">Agile development methodologies</li>
+              <li *ngIf="service.id === 'software-engineering'">Scalable architecture design</li>
+              <li *ngIf="service.id === 'software-engineering'">DevOps integration</li>
+              <li *ngIf="service.id === 'software-engineering'">Continuous deployment</li>
+              
+              <li *ngIf="service.id === 'data-intelligence'">Business intelligence dashboards</li>
+              <li *ngIf="service.id === 'data-intelligence'">Predictive analytics</li>
+              <li *ngIf="service.id === 'data-intelligence'">Data visualization</li>
+              <li *ngIf="service.id === 'data-intelligence'">Real-time reporting</li>
+              
+              <li *ngIf="service.id === 'quality-assurance'">Automated testing frameworks</li>
+              <li *ngIf="service.id === 'quality-assurance'">Performance testing</li>
+              <li *ngIf="service.id === 'quality-assurance'">Security assessments</li>
+              <li *ngIf="service.id === 'quality-assurance'">Quality metrics tracking</li>
+            </ul>
+          </div>
+
+          <div class="service-detail__technologies">
+            <h4 class="service-detail__technologies-title">Technologies:</h4>
+            <div class="service-detail__tech-tags">
+              <ng-container [ngSwitch]="service.id">
+                <ng-container *ngSwitchCase="'ai-solutions'">
+                  <span class="tech-tag">TensorFlow</span>
+                  <span class="tech-tag">PyTorch</span>
+                  <span class="tech-tag">OpenAI</span>
+                  <span class="tech-tag">Hugging Face</span>
+                </ng-container>
+                
+                <ng-container *ngSwitchCase="'cloud-infrastructure'">
+                  <span class="tech-tag">AWS</span>
+                  <span class="tech-tag">Azure</span>
+                  <span class="tech-tag">Google Cloud</span>
+                  <span class="tech-tag">Kubernetes</span>
+                </ng-container>
+                
+                <ng-container *ngSwitchCase="'app-development'">
+                  <span class="tech-tag">React Native</span>
+                  <span class="tech-tag">Flutter</span>
+                  <span class="tech-tag">Swift</span>
+                  <span class="tech-tag">Kotlin</span>
+                </ng-container>
+                
+                <ng-container *ngSwitchCase="'software-engineering'">
+                  <span class="tech-tag">Angular</span>
+                  <span class="tech-tag">React</span>
+                  <span class="tech-tag">Node.js</span>
+                  <span class="tech-tag">Python</span>
+                </ng-container>
+                
+                <ng-container *ngSwitchCase="'data-intelligence'">
+                  <span class="tech-tag">Power BI</span>
+                  <span class="tech-tag">Tableau</span>
+                  <span class="tech-tag">BigQuery</span>
+                  <span class="tech-tag">Apache Spark</span>
+                </ng-container>
+                
+                <ng-container *ngSwitchCase="'quality-assurance'">
+                  <span class="tech-tag">Selenium</span>
+                  <span class="tech-tag">Jest</span>
+                  <span class="tech-tag">Cypress</span>
+                  <span class="tech-tag">JMeter</span>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+
+          <button class="btn-primary service-detail__cta">
+            Get Started
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section section-padding">
+  <div class="container">
+    <div class="cta-section__content animate-on-scroll">
+      <h2 class="cta-section__title">Ready to Get Started?</h2>
+      <p class="cta-section__description">
+        Let's discuss how our services can help transform your business and drive innovation.
+      </p>
+      <div class="cta-section__actions">
+        <button class="btn-primary">
+          Contact Our Team
+        </button>
+        <button class="btn-secondary">
+          Schedule Consultation
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

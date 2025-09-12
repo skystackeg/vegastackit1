@@ -1,0 +1,18 @@
+// src/app/app.component.scss
+@import './assets//styles/variables';
+@import './assets/styles/mixins';
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 80px; // Account for fixed header
+  
+  @include mobile {
+    margin-top: 70px;
+  }
+}
