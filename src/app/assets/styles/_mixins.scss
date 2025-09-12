@@ -1,37 +1,232 @@
 // src/assets/styles/_mixins.scss
 
-// Responsive breakpoints
+// ===== COMPREHENSIVE RESPONSIVE BREAKPOINTS =====
+// Mobile-first approach with full coverage from 320px to 1920px+
+
+// Extra small devices (320px and up)
+@mixin mobile-xs {
+  @media (min-width: #{$breakpoint-xs}) {
+    @content;
+  }
+}
+
+// Small devices (375px and up) - most phones
 @mixin mobile-sm {
-  @media (max-width: #{$breakpoint-xs - 1px}) {
+  @media (min-width: #{$breakpoint-sm}) {
     @content;
   }
 }
 
-@mixin mobile {
-  @media (max-width: #{$breakpoint-sm - 1px}) {
+// Medium devices (480px and up) - large phones
+@mixin mobile-md {
+  @media (min-width: #{$breakpoint-md}) {
     @content;
   }
 }
 
-@mixin tablet {
-  @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-lg - 1px}) {
-    @content;
-  }
-}
-
-@mixin desktop {
+// Large devices (640px and up) - small tablets
+@mixin mobile-lg {
   @media (min-width: #{$breakpoint-lg}) {
     @content;
   }
 }
 
-@mixin desktop-xl {
+// Extra large devices (768px and up) - tablets
+@mixin tablet {
   @media (min-width: #{$breakpoint-xl}) {
     @content;
   }
 }
 
-// Flexbox utilities
+// Desktop devices (1024px and up)
+@mixin desktop {
+  @media (min-width: #{$breakpoint-2xl}) {
+    @content;
+  }
+}
+
+// Large desktop devices (1280px and up)
+@mixin desktop-lg {
+  @media (min-width: #{$breakpoint-3xl}) {
+    @content;
+  }
+}
+
+// Extra large desktop devices (1440px and up)
+@mixin desktop-xl {
+  @media (min-width: #{$breakpoint-4xl}) {
+    @content;
+  }
+}
+
+// Ultra wide displays (1600px and up)
+@mixin desktop-2xl {
+  @media (min-width: #{$breakpoint-5xl}) {
+    @content;
+  }
+}
+
+// Full HD displays (1920px and up)
+@mixin desktop-3xl {
+  @media (min-width: #{$breakpoint-6xl}) {
+    @content;
+  }
+}
+
+// ===== MAX-WIDTH BREAKPOINTS (for mobile-first exceptions) =====
+
+// Up to 374px (very small phones only)
+@mixin mobile-xs-only {
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+// Up to 479px (small phones only)
+@mixin mobile-sm-only {
+  @media (max-width: #{$breakpoint-md - 1px}) {
+    @content;
+  }
+}
+
+// Up to 639px (phones only)
+@mixin mobile-only {
+  @media (max-width: #{$breakpoint-lg - 1px}) {
+    @content;
+  }
+}
+
+// Up to 767px (phones and small tablets)
+@mixin mobile-tablet-only {
+  @media (max-width: #{$breakpoint-xl - 1px}) {
+    @content;
+  }
+}
+
+// Up to 1023px (tablets and below)
+@mixin tablet-only {
+  @media (max-width: #{$breakpoint-2xl - 1px}) {
+    @content;
+  }
+}
+
+// Up to 1279px (small desktops and below)
+@mixin desktop-only {
+  @media (max-width: #{$breakpoint-3xl - 1px}) {
+    @content;
+  }
+}
+
+// ===== RANGE BREAKPOINTS =====
+
+// Between 375px and 767px (phones)
+@mixin mobile-range {
+  @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-xl - 1px}) {
+    @content;
+  }
+}
+
+// Between 768px and 1023px (tablets)
+@mixin tablet-range {
+  @media (min-width: #{$breakpoint-xl}) and (max-width: #{$breakpoint-2xl - 1px}) {
+    @content;
+  }
+}
+
+// Between 1024px and 1439px (standard desktops)
+@mixin desktop-range {
+  @media (min-width: #{$breakpoint-2xl}) and (max-width: #{$breakpoint-4xl - 1px}) {
+    @content;
+  }
+}
+
+// ===== LEGACY MIXINS (for backward compatibility) =====
+
+// Legacy mobile mixin (max-width approach)
+@mixin mobile {
+  @media (max-width: #{$breakpoint-xl - 1px}) {
+    @content;
+  }
+}
+
+// ===== CONTAINER MIXINS =====
+
+// Responsive container with proper padding
+@mixin container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding-xs;
+  padding-right: $container-padding-xs;
+
+  @include mobile-sm {
+    padding-left: $container-padding-sm;
+    padding-right: $container-padding-sm;
+  }
+
+  @include mobile-md {
+    padding-left: $container-padding-md;
+    padding-right: $container-padding-md;
+  }
+
+  @include mobile-lg {
+    max-width: $container-lg;
+    padding-left: $container-padding-lg;
+    padding-right: $container-padding-lg;
+  }
+
+  @include tablet {
+    max-width: $container-xl;
+  }
+
+  @include desktop {
+    max-width: $container-2xl;
+    padding-left: $container-padding-xl;
+    padding-right: $container-padding-xl;
+  }
+
+  @include desktop-lg {
+    max-width: $container-3xl;
+  }
+
+  @include desktop-xl {
+    max-width: $container-4xl;
+  }
+
+  @include desktop-2xl {
+    max-width: $container-5xl;
+  }
+}
+
+// Fluid container (no max-width)
+@mixin container-fluid {
+  width: 100%;
+  padding-left: $container-padding-xs;
+  padding-right: $container-padding-xs;
+
+  @include mobile-sm {
+    padding-left: $container-padding-sm;
+    padding-right: $container-padding-sm;
+  }
+
+  @include mobile-md {
+    padding-left: $container-padding-md;
+    padding-right: $container-padding-md;
+  }
+
+  @include tablet {
+    padding-left: $container-padding-lg;
+    padding-right: $container-padding-lg;
+  }
+
+  @include desktop {
+    padding-left: $container-padding-xl;
+    padding-right: $container-padding-xl;
+  }
+}
+
+// ===== FLEXBOX UTILITIES =====
+
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -42,6 +237,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 @mixin flex-column {
@@ -56,7 +263,245 @@
   justify-content: center;
 }
 
-// Button styles
+@mixin flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// ===== RESPONSIVE SECTION PADDING =====
+
+@mixin section-padding {
+  padding-top: $spacing-12;
+  padding-bottom: $spacing-12;
+
+  @include mobile-sm {
+    padding-top: $spacing-14;
+    padding-bottom: $spacing-14;
+  }
+
+  @include mobile-md {
+    padding-top: $spacing-16;
+    padding-bottom: $spacing-16;
+  }
+
+  @include tablet {
+    padding-top: $spacing-18;
+    padding-bottom: $spacing-18;
+  }
+
+  @include desktop {
+    padding-top: $spacing-20;
+    padding-bottom: $spacing-20;
+  }
+
+  @include desktop-lg {
+    padding-top: $spacing-24;
+    padding-bottom: $spacing-24;
+  }
+
+  @include desktop-xl {
+    padding-top: $spacing-28;
+    padding-bottom: $spacing-28;
+  }
+}
+
+@mixin section-padding-sm {
+  padding-top: $spacing-8;
+  padding-bottom: $spacing-8;
+
+  @include mobile-md {
+    padding-top: $spacing-10;
+    padding-bottom: $spacing-10;
+  }
+
+  @include tablet {
+    padding-top: $spacing-12;
+    padding-bottom: $spacing-12;
+  }
+
+  @include desktop {
+    padding-top: $spacing-16;
+    padding-bottom: $spacing-16;
+  }
+}
+
+@mixin section-padding-lg {
+  padding-top: $spacing-16;
+  padding-bottom: $spacing-16;
+
+  @include mobile-md {
+    padding-top: $spacing-20;
+    padding-bottom: $spacing-20;
+  }
+
+  @include tablet {
+    padding-top: $spacing-24;
+    padding-bottom: $spacing-24;
+  }
+
+  @include desktop {
+    padding-top: $spacing-32;
+    padding-bottom: $spacing-32;
+  }
+
+  @include desktop-xl {
+    padding-top: $spacing-40;
+    padding-bottom: $spacing-40;
+  }
+}
+
+// ===== RESPONSIVE TYPOGRAPHY =====
+
+@mixin heading-1 {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-bold;
+  line-height: 1.1;
+  color: $text-primary;
+  font-size: $font-size-2xl;
+
+  @include mobile-sm {
+    font-size: $font-size-3xl;
+  }
+
+  @include mobile-md {
+    font-size: $font-size-4xl;
+  }
+
+  @include tablet {
+    font-size: $font-size-5xl;
+  }
+
+  @include desktop {
+    font-size: $font-size-6xl;
+  }
+
+  @include desktop-xl {
+    font-size: $font-size-7xl;
+  }
+}
+
+@mixin heading-2 {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  color: $text-primary;
+  font-size: $font-size-xl;
+
+  @include mobile-sm {
+    font-size: $font-size-2xl;
+  }
+
+  @include mobile-md {
+    font-size: $font-size-3xl;
+  }
+
+  @include tablet {
+    font-size: $font-size-4xl;
+  }
+
+  @include desktop {
+    font-size: $font-size-5xl;
+  }
+
+  @include desktop-xl {
+    font-size: $font-size-6xl;
+  }
+}
+
+@mixin heading-3 {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-semibold;
+  line-height: 1.3;
+  color: $text-primary;
+  font-size: $font-size-lg;
+
+  @include mobile-sm {
+    font-size: $font-size-xl;
+  }
+
+  @include mobile-md {
+    font-size: $font-size-2xl;
+  }
+
+  @include tablet {
+    font-size: $font-size-3xl;
+  }
+
+  @include desktop-xl {
+    font-size: $font-size-4xl;
+  }
+}
+
+@mixin heading-4 {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-semibold;
+  line-height: 1.4;
+  color: $text-primary;
+  font-size: $font-size-base;
+
+  @include mobile-sm {
+    font-size: $font-size-lg;
+  }
+
+  @include tablet {
+    font-size: $font-size-xl;
+  }
+
+  @include desktop {
+    font-size: $font-size-2xl;
+  }
+}
+
+@mixin body-large {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-regular;
+  line-height: 1.6;
+  color: $text-secondary;
+  font-size: $font-size-base;
+
+  @include tablet {
+    font-size: $font-size-lg;
+  }
+
+  @include desktop {
+    font-size: $font-size-xl;
+  }
+}
+
+@mixin body-base {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-regular;
+  line-height: 1.6;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+
+  @include mobile-sm {
+    font-size: $font-size-base;
+  }
+
+  @include desktop {
+    font-size: $font-size-lg;
+  }
+}
+
+@mixin body-small {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-regular;
+  line-height: 1.5;
+  color: $text-secondary;
+  font-size: $font-size-xs;
+
+  @include mobile-sm {
+    font-size: $font-size-sm;
+  }
+
+  @include desktop {
+    font-size: $font-size-base;
+  }
+}
+
+// ===== RESPONSIVE BUTTONS =====
+
 @mixin button-base {
   display: inline-flex;
   align-items: center;
@@ -64,15 +509,22 @@
   font-weight: $font-weight-medium;
   text-decoration: none;
   border: none;
-  border-radius: $border-radius;
+  border-radius: $border-radius-md;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: $transition-all;
   text-align: center;
   white-space: nowrap;
+  font-family: $font-family-primary;
   
   &:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba($primary, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 }
 
@@ -80,10 +532,27 @@
   @include button-base;
   background: $gradient-primary;
   color: white;
-  padding: $spacing-3 $spacing-6;
-  font-size: $font-size-base;
+  padding: $spacing-2-5 $spacing-4;
+  font-size: $font-size-sm;
+  min-height: $button-height-md;
   
-  &:hover {
+  @include mobile-sm {
+    padding: $spacing-3 $spacing-5;
+    font-size: $font-size-base;
+  }
+
+  @include tablet {
+    padding: $spacing-3 $spacing-6;
+    min-height: $button-height-lg;
+  }
+
+  @include desktop {
+    padding: $spacing-4 $spacing-8;
+    min-height: $button-height-xl;
+    font-size: $font-size-lg;
+  }
+  
+  &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: $shadow-lg;
   }
@@ -98,10 +567,27 @@
   background: white;
   color: $primary;
   border: 2px solid $primary;
-  padding: calc(#{$spacing-3} - 2px) calc(#{$spacing-6} - 2px);
-  font-size: $font-size-base;
+  padding: calc(#{$spacing-2-5} - 2px) calc(#{$spacing-4} - 2px);
+  font-size: $font-size-sm;
+  min-height: $button-height-md;
+
+  @include mobile-sm {
+    padding: calc(#{$spacing-3} - 2px) calc(#{$spacing-5} - 2px);
+    font-size: $font-size-base;
+  }
+
+  @include tablet {
+    padding: calc(#{$spacing-3} - 2px) calc(#{$spacing-6} - 2px);
+    min-height: $button-height-lg;
+  }
+
+  @include desktop {
+    padding: calc(#{$spacing-4} - 2px) calc(#{$spacing-8} - 2px);
+    min-height: $button-height-xl;
+    font-size: $font-size-lg;
+  }
   
-  &:hover {
+  &:hover:not(:disabled) {
     background: $primary;
     color: white;
     transform: translateY(-2px);
@@ -109,110 +595,124 @@
   }
 }
 
-// Card styles
+// ===== CARD STYLES =====
+
 @mixin card-base {
   background: white;
   border-radius: $border-radius-lg;
   box-shadow: $shadow;
-  transition: all 0.3s ease;
+  transition: $transition-all;
+  overflow: hidden;
+
+  @include desktop {
+    border-radius: $border-radius-xl;
+  }
 }
 
 @mixin card-hover {
   &:hover {
     transform: translateY(-4px);
     box-shadow: $shadow-xl;
+
+    @include desktop {
+      transform: translateY(-6px);
+      box-shadow: $shadow-2xl;
+    }
   }
 }
 
-// Container
-@mixin container {
-  max-width: $container-max-width;
-  margin: 0 auto;
-  padding: 0 $container-padding;
+@mixin card-interactive {
+  @include card-base;
+  cursor: pointer;
   
-  @include mobile {
-    padding: 0 $spacing-4;
+  &:hover {
+    @include card-hover;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($primary, 0.2), $shadow-xl;
   }
 }
 
-// Section spacing
-@mixin section-padding {
-  padding: $spacing-20 0;
+// ===== UTILITY MIXINS =====
+
+// Responsive aspect ratio
+@mixin aspect-ratio($width, $height) {
+  position: relative;
   
+  &::before {
+    content: '';
+    display: block;
+    padding-top: calc(#{$height} / #{$width} * 100%);
+  }
+
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Responsive grid
+@mixin grid-responsive($mobile: 1, $tablet: 2, $desktop: 3, $desktop-lg: 4) {
+  display: grid;
+  grid-template-columns: repeat($mobile, 1fr);
+  gap: $spacing-4;
+
+  @include mobile-sm {
+    gap: $spacing-6;
+  }
+
   @include tablet {
-    padding: $spacing-16 0;
+    grid-template-columns: repeat($tablet, 1fr);
+    gap: $spacing-8;
   }
-  
-  @include mobile {
-    padding: $spacing-12 0;
-  }
-}
 
-// Typography
-@mixin heading-1 {
-  font-family: $font-family-heading;
-  font-size: $font-size-5xl;
-  font-weight: $font-weight-bold;
-  line-height: 1.1;
-  color: $text-primary;
-  
-  @include tablet {
-    font-size: $font-size-4xl;
+  @include desktop {
+    grid-template-columns: repeat($desktop, 1fr);
   }
-  
-  @include mobile {
-    font-size: $font-size-3xl;
-  }
-}
 
-@mixin heading-2 {
-  font-family: $font-family-heading;
-  font-size: $font-size-4xl;
-  font-weight: $font-weight-bold;
-  line-height: 1.2;
-  color: $text-primary;
-  
-  @include tablet {
-    font-size: $font-size-3xl;
+  @include desktop-lg {
+    grid-template-columns: repeat($desktop-lg, 1fr);
+    gap: $spacing-10;
   }
-  
-  @include mobile {
-    font-size: $font-size-2xl;
-  }
-}
-
-@mixin heading-3 {
-  font-family: $font-family-heading;
-  font-size: $font-size-2xl;
-  font-weight: $font-weight-semibold;
-  line-height: 1.3;
-  color: $text-primary;
-  
-  @include mobile {
-    font-size: $font-size-xl;
-  }
-}
-
-@mixin body-large {
-  font-family: $font-family-primary;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-regular;
-  line-height: 1.6;
-  color: $text-secondary;
-}
-
-@mixin body-base {
-  font-family: $font-family-primary;
-  font-size: $font-size-base;
-  font-weight: $font-weight-regular;
-  line-height: 1.6;
-  color: $text-secondary;
 }
 
 // Animations
-@mixin fade-in-up {
+@mixin fade-in-left {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.animate {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@mixin fade-in-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.animate {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@mixin scale-in {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+
+  &.animate {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 // Gradient text
@@ -221,6 +721,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: transparent;
 }
 
 // Glass morphism effect
@@ -229,3 +730,296 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+@mixin glass-morphism-dark {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// ===== RESPONSIVE UTILITIES =====
+
+// Hide/show elements at different breakpoints
+@mixin hide-mobile {
+  @include mobile-tablet-only {
+    display: none !important;
+  }
+}
+
+@mixin show-mobile-only {
+  @include tablet {
+    display: none !important;
+  }
+}
+
+@mixin hide-tablet {
+  @include tablet-range {
+    display: none !important;
+  }
+}
+
+@mixin show-tablet-only {
+  @include mobile-only {
+    display: none !important;
+  }
+  
+  @include desktop {
+    display: none !important;
+  }
+}
+
+@mixin hide-desktop {
+  @include desktop {
+    display: none !important;
+  }
+}
+
+@mixin show-desktop-only {
+  @include tablet-only {
+    display: none !important;
+  }
+}
+
+// ===== FORM ELEMENTS =====
+
+@mixin input-base {
+  width: 100%;
+  border: 2px solid rgba($neutral-dark, 0.1);
+  border-radius: $border-radius-md;
+  padding: $spacing-3 $spacing-4;
+  font-size: $font-size-sm;
+  font-family: $font-family-primary;
+  background: white;
+  color: $text-primary;
+  transition: $transition-all;
+  min-height: $input-height-md;
+
+  @include mobile-sm {
+    font-size: $font-size-base;
+    padding: $spacing-3-5 $spacing-5;
+  }
+
+  @include tablet {
+    min-height: $input-height-lg;
+    padding: $spacing-4 $spacing-6;
+  }
+
+  &::placeholder {
+    color: rgba($text-secondary, 0.7);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+  }
+
+  &:disabled {
+    background: $neutral-light;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &.error {
+    border-color: #EF4444;
+    box-shadow: 0 0 0 3px rgba(#EF4444, 0.1);
+  }
+}
+
+@mixin textarea-base {
+  @include input-base;
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.5;
+
+  @include tablet {
+    min-height: 140px;
+  }
+}
+
+// ===== LAYOUT UTILITIES =====
+
+// Responsive spacing utilities
+@mixin spacing-responsive($property, $mobile, $tablet: null, $desktop: null) {
+  #{$property}: $mobile;
+
+  @if $tablet {
+    @include tablet {
+      #{$property}: $tablet;
+    }
+  }
+
+  @if $desktop {
+    @include desktop {
+      #{$property}: $desktop;
+    }
+  }
+}
+
+// Responsive width utilities
+@mixin width-responsive($mobile, $tablet: null, $desktop: null) {
+  width: $mobile;
+
+  @if $tablet {
+    @include tablet {
+      width: $tablet;
+    }
+  }
+
+  @if $desktop {
+    @include desktop {
+      width: $desktop;
+    }
+  }
+}
+
+// Center content with max-width
+@mixin center-content($max-width: 800px) {
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Responsive text alignment
+@mixin text-align-responsive($mobile: center, $tablet: null, $desktop: null) {
+  text-align: $mobile;
+
+  @if $tablet {
+    @include tablet {
+      text-align: $tablet;
+    }
+  }
+
+  @if $desktop {
+    @include desktop {
+      text-align: $desktop;
+    }
+  }
+}
+
+// ===== IMAGE AND MEDIA =====
+
+// Responsive image
+@mixin img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// Background image with responsive sizing
+@mixin bg-responsive {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  @include mobile-only {
+    background-size: contain;
+  }
+}
+
+// ===== PERFORMANCE OPTIMIZATIONS =====
+
+// Hardware acceleration
+@mixin hardware-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+
+// GPU-optimized transitions
+@mixin gpu-transition($properties...) {
+  @include hardware-accelerated;
+  transition: $properties;
+  will-change: transform, opacity;
+}
+
+// ===== ACCESSIBILITY =====
+
+// Screen reader only
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Focus visible styles
+@mixin focus-visible {
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba($primary, 0.2);
+  }
+}
+
+// High contrast mode support
+@mixin high-contrast {
+  @media (prefers-contrast: high) {
+    @content;
+  }
+}
+
+// Reduced motion support
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// ===== PRINT STYLES =====
+
+@mixin print-hidden {
+  @media print {
+    display: none !important;
+  }
+}
+
+@mixin print-only {
+  display: none;
+  
+  @media print {
+    display: block !important;
+  }
+}
+
+// ===== CUSTOM SCROLLBAR =====
+
+@mixin custom-scrollbar($width: 8px, $track-color: $neutral-light, $thumb-color: $primary) {
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: $border-radius-full;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $border-radius-full;
+    
+    &:hover {
+      background: darken($thumb-color, 10%);
+    }
+  }
+
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: $thumb-color $track-color;
+}
+@mixin fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

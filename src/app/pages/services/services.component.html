@@ -111,9 +111,9 @@
             </div>
           </div>
 
-          <button class="btn-primary service-detail__cta">
-            Get Started
-          </button>
+       <button class="btn-primary service-detail__cta" (click)="navigateToContact(service.title)">
+  Get Started
+</button>
         </div>
       </div>
     </div>
@@ -128,8 +128,8 @@
       <p class="cta-section__description">
         Let's discuss how our services can help transform your business and drive innovation.
       </p>
-      <div class="cta-section__actions">
-        <button class="btn-primary">
+      <div class="cta-section__actions" (click)="navigateToContactNoTiltel()">
+        <button class="btn-primary"routerLink="/contact">
           Contact Our Team
         </button>
         <button class="btn-secondary">

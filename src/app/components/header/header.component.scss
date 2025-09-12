@@ -48,14 +48,18 @@
 }
 
 .header__logo-image {
-  height: 40px;
-  width: auto;
+  height: auto;
+  width: 40px;
   margin-top: 0.6rem;
   // Add the following line to scale the logo
   transform: scale(4); 
-
+@include mobile-lg{
+  margin-left: 0.2rem;
+width: 40px;
+}
   @include mobile {
-    height: 32px;
+    width: 40px;
+    margin-left: 3rem;
   }
 }
 

@@ -57,8 +57,8 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     this.isMobileMenuOpen = false;
   }
 
-  navigateToSection(fragment: string): void {
-    this.router.navigate(['/'], { fragment });
+  navigateToSection(): void {
+    this.router.navigate(['/contact']);
     this.closeMobileMenu();
   }
 }

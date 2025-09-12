@@ -2,491 +2,1163 @@
 @import '../../assets/styles/variables';
 @import '../../assets/styles/mixins';
 
-// About Hero Section
+// ===== ABOUT HERO SECTION =====
 .about-hero {
-  padding: $spacing-32 0 $spacing-20 0;
-  background: linear-gradient(135deg, rgba($secondary, 0.05) 0%, rgba($accent, 0.05) 100%);
-  text-align: center;
   position: relative;
   overflow: hidden;
+  @include flex-center;
+  background: linear-gradient(135deg, rgba($secondary, 0.02) 0%, rgba($accent, 0.03) 100%);
+  text-align: center;
+  
+  // Margin top for mobile and tablet (header clearance)
+  margin-top: $header-height-mobile;
+  @include tablet {
+    margin-top: $header-height-tablet;
+  }
+  @include desktop {
+    margin-top: 0; // Remove margin on desktop
+  }
+  
+  // Responsive padding
+  padding: $spacing-16 0 $spacing-10 0;
+  @include mobile-sm {
+    padding: $spacing-18 0 $spacing-12 0;
+  }
+  @include mobile-md {
+    padding: $spacing-20 0 $spacing-14 0;
+  }
+  @include mobile-lg {
+    padding: $spacing-24 0 $spacing-16 0;
+  }
+  @include tablet {
+    padding: $spacing-28 0 $spacing-18 0;
+  }
+  @include desktop {
+    padding: $spacing-32 0 $spacing-20 0;
+  }
 
+  // Animated background element
   &::before {
     content: '';
     position: absolute;
-    top: -30%;
-    right: -30%;
-    width: 150%;
-    height: 150%;
-    background: radial-gradient(circle, rgba($accent, 0.1) 0%, transparent 50%);
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba($accent, 0.08) 0%, transparent 70%);
     animation: float 25s ease-in-out infinite;
-  }
-
-  @include mobile {
-    padding: $spacing-24 0 $spacing-16 0;
+    
+    @include mobile-sm {
+      top: -40%;
+      right: -40%;
+      width: 180%;
+      height: 180%;
+      background: radial-gradient(circle, rgba($accent, 0.06) 0%, transparent 60%);
+    }
+    
+    @include tablet {
+      background: radial-gradient(circle, rgba($accent, 0.1) 0%, transparent 50%);
+    }
   }
 
   .container {
     position: relative;
     z-index: 2;
+    @include center-content(1200px);
   }
 }
 
 .about-hero__content {
-  max-width: 800px;
+  // Responsive max-width
+  max-width: 100%;
   margin: 0 auto;
+  
+  @include mobile-lg {
+    max-width: 90%;
+  }
+  
+  @include tablet {
+    max-width: 85%;
+  }
+  
+  @include desktop {
+    max-width: 800px;
+  }
 }
 
 .about-hero__title {
   @include heading-1;
-  margin-bottom: $spacing-6;
-  font-size: $font-size-5xl;
-
-  @include tablet {
-    font-size: $font-size-4xl;
+  margin-bottom: $spacing-4;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
   }
-
-  @include mobile {
-    font-size: $font-size-3xl;
+  
+  @include mobile-md {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-6;
   }
 }
 
 .about-hero__subtitle {
   @include body-large;
   color: $text-secondary;
-  max-width: 600px;
+  line-height: 1.7;
+  
+  // Responsive max-width for readability
+  max-width: 100%;
   margin: 0 auto;
+  
+  @include mobile-lg {
+    max-width: 85%;
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    max-width: 75%;
+    font-size: $font-size-xl;
+  }
+  
+  @include desktop {
+    max-width: 600px;
+  }
 }
 
-// Company Story Section
+// ===== COMPANY STORY SECTION =====
 .company-story {
   background: white;
+  @include section-padding;
 }
 
 .company-story__content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $spacing-16;
   align-items: center;
-
+  
+  // Responsive grid layout
+  grid-template-columns: 1fr;
+  gap: $spacing-8;
+  
+  @include mobile-lg {
+    gap: $spacing-10;
+  }
+  
   @include tablet {
-    grid-template-columns: 1fr;
     gap: $spacing-12;
   }
+  
+  @include desktop {
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-16;
+  }
+  
+  @include desktop-lg {
+    gap: $spacing-20;
+    max-width: $container-4xl;
+    margin: 0 auto;
+  }
+}
+
+.company-story__text {
+  @include text-align-responsive(center, center, left);
 }
 
 .company-story__title {
   @include heading-2;
-  margin-bottom: $spacing-6;
+  margin-bottom: $spacing-4;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-6;
+  }
 }
 
 .company-story__description {
   @include body-base;
-  margin-bottom: $spacing-6;
+  color: $text-secondary;
   line-height: 1.7;
+  margin-bottom: $spacing-5;
+  
+  @include mobile-md {
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    @include body-large;
+    margin-bottom: $spacing-6;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-6;
+  }
 
   &:last-of-type {
-    margin-bottom: 0;
+    margin-bottom: $spacing-8;
+    
+    @include mobile-sm {
+      margin-bottom: $spacing-9;
+    }
+    
+    @include tablet {
+      margin-bottom: $spacing-10;
+    }
+    
+    @include desktop {
+      margin-bottom: 0;
+    }
   }
 }
 
 .stats-grid {
   display: grid;
+  gap: $spacing-4;
+  
+  // Responsive grid columns
   grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-6;
-
-  @include mobile {
+  
+  @include mobile-md {
+    gap: $spacing-5;
+  }
+  
+  @include mobile-lg {
+    grid-template-columns: repeat(4, 1fr);
+    gap: $spacing-6;
+  }
+  
+  @include tablet {
+    gap: $spacing-6;
+  }
+  
+  @include desktop {
     grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-4;
+    gap: $spacing-6;
+  }
+  
+  @include desktop-lg {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 .stat-card {
   @include card-base;
-  padding: $spacing-6;
   text-align: center;
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
+  transition: $transition-all;
+  
+  // Responsive padding
+  padding: $spacing-4;
+  
+  @include mobile-sm {
+    padding: $spacing-5;
+  }
+  
+  @include mobile-md {
+    padding: $spacing-6;
+  }
+  
+  @include tablet {
+    padding: $spacing-6;
+  }
+  
+  @include desktop {
+    padding: $spacing-6;
   }
 
-  @include mobile {
-    padding: $spacing-4;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+    
+    @include desktop {
+      transform: translateY(-4px);
+      box-shadow: $shadow-lg;
+    }
   }
 }
 
 .stat-card__number {
   font-family: $font-family-heading;
-  font-size: $font-size-3xl;
   font-weight: $font-weight-bold;
   color: $primary;
-  margin-bottom: $spacing-2;
-
-  @include mobile {
+  margin-bottom: $spacing-1;
+  
+  // Responsive font sizing
+  font-size: $font-size-xl;
+  
+  @include mobile-sm {
     font-size: $font-size-2xl;
+    margin-bottom: $spacing-2;
+  }
+  
+  @include mobile-md {
+    font-size: $font-size-2xl;
+  }
+  
+  @include tablet {
+    font-size: $font-size-3xl;
+    margin-bottom: $spacing-2;
+  }
+  
+  @include desktop {
+    font-size: $font-size-2xl;
+  }
+  
+  @include desktop-lg {
+    font-size: $font-size-3xl;
   }
 }
 
 .stat-card__label {
-  font-size: $font-size-sm;
   color: $text-secondary;
   font-weight: $font-weight-medium;
+  
+  // Responsive font sizing
+  font-size: $font-size-xs;
+  
+  @include mobile-sm {
+    font-size: $font-size-sm;
+  }
+  
+  @include tablet {
+    font-size: $font-size-sm;
+  }
 }
 
-// Vision Section
+// ===== VISION SECTION =====
 .vision {
+  background: $neutral-light;
+  @include section-padding;
   text-align: center;
 }
 
 .vision__title {
   @include heading-2;
-  margin-bottom: $spacing-6;
+  margin-bottom: $spacing-4;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-6;
+  }
 }
 
 .vision__description {
   @include body-base;
-  max-width: 800px;
-  margin: 0 auto $spacing-6 auto;
+  color: $text-secondary;
   line-height: 1.7;
+  margin-bottom: $spacing-5;
+  
+  // Responsive max-width and centering
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  
+  @include mobile-lg {
+    max-width: 90%;
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    @include body-large;
+    max-width: 85%;
+    margin-bottom: $spacing-6;
+  }
+  
+  @include desktop {
+    max-width: 800px;
+    margin-bottom: $spacing-6;
+  }
 
   &:last-of-type {
-    margin-bottom: $spacing-12;
+    margin-bottom: $spacing-10;
+    
+    @include mobile-sm {
+      margin-bottom: $spacing-12;
+    }
+    
+    @include tablet {
+      margin-bottom: $spacing-14;
+    }
+    
+    @include desktop {
+      margin-bottom: $spacing-12;
+    }
   }
 }
 
 .vision__highlights {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-8;
-  max-width: 1000px;
   margin: 0 auto;
-
+  
+  // Responsive grid layout and sizing
+  grid-template-columns: 1fr;
+  gap: $spacing-6;
+  max-width: 100%;
+  
+  @include mobile-lg {
+    gap: $spacing-7;
+  }
+  
   @include tablet {
     grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-6;
+    gap: $spacing-8;
+    max-width: 900px;
   }
-
-  @include mobile {
-    grid-template-columns: 1fr;
-    gap: $spacing-6;
+  
+  @include desktop {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-8;
+    max-width: 1000px;
   }
 }
 
 .highlight-card {
   @include card-base;
-  padding: $spacing-8;
   text-align: center;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: $shadow-xl;
+  transition: $transition-all;
+  
+  // Responsive padding
+  padding: $spacing-6;
+  
+  @include mobile-sm {
+    padding: $spacing-7;
+  }
+  
+  @include tablet {
+    padding: $spacing-8;
+  }
+  
+  @include desktop {
+    padding: $spacing-8;
   }
 
-  @include mobile {
-    padding: $spacing-6;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+    
+    @include desktop {
+      transform: translateY(-4px);
+      box-shadow: $shadow-xl;
+    }
   }
 }
 
 .highlight-card__title {
-  @include heading-3;
-  margin-bottom: $spacing-4;
-  font-size: $font-size-lg;
+  @include heading-4;
   color: $primary;
+  margin-bottom: $spacing-3;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-4;
+  }
+  
+  @include tablet {
+    @include heading-3;
+    margin-bottom: $spacing-4;
+  }
 }
 
 .highlight-card__text {
   @include body-base;
   color: $text-secondary;
-  font-size: $font-size-sm;
   line-height: 1.6;
+  
+  // Responsive font sizing
+  font-size: $font-size-sm;
+  
+  @include mobile-md {
+    line-height: 1.7;
+  }
+  
+  @include tablet {
+    font-size: $font-size-base;
+  }
 }
 
-// Approach Section
+// ===== APPROACH SECTION =====
 .approach {
   background: white;
+  @include section-padding;
 }
 
 .approach__header {
   text-align: center;
-  max-width: 800px;
-  margin: 0 auto $spacing-16 auto;
-
+  margin: 0 auto;
+  
+  // Responsive max-width and margin
+  max-width: 100%;
+  margin-bottom: $spacing-12;
+  
+  @include mobile-lg {
+    max-width: 90%;
+  }
+  
   @include tablet {
-    margin-bottom: $spacing-12;
+    max-width: 85%;
+    margin-bottom: $spacing-14;
+  }
+  
+  @include desktop {
+    max-width: 800px;
+    margin-bottom: $spacing-16;
   }
 }
 
 .approach__title {
   @include heading-2;
-  margin-bottom: $spacing-6;
+  margin-bottom: $spacing-4;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-6;
+  }
 }
 
 .approach__subtitle {
   @include body-large;
   color: $text-secondary;
+  line-height: 1.7;
+  
+  @include mobile-md {
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    font-size: $font-size-xl;
+  }
 }
 
 .approach__values {
   display: flex;
   flex-direction: column;
-  gap: $spacing-12;
-
-  @include mobile {
-    gap: $spacing-8;
+  
+  // Responsive gap
+  gap: $spacing-8;
+  
+  @include mobile-sm {
+    gap: $spacing-10;
+  }
+  
+  @include tablet {
+    gap: $spacing-12;
+  }
+  
+  @include desktop {
+    gap: $spacing-12;
   }
 }
 
 .value-card {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: $spacing-8;
   align-items: center;
-  padding: $spacing-10;
   border-radius: $border-radius-xl;
   background: rgba($neutral-light, 0.3);
   border: 1px solid rgba($primary, 0.1);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: $shadow-xl;
-    border-color: rgba($primary, 0.2);
+  transition: $transition-all;
+  
+  // Responsive grid layout and padding
+  grid-template-columns: 1fr;
+  gap: $spacing-5;
+  padding: $spacing-6;
+  text-align: center;
+  
+  @include mobile-sm {
+    gap: $spacing-6;
+    padding: $spacing-7;
+  }
+  
+  @include mobile-lg {
+    gap: $spacing-7;
+    padding: $spacing-8;
+  }
+  
+  @include tablet {
+    grid-template-columns: auto 1fr;
+    gap: $spacing-8;
+    padding: $spacing-8;
+    text-align: left;
+  }
+  
+  @include desktop {
+    gap: $spacing-8;
+    padding: $spacing-10;
+  }
+  
+  @include desktop-lg {
+    gap: $spacing-10;
+    padding: $spacing-12;
   }
 
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+    border-color: rgba($primary, 0.2);
+    
+    @include desktop {
+      transform: translateY(-4px);
+      box-shadow: $shadow-xl;
+    }
+  }
+
+  // Alternate layout for even items on desktop
   &.reverse {
-    grid-template-columns: 1fr auto;
-
-    .value-card__icon {
-      order: 2;
-    }
-
-    .value-card__content {
-      order: 1;
-      text-align: right;
-    }
-
-    @include tablet {
-      grid-template-columns: auto 1fr;
+    @include desktop {
+      grid-template-columns: 1fr auto;
 
       .value-card__icon {
-        order: 1;
+        order: 2;
       }
 
       .value-card__content {
-        order: 2;
-        text-align: left;
+        order: 1;
+        text-align: right;
       }
-    }
-  }
-
-  @include tablet {
-    grid-template-columns: auto 1fr;
-    gap: $spacing-6;
-    padding: $spacing-8;
-  }
-
-  @include mobile {
-    grid-template-columns: 1fr;
-    gap: $spacing-4;
-    padding: $spacing-6;
-    text-align: center;
-
-    &.reverse .value-card__content {
-      text-align: center;
     }
   }
 }
 
 .value-card__icon {
-  width: 100px;
-  height: 100px;
-  padding: $spacing-4;
-  background: white;
-  border-radius: $border-radius-xl;
-  box-shadow: $shadow-lg;
   @include flex-center;
   flex-shrink: 0;
-
-  :global(svg) {
-    width: 60px;
-    height: 60px;
-    fill: $primary;
-    stroke: $primary;
+  background: white;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-md;
+  
+  // Responsive sizing
+  width: 60px;
+  height: 60px;
+  padding: $spacing-3;
+  margin: 0 auto;
+  
+  @include mobile-sm {
+    width: 70px;
+    height: 70px;
+    padding: $spacing-4;
+    box-shadow: $shadow-lg;
   }
-
-  @include tablet {
+  
+  @include mobile-md {
     width: 80px;
     height: 80px;
+  }
+  
+  @include tablet {
+    width: 90px;
+    height: 90px;
+    padding: $spacing-4;
+    margin: 0;
+  }
+  
+  @include desktop {
+    width: 100px;
+    height: 100px;
+    padding: $spacing-4;
+  }
 
-    :global(svg) {
+  :global(svg) {
+    fill: $primary;
+    stroke: $primary;
+    
+    // Responsive SVG sizing
+    width: 24px;
+    height: 24px;
+    
+    @include mobile-sm {
+      width: 28px;
+      height: 28px;
+    }
+    
+    @include mobile-md {
+      width: 32px;
+      height: 32px;
+    }
+    
+    @include tablet {
+      width: 40px;
+      height: 40px;
+    }
+    
+    @include desktop {
       width: 48px;
       height: 48px;
     }
-  }
-
-  @include mobile {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto;
+    
+    @include desktop-lg {
+      width: 60px;
+      height: 60px;
+    }
   }
 }
 
+.value-card__content {
+  min-width: 0;
+}
+
 .value-card__title {
-  @include heading-3;
-  margin-bottom: $spacing-4;
+  @include heading-4;
   color: $primary;
+  margin-bottom: $spacing-3;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-4;
+  }
+  
+  @include tablet {
+    @include heading-3;
+    margin-bottom: $spacing-4;
+  }
 }
 
 .value-card__description {
   @include body-base;
   color: $text-secondary;
   line-height: 1.7;
+  
+  @include mobile-md {
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    @include body-large;
+  }
 }
 
-// Team Section
+// ===== TEAM SECTION =====
+.team {
+  background: $neutral-light;
+  @include section-padding;
+}
+
 .team__header {
   text-align: center;
-  max-width: 800px;
-  margin: 0 auto $spacing-16 auto;
-
+  margin: 0 auto;
+  
+  // Responsive max-width and margin
+  max-width: 100%;
+  margin-bottom: $spacing-12;
+  
+  @include mobile-lg {
+    max-width: 90%;
+  }
+  
   @include tablet {
-    margin-bottom: $spacing-12;
+    max-width: 85%;
+    margin-bottom: $spacing-14;
+  }
+  
+  @include desktop {
+    max-width: 800px;
+    margin-bottom: $spacing-16;
   }
 }
 
 .team__title {
   @include heading-2;
-  margin-bottom: $spacing-6;
+  margin-bottom: $spacing-4;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-6;
+  }
 }
 
 .team__subtitle {
   @include body-large;
   color: $text-secondary;
+  line-height: 1.7;
+  
+  @include mobile-md {
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    font-size: $font-size-xl;
+  }
 }
 
 .expertise-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-8;
-
+  
+  // Responsive grid layout
+  grid-template-columns: 1fr;
+  gap: $spacing-6;
+  
+  @include mobile-lg {
+    gap: $spacing-7;
+  }
+  
   @include tablet {
     grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-6;
+    gap: $spacing-8;
   }
-
-  @include mobile {
-    grid-template-columns: 1fr;
-    gap: $spacing-6;
+  
+  @include desktop {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-8;
+  }
+  
+  @include desktop-lg {
+    max-width: 1200px;
+    margin: 0 auto;
   }
 }
 
 .expertise-card {
   @include card-base;
-  padding: $spacing-8;
   text-align: center;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: $shadow-xl;
+  transition: $transition-all;
+  
+  // Responsive padding
+  padding: $spacing-6;
+  
+  @include mobile-sm {
+    padding: $spacing-7;
+  }
+  
+  @include tablet {
+    padding: $spacing-8;
+  }
+  
+  @include desktop {
+    padding: $spacing-8;
   }
 
-  @include mobile {
-    padding: $spacing-6;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+    
+    @include desktop {
+      transform: translateY(-4px);
+      box-shadow: $shadow-xl;
+    }
   }
 }
 
 .expertise-card__icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto $spacing-6 auto;
-  padding: $spacing-4;
+  @include flex-center;
   background: rgba($primary, 0.1);
   border-radius: $border-radius-xl;
-  @include flex-center;
+  margin: 0 auto;
+  
+  // Responsive sizing
+  width: 60px;
+  height: 60px;
+  padding: $spacing-3;
+  margin-bottom: $spacing-4;
+  
+  @include mobile-sm {
+    width: 70px;
+    height: 70px;
+    padding: $spacing-4;
+    margin-bottom: $spacing-5;
+  }
+  
+  @include tablet {
+    width: 80px;
+    height: 80px;
+    padding: $spacing-4;
+    margin-bottom: $spacing-6;
+  }
 
   :global(svg) {
-    width: 48px;
-    height: 48px;
     fill: $primary;
     stroke: $primary;
+    
+    // Responsive SVG sizing
+    width: 24px;
+    height: 24px;
+    
+    @include mobile-sm {
+      width: 28px;
+      height: 28px;
+    }
+    
+    @include tablet {
+      width: 32px;
+      height: 32px;
+    }
+    
+    @include desktop {
+      width: 48px;
+      height: 48px;
+    }
   }
 }
 
 .expertise-card__title {
-  @include heading-3;
-  margin-bottom: $spacing-4;
-  font-size: $font-size-lg;
+  @include heading-4;
   color: $primary;
+  margin-bottom: $spacing-3;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-4;
+  }
+  
+  @include tablet {
+    @include heading-3;
+    margin-bottom: $spacing-4;
+  }
 }
 
 .expertise-card__description {
   @include body-base;
   color: $text-secondary;
-  font-size: $font-size-sm;
   line-height: 1.6;
+  
+  // Responsive font sizing
+  font-size: $font-size-sm;
+  
+  @include mobile-md {
+    line-height: 1.7;
+  }
+  
+  @include tablet {
+    font-size: $font-size-base;
+  }
 }
 
-// CTA Section
+// ===== CTA SECTION =====
 .cta-section {
   background: $gradient-secondary;
   color: white;
   text-align: center;
+  @include section-padding;
 }
 
 .cta-section__content {
-  max-width: 800px;
-  margin: 0 auto;
+  @include center-content(900px);
+  
+  // Responsive max-width
+  max-width: 100%;
+  
+  @include mobile-lg {
+    max-width: 90%;
+  }
+  
+  @include tablet {
+    max-width: 85%;
+  }
+  
+  @include desktop {
+    max-width: 800px;
+  }
 }
 
 .cta-section__title {
   @include heading-2;
   color: white;
-  margin-bottom: $spacing-6;
+  margin-bottom: $spacing-4;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-6;
+  }
 }
 
 .cta-section__description {
   @include body-large;
   color: rgba(white, 0.9);
-  margin-bottom: $spacing-8;
+  line-height: 1.7;
+  margin-bottom: $spacing-6;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-7;
+  }
+  
+  @include mobile-md {
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-8;
+    font-size: $font-size-xl;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-8;
+  }
 }
 
 .cta-section__actions {
   display: flex;
-  gap: $spacing-4;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: $spacing-3;
+  
+  @include mobile-sm {
+    gap: $spacing-4;
+  }
+  
+  @include tablet {
+    gap: $spacing-4;
+  }
 
-  @include mobile {
+  // Stack buttons on very small screens
+  @include mobile-xs-only {
     flex-direction: column;
     align-items: stretch;
+    gap: $spacing-3;
   }
 
   .btn-secondary {
     background: rgba(white, 0.1);
     border-color: rgba(white, 0.3);
     color: white;
+    backdrop-filter: blur(10px);
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: white;
       color: $secondary;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
     }
   }
 }
 
-// Animations
+// ===== ANIMATIONS =====
 @keyframes float {
   0%, 100% {
     transform: translateY(0) rotate(0deg);
+    opacity: 0.08;
+  }
+  25% {
+    transform: translateY(-10px) rotate(90deg);
+    opacity: 0.12;
   }
   50% {
     transform: translateY(-15px) rotate(180deg);
+    opacity: 0.08;
+  }
+  75% {
+    transform: translateY(-10px) rotate(270deg);
+    opacity: 0.12;
   }
 }
 
-// Scroll padding for fragment links
+// ===== PERFORMANCE OPTIMIZATIONS =====
+.about-hero,
+.about-hero::before,
+.stat-card,
+.highlight-card,
+.value-card,
+.expertise-card {
+  @include hardware-accelerated;
+}
+
+// ===== ACCESSIBILITY ENHANCEMENTS =====
+@include reduced-motion {
+  .about-hero::before {
+    animation: none;
+  }
+  
+  .stat-card:hover,
+  .highlight-card:hover,
+  .value-card:hover,
+  .expertise-card:hover {
+    transform: none;
+  }
+  
+  .cta-section__actions .btn-secondary:hover {
+    transform: none;
+  }
+}
+
+// ===== ULTRA-WIDE SCREEN OPTIMIZATIONS =====
+@include desktop-lg {
+  .about-hero {
+    .container {
+      max-width: $container-4xl;
+    }
+  }
+  
+  .company-story__content,
+  .approach__values,
+  .expertise-grid {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .value-card {
+    padding: $spacing-14;
+    gap: $spacing-12;
+  }
+}
+
+// ===== SCROLL PADDING FOR FRAGMENT LINKS =====
 #vision,
-#approach {
-  scroll-margin-top: 100px;
+#approach,
+#team {
+  scroll-margin-top: 80px;
+  
+  @include tablet {
+    scroll-margin-top: 90px;
+  }
+  
+  @include desktop {
+    scroll-margin-top: 100px;
+  }
+}
+
+// ===== PRINT STYLES =====
+@media print {
+  .about-hero::before,
+  .stat-card:hover,
+  .highlight-card:hover,
+  .value-card:hover,
+  .expertise-card:hover {
+    @include print-hidden;
+  }
+  
+  .company-story__content,
+  .vision__highlights,
+  .expertise-grid {
+    grid-template-columns: 1fr;
+    gap: $spacing-6;
+  }
+  
+  .value-card,
+  .highlight-card,
+  .expertise-card {
+    break-inside: avoid;
+    margin-bottom: $spacing-6;
+  }
 }

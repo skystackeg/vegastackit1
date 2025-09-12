@@ -2,14 +2,42 @@
 @import '../../assets/styles/variables';
 @import '../../assets/styles/mixins';
 
-// Services Hero Section
+// ===== SERVICES HERO SECTION =====
 .services-hero {
-  padding: $spacing-32 0 $spacing-20 0;
-  background: linear-gradient(135deg, rgba($primary, 0.05) 0%, rgba($secondary, 0.05) 100%);
-  text-align: center;
   position: relative;
   overflow: hidden;
+  @include flex-center;
+  background: linear-gradient(135deg, rgba($primary, 0.05) 0%, rgba($secondary, 0.05) 100%);
+  text-align: center;
+  
+  // Margin top for mobile and tablet (header clearance)
+  margin-top: $header-height-mobile;
+  @include tablet {
+    margin-top: $header-height-tablet;
+  }
+  @include desktop {
+    margin-top: 0; // Remove margin on desktop
+  }
+  
+  // Responsive padding
+  padding: $spacing-16 0 $spacing-10 0;
+  @include mobile-sm {
+    padding: $spacing-18 0 $spacing-12 0;
+  }
+  @include mobile-md {
+    padding: $spacing-20 0 $spacing-14 0;
+  }
+  @include mobile-lg {
+    padding: $spacing-24 0 $spacing-16 0;
+  }
+  @include tablet {
+    padding: $spacing-28 0 $spacing-18 0;
+  }
+  @include desktop {
+    padding: $spacing-32 0 $spacing-20 0;
+  }
 
+  // Animated background element
   &::before {
     content: '';
     position: absolute;
@@ -17,150 +45,262 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba($secondary, 0.1) 0%, transparent 50%);
+    background: radial-gradient(circle, rgba($secondary, 0.08) 0%, transparent 50%);
     animation: rotate 30s linear infinite;
-  }
-
-  @include mobile {
-    padding: $spacing-24 0 $spacing-16 0;
+    
+    @include mobile-sm {
+      top: -40%;
+      left: -40%;
+      width: 180%;
+      height: 180%;
+      background: radial-gradient(circle, rgba($secondary, 0.06) 0%, transparent 60%);
+    }
+    
+    @include tablet {
+      background: radial-gradient(circle, rgba($secondary, 0.1) 0%, transparent 50%);
+    }
   }
 
   .container {
     position: relative;
     z-index: 2;
+    @include center-content(1200px);
   }
 }
 
 .services-hero__content {
-  max-width: 800px;
+  // Responsive max-width
+  max-width: 100%;
   margin: 0 auto;
+  
+  @include mobile-lg {
+    max-width: 90%;
+  }
+  
+  @include tablet {
+    max-width: 85%;
+  }
+  
+  @include desktop {
+    max-width: 800px;
+  }
 }
 
 .services-hero__title {
   @include heading-1;
-  margin-bottom: $spacing-6;
-  font-size: $font-size-5xl;
-
-  @include tablet {
-    font-size: $font-size-4xl;
+  margin-bottom: $spacing-4;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
   }
-
-  @include mobile {
-    font-size: $font-size-3xl;
+  
+  @include mobile-md {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-6;
   }
 }
 
 .services-hero__subtitle {
   @include body-large;
   color: $text-secondary;
-  max-width: 600px;
+  line-height: 1.7;
+  
+  // Responsive max-width for readability
+  max-width: 100%;
   margin: 0 auto;
+  
+  @include mobile-lg {
+    max-width: 85%;
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    max-width: 75%;
+    font-size: $font-size-xl;
+  }
+  
+  @include desktop {
+    max-width: 600px;
+  }
 }
 
-// Services Details Section
+// ===== SERVICES DETAILS SECTION =====
 .services-details {
   background: white;
+  @include section-padding;
 }
 
 .services-details__grid {
   display: flex;
   flex-direction: column;
-  gap: $spacing-20;
-
-  @include mobile {
+  
+  // Responsive gap
+  gap: $spacing-10;
+  @include mobile-sm {
+    gap: $spacing-12;
+  }
+  @include mobile-md {
+    gap: $spacing-14;
+  }
+  @include mobile-lg {
     gap: $spacing-16;
+  }
+  @include tablet {
+    gap: $spacing-18;
+  }
+  @include desktop {
+    gap: $spacing-20;
   }
 }
 
 .service-detail {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: $spacing-8;
   align-items: start;
-  padding: $spacing-12;
   border-radius: $border-radius-xl;
   background: rgba($neutral-light, 0.5);
   border: 1px solid rgba($primary, 0.1);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: $shadow-xl;
-    border-color: rgba($primary, 0.2);
+  transition: $transition-all;
+  
+  // Responsive grid layout and padding
+  grid-template-columns: 1fr;
+  gap: $spacing-4;
+  padding: $spacing-6;
+  text-align: center;
+  
+  @include mobile-sm {
+    gap: $spacing-5;
+    padding: $spacing-7;
   }
-
-  @include tablet {
-    grid-template-columns: 1fr;
+  
+  @include mobile-md {
     gap: $spacing-6;
-    text-align: center;
     padding: $spacing-8;
   }
-
-  @include mobile {
-    padding: $spacing-6;
+  
+  @include mobile-lg {
+    gap: $spacing-6;
+    padding: $spacing-9;
+  }
+  
+  @include tablet {
+    gap: $spacing-6;
+    padding: $spacing-10;
+  }
+  
+  @include desktop {
+    grid-template-columns: auto 1fr;
+    gap: $spacing-8;
+    padding: $spacing-12;
+    text-align: left; // All cards align left on desktop
+  }
+  
+  @include desktop-lg {
+    gap: $spacing-10;
+    padding: $spacing-14;
   }
 
-  // Alternate layout for even items
-  &:nth-child(even) {
-    grid-template-columns: 1fr auto;
-
-    .service-detail__icon {
-      order: 2;
-    }
-
-    .service-detail__content {
-      order: 1;
-    }
-
-    @include tablet {
-      grid-template-columns: 1fr;
-
-      .service-detail__icon {
-        order: 1;
-      }
-
-      .service-detail__content {
-        order: 2;
-      }
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+    border-color: rgba($primary, 0.2);
+    
+    @include desktop {
+      transform: translateY(-4px);
+      box-shadow: $shadow-xl;
     }
   }
+
+  // REMOVED: All alternating layout styles for consistent left alignment
 }
 
 .service-detail__icon {
-  width: 120px;
-  height: 120px;
-  padding: $spacing-6;
-  background: white;
-  border-radius: $border-radius-xl;
-  box-shadow: $shadow-lg;
   @include flex-center;
   flex-shrink: 0;
-
-  :global(svg) {
+  background: white;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-md;
+  
+  // Responsive sizing
+  width: 60px;
+  height: 60px;
+  padding: $spacing-3;
+  margin: 0 auto;
+  
+  @include mobile-sm {
+    width: 70px;
+    height: 70px;
+    padding: $spacing-4;
+    box-shadow: $shadow-lg;
+  }
+  
+  @include mobile-md {
     width: 80px;
     height: 80px;
-    fill: $primary;
-    stroke: $primary;
+    padding: $spacing-4;
   }
-
+  
+  @include mobile-lg {
+    width: 90px;
+    height: 90px;
+    padding: $spacing-5;
+  }
+  
   @include tablet {
     width: 100px;
     height: 100px;
-    margin: 0 auto;
+    padding: $spacing-5;
+  }
+  
+  @include desktop {
+    width: 120px;
+    height: 120px;
+    padding: $spacing-6;
+    margin: 0;
+  }
 
-    :global(svg) {
+  :global(svg) {
+    fill: $primary;
+    stroke: $primary;
+    
+    // Responsive SVG sizing
+    width: 24px;
+    height: 24px;
+    
+    @include mobile-sm {
+      width: 28px;
+      height: 28px;
+    }
+    
+    @include mobile-md {
+      width: 32px;
+      height: 32px;
+    }
+    
+    @include mobile-lg {
+      width: 36px;
+      height: 36px;
+    }
+    
+    @include tablet {
+      width: 48px;
+      height: 48px;
+    }
+    
+    @include desktop {
       width: 60px;
       height: 60px;
     }
-  }
-
-  @include mobile {
-    width: 80px;
-    height: 80px;
-
-    :global(svg) {
-      width: 48px;
-      height: 48px;
+    
+    @include desktop-lg {
+      width: 80px;
+      height: 80px;
     }
   }
 }
@@ -170,32 +310,73 @@
 }
 
 .service-detail__title {
-  @include heading-2;
-  margin-bottom: $spacing-4;
+  @include heading-3;
   color: $text-primary;
-
-  @include mobile {
-    font-size: $font-size-xl;
+  margin-bottom: $spacing-3;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-4;
+  }
+  
+  @include tablet {
+    @include heading-2;
+    margin-bottom: $spacing-4;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-4;
   }
 }
 
 .service-detail__description {
   @include body-base;
-  margin-bottom: $spacing-8;
   color: $text-secondary;
   line-height: 1.7;
+  margin-bottom: $spacing-6;
+  
+  @include mobile-md {
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    @include body-large;
+    margin-bottom: $spacing-7;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-8;
+  }
 }
 
 .service-detail__features {
-  margin-bottom: $spacing-6;
+  margin-bottom: $spacing-5;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
 }
 
 .service-detail__features-title {
   font-family: $font-family-heading;
-  font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   color: $text-primary;
-  margin-bottom: $spacing-3;
+  margin-bottom: $spacing-2;
+  
+  // Responsive font sizing
+  font-size: $font-size-base;
+  
+  @include mobile-sm {
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-3;
+  }
+  
+  @include tablet {
+    font-size: $font-size-lg;
+  }
 }
 
 .service-detail__features-list {
@@ -203,18 +384,40 @@
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: $spacing-2;
-
-  @include mobile {
-    grid-template-columns: 1fr;
+  
+  // Responsive grid columns
+  grid-template-columns: 1fr;
+  
+  @include mobile-md {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-2;
+  }
+  
+  @include tablet {
+    gap: $spacing-3;
+  }
+  
+  @include desktop {
+    gap: $spacing-2;
   }
 
   li {
     position: relative;
-    padding-left: $spacing-6;
-    font-size: $font-size-sm;
+    padding-left: $spacing-5;
     color: $text-secondary;
+    
+    // Responsive font sizing
+    font-size: $font-size-xs;
+    
+    @include mobile-sm {
+      font-size: $font-size-sm;
+      padding-left: $spacing-6;
+    }
+    
+    @include tablet {
+      font-size: $font-size-sm;
+    }
 
     &::before {
       content: '';
@@ -222,112 +425,324 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
       background: $gradient-primary;
       border-radius: 50%;
+      
+      // Responsive dot sizing
+      width: 12px;
+      height: 12px;
+      
+      @include mobile-sm {
+        width: 14px;
+        height: 14px;
+      }
+      
+      @include tablet {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
 }
 
 .service-detail__technologies {
-  margin-bottom: $spacing-8;
+  margin-bottom: $spacing-6;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-7;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-8;
+  }
 }
 
 .service-detail__technologies-title {
   font-family: $font-family-heading;
-  font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   color: $text-primary;
-  margin-bottom: $spacing-3;
+  margin-bottom: $spacing-2;
+  
+  // Responsive font sizing
+  font-size: $font-size-base;
+  
+  @include mobile-sm {
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-3;
+  }
+  
+  @include tablet {
+    font-size: $font-size-lg;
+  }
 }
 
 .service-detail__tech-tags {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: $spacing-2;
+  
+  @include mobile-sm {
+    gap: $spacing-3;
+  }
+  
+  @include desktop {
+    justify-content: flex-start; // Always align left on desktop
+  }
+  
+  // REMOVED: Right alignment for even items
 }
 
 .tech-tag {
   display: inline-block;
-  padding: $spacing-2 $spacing-4;
   background: rgba($primary, 0.1);
   color: $primary;
-  font-size: $font-size-xs;
   font-weight: $font-weight-medium;
   border-radius: $border-radius-full;
   border: 1px solid rgba($primary, 0.2);
-  transition: all 0.3s ease;
+  transition: $transition-all;
+  
+  // Responsive padding and font sizing
+  padding: $spacing-1 $spacing-3;
+  font-size: $font-size-2xs;
+  
+  @include mobile-sm {
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-xs;
+  }
+  
+  @include mobile-md {
+    padding: $spacing-2 $spacing-4;
+  }
+  
+  @include tablet {
+    font-size: $font-size-xs;
+  }
 
   &:hover {
     background: $primary;
     color: white;
     transform: translateY(-1px);
+    box-shadow: $shadow-sm;
+    
+    @include desktop {
+      box-shadow: $shadow-md;
+    }
   }
 }
 
 .service-detail__cta {
   @include button-primary;
+  
+  // Full width on mobile, auto on larger screens
+  width: 100%;
+  
+  @include mobile-lg {
+    width: auto;
+    align-self: center;
+  }
+  
+  @include desktop {
+    align-self: flex-start; // Always align left on desktop
+  }
+  
+  // REMOVED: Right alignment for even items
 }
 
-// CTA Section
+// ===== CTA SECTION =====
 .cta-section {
   background: $gradient-primary;
   color: white;
   text-align: center;
+  @include section-padding;
 }
 
 .cta-section__content {
-  max-width: 800px;
-  margin: 0 auto;
+  @include center-content(900px);
+  
+  // Responsive max-width
+  max-width: 100%;
+  
+  @include mobile-lg {
+    max-width: 90%;
+  }
+  
+  @include tablet {
+    max-width: 85%;
+  }
+  
+  @include desktop {
+    max-width: 800px;
+  }
 }
 
 .cta-section__title {
   @include heading-2;
   color: white;
-  margin-bottom: $spacing-6;
+  margin-bottom: $spacing-4;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-6;
+  }
 }
 
 .cta-section__description {
   @include body-large;
   color: rgba(white, 0.9);
-  margin-bottom: $spacing-8;
+  line-height: 1.7;
+  margin-bottom: $spacing-6;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-7;
+  }
+  
+  @include mobile-md {
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-8;
+    font-size: $font-size-xl;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-8;
+  }
 }
 
 .cta-section__actions {
   display: flex;
-  gap: $spacing-4;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: $spacing-3;
+  
+  @include mobile-sm {
+    gap: $spacing-4;
+  }
+  
+  @include tablet {
+    gap: $spacing-6;
+  }
 
-  @include mobile {
+  // Stack buttons on very small screens
+  @include mobile-xs-only {
     flex-direction: column;
     align-items: stretch;
+    gap: $spacing-3;
   }
 
   .btn-secondary {
     background: rgba(white, 0.1);
     border-color: rgba(white, 0.3);
     color: white;
+    backdrop-filter: blur(10px);
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: white;
       color: $primary;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
     }
   }
 }
 
-// Animations
+// ===== ANIMATIONS =====
 @keyframes rotate {
   from {
     transform: rotate(0deg);
+    opacity: 0.06;
+  }
+  25% {
+    opacity: 0.08;
+  }
+  50% {
+    transform: rotate(180deg);
+    opacity: 0.06;
+  }
+  75% {
+    opacity: 0.08;
   }
   to {
     transform: rotate(360deg);
+    opacity: 0.06;
   }
 }
 
-// Scroll padding for fragment links
+// ===== PERFORMANCE OPTIMIZATIONS =====
+.services-hero,
+.services-hero::before,
+.service-detail,
+.tech-tag {
+  @include hardware-accelerated;
+}
+
+// ===== ACCESSIBILITY ENHANCEMENTS =====
+@include reduced-motion {
+  .services-hero::before {
+    animation: none;
+  }
+  
+  .service-detail:hover,
+  .tech-tag:hover {
+    transform: none;
+  }
+  
+  .cta-section__actions .btn-secondary:hover {
+    transform: none;
+  }
+}
+
+// ===== ULTRA-WIDE SCREEN OPTIMIZATIONS =====
+@include desktop-lg {
+  .services-hero {
+    .container {
+      max-width: $container-4xl;
+    }
+  }
+  
+  .services-details__grid {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .service-detail {
+    padding: $spacing-16;
+    gap: $spacing-12;
+  }
+}
+
+// ===== SCROLL PADDING FOR FRAGMENT LINKS =====
 .service-detail {
-  scroll-margin-top: 100px;
+  scroll-margin-top: 80px;
+  
+  @include tablet {
+    scroll-margin-top: 90px;
+  }
+  
+  @include desktop {
+    scroll-margin-top: 100px;
+  }
+}
+
+// ===== PRINT STYLES =====
+@media print {
+  .services-hero::before,
+  .service-detail__icon,
+  .tech-tag:hover,
+  .service-detail:hover {
+    @include print-hidden;
+  }
+  
+  .service-detail {
+    break-inside: avoid;
+    margin-bottom: $spacing-8;
+  }
 }

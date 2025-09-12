@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Service } from '../../shared/models/service.interface';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-services',
   standalone: true,
@@ -17,7 +17,7 @@ export class ServicesComponent implements OnInit, AfterViewInit {
 
   services: Service[] = [];
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router) {
     this.services = [
       {
         id: 'ai-solutions',
@@ -420,4 +420,12 @@ export class ServicesComponent implements OnInit, AfterViewInit {
       GsapAnimations.scrollToElement(`#${fragment}`, 1);
     }
   }
+  navigateToContact(serviceTitle: string): void {
+  this.router.navigate(['/contact'], { 
+    queryParams: { service: serviceTitle } 
+  });
+}
+  navigateToContactNoTiltel(): void {
+  this.router.navigate(['/contact']);
+}
 }

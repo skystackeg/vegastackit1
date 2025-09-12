@@ -2,116 +2,281 @@
 @import '../../assets/styles/variables';
 @import '../../assets/styles/mixins';
 
-// Contact Hero Section
+// ===== CONTACT HERO SECTION =====
 .contact-hero {
-  padding: $spacing-32 0 $spacing-20 0;
-  background: linear-gradient(135deg, rgba($accent, 0.05) 0%, rgba($primary, 0.05) 100%);
-  text-align: center;
   position: relative;
   overflow: hidden;
+  @include flex-center;
+  background: linear-gradient(135deg, rgba($accent, 0.02) 0%, rgba($primary, 0.03) 100%);
+  text-align: center;
+  
+  // Margin top for mobile and tablet (header clearance)
+  margin-top: $header-height-mobile;
+  @include tablet {
+    margin-top: $header-height-tablet;
+  }
+  @include desktop {
+    margin-top: 0; // Remove margin on desktop
+  }
+  
+  // Responsive padding
+  padding: $spacing-16 0 $spacing-10 0;
+  @include mobile-sm {
+    padding: $spacing-18 0 $spacing-12 0;
+  }
+  @include mobile-md {
+    padding: $spacing-20 0 $spacing-14 0;
+  }
+  @include mobile-lg {
+    padding: $spacing-24 0 $spacing-16 0;
+  }
+  @include tablet {
+    padding: $spacing-28 0 $spacing-18 0;
+  }
+  @include desktop {
+    padding: $spacing-32 0 $spacing-20 0;
+  }
 
+  // Animated background element
   &::before {
     content: '';
     position: absolute;
-    top: -40%;
-    left: -40%;
-    width: 180%;
-    height: 180%;
-    background: radial-gradient(circle, rgba($accent, 0.1) 0%, transparent 50%);
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba($accent, 0.08) 0%, transparent 70%);
     animation: pulse 20s ease-in-out infinite;
-  }
-
-  @include mobile {
-    padding: $spacing-24 0 $spacing-16 0;
+    
+    @include mobile-sm {
+      top: -40%;
+      left: -40%;
+      width: 180%;
+      height: 180%;
+      background: radial-gradient(circle, rgba($accent, 0.06) 0%, transparent 60%);
+    }
+    
+    @include tablet {
+      background: radial-gradient(circle, rgba($accent, 0.1) 0%, transparent 50%);
+    }
   }
 
   .container {
     position: relative;
     z-index: 2;
+    @include center-content(1200px);
   }
 }
 
 .contact-hero__content {
-  max-width: 800px;
+  // Responsive max-width
+  max-width: 100%;
   margin: 0 auto;
+  
+  @include mobile-lg {
+    max-width: 90%;
+  }
+  
+  @include tablet {
+    max-width: 85%;
+  }
+  
+  @include desktop {
+    max-width: 800px;
+  }
 }
 
 .contact-hero__title {
   @include heading-1;
-  margin-bottom: $spacing-6;
-  font-size: $font-size-5xl;
-
-  @include tablet {
-    font-size: $font-size-4xl;
+  margin-bottom: $spacing-4;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
   }
-
-  @include mobile {
-    font-size: $font-size-3xl;
+  
+  @include mobile-md {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-6;
   }
 }
 
 .contact-hero__subtitle {
   @include body-large;
   color: $text-secondary;
-  max-width: 600px;
+  line-height: 1.7;
+  
+  // Responsive max-width for readability
+  max-width: 100%;
   margin: 0 auto;
+  
+  @include mobile-lg {
+    max-width: 85%;
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    max-width: 75%;
+    font-size: $font-size-xl;
+  }
+  
+  @include desktop {
+    max-width: 600px;
+  }
 }
 
-// Contact Main Section
+// ===== CONTACT MAIN SECTION =====
 .contact-main {
   background: white;
+  @include section-padding;
 }
 
 .contact-main__grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: $spacing-20;
   align-items: start;
-
+  
+  // Responsive grid layout
+  grid-template-columns: 1fr;
+  gap: $spacing-8;
+  
+  @include mobile-lg {
+    gap: $spacing-10;
+  }
+  
   @include tablet {
-    grid-template-columns: 1fr;
+    gap: $spacing-12;
+  }
+  
+  @include desktop {
+    grid-template-columns: 1.5fr 1fr;
     gap: $spacing-16;
+  }
+  
+  @include desktop-lg {
+    gap: $spacing-20;
+    max-width: $container-4xl;
+    margin: 0 auto;
   }
 }
 
-// Contact Form Section
+// ===== CONTACT FORM SECTION =====
 .contact-form-container {
   @include card-base;
-  padding: $spacing-12;
-
-  @include mobile {
+  
+  // Responsive padding
+  padding: $spacing-6;
+  
+  @include mobile-sm {
+    padding: $spacing-7;
+  }
+  
+  @include mobile-md {
     padding: $spacing-8;
+  }
+  
+  @include mobile-lg {
+    padding: $spacing-9;
+  }
+  
+  @include tablet {
+    padding: $spacing-10;
+  }
+  
+  @include desktop {
+    padding: $spacing-12;
+  }
+  
+  @include desktop-lg {
+    padding: $spacing-14;
   }
 }
 
 .contact-form__title {
-  @include heading-2;
-  margin-bottom: $spacing-4;
-  font-size: $font-size-2xl;
+  @include heading-3;
+  margin-bottom: $spacing-3;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-4;
+  }
+  
+  @include tablet {
+    @include heading-2;
+    margin-bottom: $spacing-4;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-4;
+  }
 }
 
 .contact-form__subtitle {
   @include body-base;
   color: $text-secondary;
-  margin-bottom: $spacing-10;
+  line-height: 1.6;
+  margin-bottom: $spacing-8;
+  
+  @include mobile-md {
+    line-height: 1.7;
+  }
+  
+  @include tablet {
+    @include body-large;
+    margin-bottom: $spacing-10;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-10;
+  }
 }
 
-// Success Message
+// ===== SUCCESS MESSAGE =====
 .success-message {
   display: flex;
-  gap: $spacing-4;
-  padding: $spacing-6;
   background: rgba($secondary, 0.1);
   border: 1px solid rgba($secondary, 0.2);
   border-radius: $border-radius-lg;
-  margin-bottom: $spacing-8;
+  margin-bottom: $spacing-6;
+  
+  // Responsive padding and gap
+  padding: $spacing-4;
+  gap: $spacing-3;
+  
+  @include mobile-sm {
+    padding: $spacing-5;
+    gap: $spacing-4;
+    margin-bottom: $spacing-7;
+  }
+  
+  @include tablet {
+    padding: $spacing-6;
+    gap: $spacing-4;
+    margin-bottom: $spacing-8;
+  }
 }
 
 .success-message__icon {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
   color: $secondary;
+  
+  // Responsive icon sizing
+  width: 20px;
+  height: 20px;
+  
+  @include mobile-sm {
+    width: 22px;
+    height: 22px;
+  }
+  
+  @include tablet {
+    width: 24px;
+    height: 24px;
+  }
 
   svg {
     width: 100%;
@@ -121,34 +286,67 @@
 
 .success-message__content {
   h3 {
-    font-size: $font-size-lg;
     font-weight: $font-weight-semibold;
     color: $secondary;
-    margin-bottom: $spacing-2;
+    margin-bottom: $spacing-1;
+    
+    // Responsive font sizing
+    font-size: $font-size-base;
+    
+    @include mobile-sm {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-2;
+    }
+    
+    @include tablet {
+      font-size: $font-size-lg;
+    }
   }
 
   p {
     color: $text-secondary;
-    font-size: $font-size-sm;
     margin: 0;
+    
+    // Responsive font sizing
+    font-size: $font-size-xs;
+    
+    @include mobile-sm {
+      font-size: $font-size-sm;
+    }
   }
 }
 
-// Form Styles
+// ===== FORM STYLES =====
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: $spacing-6;
+  
+  // Responsive gap
+  gap: $spacing-5;
+  
+  @include mobile-sm {
+    gap: $spacing-6;
+  }
+  
+  @include tablet {
+    gap: $spacing-6;
+  }
 }
 
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $spacing-6;
-
-  @include mobile {
-    grid-template-columns: 1fr;
-    gap: $spacing-4;
+  
+  // Responsive grid layout
+  grid-template-columns: 1fr;
+  gap: $spacing-4;
+  
+  @include mobile-lg {
+    gap: $spacing-5;
+  }
+  
+  @include tablet {
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-6;
   }
 }
 
@@ -156,23 +354,43 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-2;
+  
+  @include mobile-sm {
+    gap: $spacing-2;
+  }
 }
 
 .form-label {
-  font-size: $font-size-sm;
   font-weight: $font-weight-medium;
   color: $text-primary;
+  
+  // Responsive font sizing
+  font-size: $font-size-xs;
+  
+  @include mobile-sm {
+    font-size: $font-size-sm;
+  }
 }
 
 .form-input,
 .form-select,
 .form-textarea {
-  padding: $spacing-4;
   border: 2px solid rgba($neutral-dark, 0.1);
   border-radius: $border-radius;
   font-size: $font-size-base;
-  transition: all 0.3s ease;
+  transition: $transition-all;
   background: white;
+  
+  // Responsive padding
+  padding: $spacing-3;
+  
+  @include mobile-sm {
+    padding: $spacing-4;
+  }
+  
+  @include tablet {
+    padding: $spacing-4;
+  }
 
   &:focus {
     outline: none;
@@ -187,13 +405,34 @@
 
   &::placeholder {
     color: $text-secondary;
+    
+    // Responsive placeholder font size
+    font-size: $font-size-sm;
+    
+    @include tablet {
+      font-size: $font-size-base;
+    }
   }
 }
 
 .form-textarea {
   resize: vertical;
-  min-height: 120px;
   font-family: inherit;
+  
+  // Responsive min-height
+  min-height: 100px;
+  
+  @include mobile-sm {
+    min-height: 110px;
+  }
+  
+  @include mobile-md {
+    min-height: 120px;
+  }
+  
+  @include tablet {
+    min-height: 120px;
+  }
 }
 
 .form-select {
@@ -201,82 +440,172 @@
 }
 
 .form-error {
-  font-size: $font-size-xs;
   color: #ef4444;
   margin-top: $spacing-1;
+  
+  // Responsive font sizing
+  font-size: $font-size-2xs;
+  
+  @include mobile-sm {
+    font-size: $font-size-xs;
+  }
 }
 
 .form-submit {
   @include button-primary;
-  align-self: flex-start;
-  min-width: 160px;
   position: relative;
-
-  &.loading {
-    opacity: 0.7;
-    cursor: not-allowed;
+  
+  // Responsive alignment and width
+  align-self: stretch;
+  
+  @include mobile-lg {
+    align-self: center;
+    min-width: 160px;
+    width: auto;
+  }
+  
+  @include desktop {
+    align-self: flex-start;
   }
 
+  &.loading,
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
   }
-
-  @include mobile {
-    align-self: stretch;
-  }
 }
 
-// Contact Info Section
+// ===== CONTACT INFO SECTION =====
 .contact-info {
-  position: sticky;
-  top: 120px;
-
-  @include tablet {
-    position: static;
+  // Sticky positioning on desktop only
+  position: static;
+  
+  @include desktop {
+    position: sticky;
+    top: 100px;
+  }
+  
+  @include desktop-lg {
+    top: 120px;
   }
 }
 
 .contact-info__title {
+  margin-top: 2.8rem;
   @include heading-3;
-  margin-bottom: $spacing-4;
+  margin-bottom: $spacing-3;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-4;
+  }
+  
+  @include tablet {
+    @include heading-2;
+    margin-bottom: $spacing-4;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-4;
+  }
 }
 
 .contact-info__subtitle {
   @include body-base;
   color: $text-secondary;
-  margin-bottom: $spacing-8;
+  line-height: 1.6;
+  margin-bottom: $spacing-6;
+  
+  @include mobile-md {
+    line-height: 1.7;
+  }
+  
+  @include tablet {
+    @include body-large;
+    margin-bottom: $spacing-8;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-8;
+  }
 }
 
 .contact-info__items {
   display: flex;
   flex-direction: column;
-  gap: $spacing-6;
-  margin-bottom: $spacing-10;
+  margin-bottom: $spacing-8;
+  
+  // Responsive gap
+  gap: $spacing-4;
+  
+  @include mobile-sm {
+    gap: $spacing-5;
+  }
+  
+  @include mobile-md {
+    gap: $spacing-6;
+  }
+  
+  @include tablet {
+    gap: $spacing-6;
+    margin-bottom: $spacing-10;
+  }
+  
+  @include desktop {
+    margin-bottom: $spacing-10;
+  }
 }
 
 .contact-info__item {
   display: flex;
-  gap: $spacing-4;
   align-items: flex-start;
-  padding: $spacing-6;
   background: rgba($primary, 0.02);
   border-radius: $border-radius-lg;
   border: 1px solid rgba($primary, 0.1);
-  transition: all 0.3s ease;
+  transition: $transition-all;
+  
+  // Responsive padding and gap
+  padding: $spacing-4;
+  gap: $spacing-3;
+  
+  @include mobile-sm {
+    padding: $spacing-5;
+    gap: $spacing-4;
+  }
+  
+  @include tablet {
+    padding: $spacing-6;
+    gap: $spacing-4;
+  }
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: $shadow-md;
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
     border-color: rgba($primary, 0.2);
+    
+    @include desktop {
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+    }
   }
 }
 
 .contact-info__icon {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
   color: $primary;
+  
+  // Responsive icon sizing
+  width: 20px;
+  height: 20px;
+  
+  @include mobile-sm {
+    width: 22px;
+    height: 22px;
+  }
+  
+  @include tablet {
+    width: 24px;
+    height: 24px;
+  }
 
   svg {
     width: 100%;
@@ -286,20 +615,34 @@
 
 .contact-info__content {
   flex: 1;
+  min-width: 0;
 }
 
 .contact-info__item-title {
-  font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
   color: $text-primary;
   margin-bottom: $spacing-1;
+  
+  // Responsive font sizing
+  font-size: $font-size-xs;
+  
+  @include mobile-sm {
+    font-size: $font-size-sm;
+  }
 }
 
 .contact-info__item-value {
-  font-size: $font-size-sm;
   color: $text-secondary;
   text-decoration: none;
   transition: color 0.3s ease;
+  word-break: break-word;
+  
+  // Responsive font sizing
+  font-size: $font-size-xs;
+  
+  @include mobile-sm {
+    font-size: $font-size-sm;
+  }
 
   &:hover {
     color: $primary;
@@ -307,91 +650,188 @@
 }
 
 .contact-info__cta {
-  padding: $spacing-6;
   background: rgba($secondary, 0.05);
   border-radius: $border-radius-lg;
   text-align: center;
+  
+  // Responsive padding
+  padding: $spacing-5;
+  
+  @include mobile-sm {
+    padding: $spacing-6;
+  }
+  
+  @include tablet {
+    padding: $spacing-6;
+  }
 
   h4 {
-    font-size: $font-size-lg;
     font-weight: $font-weight-semibold;
     color: $text-primary;
     margin-bottom: $spacing-2;
+    
+    // Responsive font sizing
+    font-size: $font-size-base;
+    
+    @include mobile-sm {
+      font-size: $font-size-lg;
+    }
   }
 
   p {
     @include body-base;
     color: $text-secondary;
-    margin-bottom: $spacing-6;
-    font-size: $font-size-sm;
+    margin-bottom: $spacing-5;
+    
+    // Responsive font sizing
+    font-size: $font-size-xs;
+    
+    @include mobile-sm {
+      font-size: $font-size-sm;
+      margin-bottom: $spacing-6;
+    }
+    
+    @include tablet {
+      margin-bottom: $spacing-6;
+    }
   }
 
   .btn-secondary {
     @include button-secondary;
+    
+    // Full width on mobile
+    width: 100%;
+    
+    @include mobile-lg {
+      width: auto;
+    }
   }
 }
 
-// FAQ Section
+// ===== FAQ SECTION =====
 .contact-faq {
+  background: $neutral-light;
+  @include section-padding;
+  
   .container {
-    max-width: 1000px;
+    @include center-content(1200px);
   }
 }
 
 .contact-faq__header {
   text-align: center;
-  max-width: 600px;
-  margin: 0 auto $spacing-16 auto;
-
+  margin: 0 auto;
+  
+  // Responsive max-width and margin
+  max-width: 100%;
+  margin-bottom: $spacing-12;
+  
+  @include mobile-lg {
+    max-width: 90%;
+  }
+  
   @include tablet {
-    margin-bottom: $spacing-12;
+    max-width: 85%;
+    margin-bottom: $spacing-14;
+  }
+  
+  @include desktop {
+    max-width: 600px;
+    margin-bottom: $spacing-16;
   }
 }
 
 .contact-faq__title {
   @include heading-2;
-  margin-bottom: $spacing-6;
+  margin-bottom: $spacing-4;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
+  }
+  
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
 }
 
 .contact-faq__subtitle {
   @include body-large;
   color: $text-secondary;
+  line-height: 1.7;
+  
+  @include mobile-md {
+    line-height: 1.75;
+  }
+  
+  @include tablet {
+    font-size: $font-size-xl;
+  }
 }
 
 .faq-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-8;
-
+  
+  // Responsive grid layout
+  grid-template-columns: 1fr;
+  gap: $spacing-6;
+  
+  @include mobile-md {
+    gap: $spacing-7;
+  }
+  
   @include tablet {
-    grid-template-columns: 1fr;
-    gap: $spacing-6;
+    gap: $spacing-8;
+  }
+  
+  @include desktop {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-8;
+  }
+  
+  @include desktop-lg {
+    max-width: 1000px;
+    margin: 0 auto;
   }
 }
 
 .faq-item {
   @include card-base;
-  padding: $spacing-8;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: $shadow-lg;
+  transition: $transition-all;
+  
+  // Responsive padding
+  padding: $spacing-6;
+  
+  @include mobile-sm {
+    padding: $spacing-7;
+  }
+  
+  @include tablet {
+    padding: $spacing-8;
   }
 
-  @include mobile {
-    padding: $spacing-6;
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+    
+    @include desktop {
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
   }
 }
 
 .faq-question {
-  @include heading-3;
-  font-size: $font-size-lg;
-  margin-bottom: $spacing-4;
+  @include heading-4;
   color: $primary;
-
-  @include mobile {
-    font-size: $font-size-base;
+  margin-bottom: $spacing-3;
+  
+  @include mobile-sm {
+    margin-bottom: $spacing-4;
+  }
+  
+  @include tablet {
+    @include heading-3;
+    margin-bottom: $spacing-4;
   }
 }
 
@@ -400,36 +840,98 @@
   color: $text-secondary;
   line-height: 1.6;
   margin: 0;
+  
+  // Responsive font sizing
   font-size: $font-size-sm;
+  
+  @include mobile-md {
+    line-height: 1.7;
+  }
+  
+  @include tablet {
+    font-size: $font-size-base;
+  }
 }
 
-// Animations
+// ===== ANIMATIONS =====
 @keyframes pulse {
   0%, 100% {
     transform: translateY(0) scale(1);
-    opacity: 0.1;
+    opacity: 0.08;
+  }
+  25% {
+    transform: translateY(-5px) scale(1.02);
+    opacity: 0.12;
   }
   50% {
     transform: translateY(-10px) scale(1.05);
-    opacity: 0.2;
+    opacity: 0.08;
+  }
+  75% {
+    transform: translateY(-5px) scale(1.02);
+    opacity: 0.12;
   }
 }
 
-// Responsive adjustments
-@include mobile {
+// ===== PERFORMANCE OPTIMIZATIONS =====
+.contact-hero,
+.contact-hero::before,
+.contact-info__item,
+.faq-item {
+  @include hardware-accelerated;
+}
+
+// ===== ACCESSIBILITY ENHANCEMENTS =====
+@include reduced-motion {
+  .contact-hero::before {
+    animation: none;
+  }
+  
+  .contact-info__item:hover,
+  .faq-item:hover {
+    transform: none;
+  }
+}
+
+// ===== ULTRA-WIDE SCREEN OPTIMIZATIONS =====
+@include desktop-lg {
+  .contact-hero {
+    .container {
+      max-width: $container-4xl;
+    }
+  }
+  
+  .contact-main__grid {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
   .contact-form-container {
-    padding: $spacing-6;
+    padding: $spacing-16;
+  }
+}
+
+// ===== PRINT STYLES =====
+@media print {
+  .contact-hero::before,
+  .contact-info__item:hover,
+  .faq-item:hover,
+  .form-submit {
+    @include print-hidden;
   }
   
-  .form-row {
-    gap: $spacing-4;
+  .contact-main__grid {
+    grid-template-columns: 1fr;
+    gap: $spacing-8;
   }
   
-  .contact-info__items {
-    gap: $spacing-4;
+  .faq-grid {
+    grid-template-columns: 1fr;
   }
   
+  .faq-item,
   .contact-info__item {
-    padding: $spacing-4;
+    break-inside: avoid;
+    margin-bottom: $spacing-4;
   }
 }

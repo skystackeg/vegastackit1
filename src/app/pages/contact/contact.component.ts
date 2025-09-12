@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
+import { ActivatedRoute } from '@angular/router';
 
 interface ContactInfo {
   title: string;
@@ -36,7 +37,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
     'Other'
   ];
 
-  constructor(private fb: FormBuilder, private sanitizer: DomSanitizer) {
+  constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private route: ActivatedRoute) {
     this.contactForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
@@ -101,6 +102,13 @@ export class ContactComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     // Component initialization
+    this.route.queryParams.subscribe(params => {
+    if (params['service']) {
+      this.contactForm.patchValue({
+        service: params['service']
+      });
+    }
+  });
   }
 
   ngAfterViewInit(): void {
