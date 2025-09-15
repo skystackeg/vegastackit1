@@ -25,7 +25,7 @@ export interface ApiResponse {
   providedIn: 'root'
 })
 export class ContactService {
-  private apiUrl = environment.apiUrl || 'http://localhost:3000/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
