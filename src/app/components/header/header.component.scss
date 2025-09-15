@@ -2,6 +2,7 @@
 @import '../../assets/styles/variables';
 @import '../../assets/styles/mixins';
 
+// ===== HEADER BASE STYLES (Mobile First - 320px+) =====
 .header {
   position: fixed;
   top: 0;
@@ -12,7 +13,8 @@
   z-index: $z-index-fixed;
   transition: all 0.3s ease;
   border-bottom: 1px solid transparent;
-
+  
+  // Scrolled state
   &.scrolled {
     background: rgba(white, 0.98);
     border-bottom-color: rgba($primary, 0.1);
@@ -20,82 +22,162 @@
   }
 }
 
+// ===== HEADER CONTENT CONTAINER =====
 .header-content {
   @include flex-between;
-  padding: $spacing-4 0;
+  padding: $spacing-3 0;
   transition: padding 0.3s ease;
-
-  .header.scrolled & {
-    padding: $spacing-3 0;
+  
+  // Responsive padding adjustments
+  @include mobile-sm {
+    padding: $spacing-3-5 0;
   }
-
-  @include mobile {
-    padding: $spacing-3 0;
+  
+  @include mobile-md {
+    padding: $spacing-4 0;
+  }
+  
+  @include tablet {
+    padding: $spacing-4 0;
+  }
+  
+  @include desktop {
+    padding: $spacing-5 0;
+  }
+  
+  // Scrolled state padding
+  .header.scrolled & {
+    padding: $spacing-2-5 0;
+    
+    @include tablet {
+      padding: $spacing-3 0;
+    }
+    
+    @include desktop {
+      padding: $spacing-3-5 0;
+    }
   }
 }
 
+// ===== LOGO SECTION =====
 .header__logo {
   display: flex;
   align-items: center;
-  gap: $spacing-3;
+  gap: $spacing-2;
   cursor: pointer;
   text-decoration: none;
   transition: transform 0.3s ease;
-
+  
+  @include mobile-sm {
+    gap: $spacing-2-5;
+  }
+  
+  @include mobile-md {
+    gap: $spacing-3;
+  }
+  
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
+    
+    @include tablet {
+      transform: scale(1.05);
+    }
   }
 }
 
 .header__logo-image {
   height: auto;
-  width: 40px;
-  margin-top: 0.6rem;
-  // Add the following line to scale the logo
-  transform: scale(4); 
-@include mobile-lg{
-  margin-left: 0.2rem;
-width: 40px;
-}
-  @include mobile {
-    width: 40px;
-    margin-left: 3rem;
+  width: 100px;
+  
+  // Responsive logo sizing
+  @include mobile-xs {
+    width: 100px;
+  }
+  
+  @include mobile-sm {
+    width: 105px;
+  }
+  
+  @include mobile-md {
+    width: 110px;
+  }
+  
+  @include mobile-lg {
+    width: 115px;
+  }
+  
+  @include tablet {
+    width: 120px;
+  }
+  
+  @include desktop {
+    width: 125px;
+  }
+  
+  @include desktop-lg {
+    width: 130px;
   }
 }
 
-
-
+// ===== DESKTOP NAVIGATION (768px+) =====
 .header__nav {
-  flex: 1;
-  display: flex;
-  justify-content: center;
+  display: none;
+  
+  @include tablet {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
 }
 
 .header__nav-list {
   display: flex;
   list-style: none;
-  gap: $spacing-8;
+  gap: $spacing-4;
   margin: 0;
   padding: 0;
-
+  
   @include tablet {
+    gap: $spacing-5;
+  }
+  
+  @include desktop {
     gap: $spacing-6;
   }
-}
-
-.header__nav-item {
-  // No specific styles needed
+  
+  @include desktop-lg {
+    gap: $spacing-8;
+  }
+  
+  @include desktop-xl {
+    gap: $spacing-10;
+  }
 }
 
 .header__nav-link {
   font-weight: $font-weight-medium;
   color: $text-primary;
   text-decoration: none;
-  padding: $spacing-2 $spacing-4;
+  padding: $spacing-2 $spacing-3;
   border-radius: $border-radius;
   transition: all 0.3s ease;
   position: relative;
-
+  font-size: $font-size-sm;
+  
+  @include desktop {
+    padding: $spacing-2 $spacing-4;
+    font-size: $font-size-base;
+  }
+  
+  @include desktop-lg {
+    padding: $spacing-2-5 $spacing-5;
+  }
+  
+  @include desktop-xl {
+    font-size: $font-size-lg;
+  }
+  
+  // Hover underline effect
   &::after {
     content: '';
     position: absolute;
@@ -107,42 +189,78 @@ width: 40px;
     transform: translateX(-50%);
     transition: width 0.3s ease;
   }
-
+  
   &:hover {
     color: $primary;
     background: rgba($primary, 0.05);
-
+    
     &::after {
       width: 80%;
     }
   }
-
+  
   &.active {
     color: $primary;
-
+    
     &::after {
       width: 80%;
     }
   }
 }
 
+// ===== CTA BUTTON (Desktop only) =====
 .header__cta {
-  // No specific styles needed - using utility classes
+  display: none;
+  
+  @include tablet {
+    display: block;
+  }
+  
+  .btn-primary {
+    font-size: $font-size-sm;
+    padding: $spacing-2 $spacing-4;
+    min-height: 36px;
+    
+    @include desktop {
+      font-size: $font-size-base;
+      padding: $spacing-2-5 $spacing-5;
+      min-height: 40px;
+    }
+    
+    @include desktop-lg {
+      padding: $spacing-3 $spacing-6;
+      min-height: 44px;
+    }
+  }
 }
 
-// Mobile Menu Toggle
+// ===== MOBILE MENU TOGGLE (Below 768px) =====
 .header__mobile-toggle {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 24px;
-  height: 18px;
+  width: 20px;
+  height: 16px;
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
   z-index: $z-index-fixed + 1;
-
+  
+  @include mobile-sm {
+    width: 22px;
+    height: 17px;
+  }
+  
+  @include mobile-md {
+    width: 24px;
+    height: 18px;
+  }
+  
+  @include tablet {
+    display: none;
+  }
+  
   &:focus {
     outline: none;
   }
@@ -155,24 +273,25 @@ width: 40px;
   border-radius: 1px;
   transform-origin: center;
   transition: all 0.3s ease;
-
+  
+  // Active hamburger animation
   .header__mobile-toggle.active & {
     &:nth-child(1) {
       transform: rotate(45deg) translate(5px, 5px);
     }
-
+    
     &:nth-child(2) {
       opacity: 0;
       transform: translateX(-20px);
     }
-
+    
     &:nth-child(3) {
       transform: rotate(-45deg) translate(6px, -6px);
     }
   }
 }
 
-// Mobile Menu
+// ===== MOBILE MENU DROPDOWN =====
 .header__mobile-menu {
   position: absolute;
   top: 100%;
@@ -185,7 +304,11 @@ width: 40px;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
-
+  
+  @include tablet {
+    display: none;
+  }
+  
   &.open {
     transform: translateY(0);
     opacity: 1;
@@ -194,7 +317,11 @@ width: 40px;
 }
 
 .header__mobile-nav {
-  padding: $spacing-4 0;
+  padding: $spacing-3 0;
+  
+  @include mobile-sm {
+    padding: $spacing-4 0;
+  }
 }
 
 .header__mobile-nav-list {
@@ -204,51 +331,142 @@ width: 40px;
 }
 
 .header__mobile-nav-item {
-  border-bottom: 1px solid rgba($primary, 0.1);
-
+  border-bottom: 1px solid rgba($primary, 0.05);
+  
   &:last-child {
     border-bottom: none;
-    padding-top: $spacing-4;
+    padding-top: $spacing-3;
+    
+    @include mobile-sm {
+      padding-top: $spacing-4;
+    }
   }
 }
 
 .header__mobile-nav-link {
   display: block;
-  padding: $spacing-4;
+  padding: $spacing-3 $spacing-4;
   color: $text-primary;
   text-decoration: none;
   font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
   transition: all 0.3s ease;
-
+  
+  @include mobile-sm {
+    padding: $spacing-3-5 $spacing-5;
+    font-size: $font-size-base;
+  }
+  
+  @include mobile-md {
+    padding: $spacing-4 $spacing-6;
+  }
+  
   &:hover {
     background: rgba($primary, 0.05);
     color: $primary;
+    padding-left: $spacing-6;
+    
+    @include mobile-sm {
+      padding-left: $spacing-7;
+    }
+    
+    @include mobile-md {
+      padding-left: $spacing-8;
+    }
   }
-
+  
   &.active {
     color: $primary;
     background: rgba($primary, 0.05);
   }
 }
 
-// Responsive Utility Classes
-.hidden-mobile {
-  display: flex;
+// Mobile CTA button in menu
+.header__mobile-nav-item .btn-primary {
+  margin: 0 $spacing-4;
+  width: calc(100% - #{$spacing-8});
+  font-size: $font-size-sm;
+  
+  @include mobile-sm {
+    margin: 0 $spacing-5;
+    width: calc(100% - #{$spacing-10});
+    font-size: $font-size-base;
+  }
+  
+  @include mobile-md {
+    margin: 0 $spacing-6;
+    width: calc(100% - #{$spacing-12});
+  }
+}
 
-  @media (max-width: 767px) {
-    display: none !important;
+// ===== RESPONSIVE UTILITY CLASSES =====
+.hidden-mobile {
+  display: none;
+  
+  @include tablet {
+    display: flex;
   }
 }
 
 .visible-mobile {
-  display: none;
-
-  @media (max-width: 767px) {
-    display: flex !important;
+  display: flex;
+  
+  @include tablet {
+    display: none !important;
   }
 }
 
-// Utility classes
 .w-full {
   width: 100%;
+}
+
+// ===== MEDIA QUERY OPTIMIZATIONS =====
+
+// Extra small screens (320px - 374px)
+@include mobile-xs-only {
+  .header-content {
+    padding: $spacing-2-5 0;
+  }
+  
+  .header__logo-image {
+    width: 26px;
+  }
+}
+
+// Large tablets and small desktops (768px - 1023px)
+@include tablet-range {
+  .header__nav-list {
+    gap: $spacing-4;
+  }
+  
+  .header__nav-link {
+    padding: $spacing-1-5 $spacing-2-5;
+    font-size: $font-size-sm;
+  }
+}
+
+// Ultra-wide displays (1920px+)
+@include desktop-3xl {
+  .header-content {
+    padding: $spacing-6 0;
+  }
+  
+  .header__logo-image {
+    width: 140px;
+  }
+  
+  .header__nav-list {
+    gap: $spacing-12;
+  }
+  
+  .header__nav-link {
+    font-size: $font-size-xl;
+    padding: $spacing-3 $spacing-6;
+  }
+  
+  .header__cta .btn-primary {
+    font-size: $font-size-lg;
+    padding: $spacing-4 $spacing-8;
+    min-height: 52px;
+  }
 }
