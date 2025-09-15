@@ -30,6 +30,23 @@
           <div class="service-detail__features">
             <h4 class="service-detail__features-title">Key Features:</h4>
             <ul class="service-detail__features-list">
+              <li *ngIf="service.id === 'erp-systems'">Custom ERP development</li>
+<li *ngIf="service.id === 'erp-systems'">Legacy system integration</li>
+<li *ngIf="service.id === 'erp-systems'">Financial management modules</li>
+<li *ngIf="service.id === 'erp-systems'">Inventory and supply chain optimization</li>
+<li *ngIf="service.id === 'erp-systems'">Human resource management</li>
+<li *ngIf="service.id === 'erp-systems'">Business process automation</li>
+<li *ngIf="service.id === 'erp-systems'">AI integration for predictive insights</li>
+
+
+<li *ngIf="service.id === 'digital-transformation'">Digital strategy development</li>
+<li *ngIf="service.id === 'digital-transformation'">Legacy system modernization</li>
+<li *ngIf="service.id === 'digital-transformation'">Process automation</li>
+<li *ngIf="service.id === 'digital-transformation'">Digital workplace solutions</li>
+<li *ngIf="service.id === 'digital-transformation'">Customer experience design</li>
+<li *ngIf="service.id === 'digital-transformation'">Digital innovation consulting</li>
+
+
               <li *ngIf="service.id === 'ai-solutions'">Custom AI model development</li>
               <li *ngIf="service.id === 'ai-solutions'">Generative AI applications</li>
               <li *ngIf="service.id === 'ai-solutions'">Conversational AI systems</li>
@@ -66,6 +83,18 @@
             <h4 class="service-detail__technologies-title">Technologies:</h4>
             <div class="service-detail__tech-tags">
               <ng-container [ngSwitch]="service.id">
+                <ng-container *ngSwitchCase="'erp-systems'">
+<span class="tech-tag">SAP</span>
+<span class="tech-tag">Oracle NetSuite</span>
+<span class="tech-tag">Microsoft Dynamics 365</span>
+<span class="tech-tag">Odoo</span>
+</ng-container>
+<ng-container *ngSwitchCase="'digital-transformation'">
+    <span class="tech-tag">Cloud Computing</span>
+    <span class="tech-tag">AI & Machine Learning</span>
+    <span class="tech-tag">Big Data Analytics</span>
+    <span class="tech-tag">Internet of Things (IoT)</span>
+</ng-container>
                 <ng-container *ngSwitchCase="'ai-solutions'">
                   <span class="tech-tag">TensorFlow</span>
                   <span class="tech-tag">PyTorch</span>

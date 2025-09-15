@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
+import { OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 interface Value {
   id: string;
@@ -22,10 +24,12 @@ interface Stat {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  styleUrls: ['./about.component.scss'],
+   changeDetection: ChangeDetectionStrategy.OnPush  // ADD this line
 })
-export class AboutComponent implements OnInit, AfterViewInit {
-
+export class AboutComponent implements OnInit, AfterViewInit,OnDestroy  {
+private animationsInitialized = false;
+private fragmentSubscription?: Subscription;
   values: Value[] = [];
   stats: Stat[] = [
     { number: '50+', label: 'Projects Completed' },
@@ -35,6 +39,7 @@ export class AboutComponent implements OnInit, AfterViewInit {
   ];
 
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+    GsapAnimations.init();  // ADD this line
     this.values = [
       {
         id: 'innovation',
@@ -163,25 +168,76 @@ export class AboutComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  ngOnInit(): void {
-    this.route.fragment.subscribe(fragment => {
-      if (fragment) {
-        setTimeout(() => {
-          this.scrollToFragment(fragment);
-        }, 100);
-      }
-    });
-  }
+ngOnInit(): void {
+  this.fragmentSubscription = this.route.fragment.subscribe(fragment => {
+    if (fragment) {
+      // Wait longer for view initialization and animations
+      setTimeout(() => {
+        this.scrollToFragment(fragment);
+      }, 100);
+    }
+  });
+}
 
-  ngAfterViewInit(): void {
-    GsapAnimations.fadeIn('.about-hero__content', 1, 0.2);
+ngAfterViewInit(): void {
+  // Initialize animations first
+  requestAnimationFrame(() => {
+    this.initializeAnimations();
+    
+    // Then handle any existing fragment after animations are set up
+    const fragment = this.route.snapshot.fragment;
+    if (fragment) {
+      setTimeout(() => {
+        this.scrollToFragment(fragment);
+      }, 800); // Wait for animations to complete
+    }
+  });
+}
+ngOnDestroy(): void {
+  if (this.fragmentSubscription) {
+    this.fragmentSubscription.unsubscribe();
+  }
+  GsapAnimations.cleanup();
+}
+
+private initializeAnimations(): void {
+  if (this.animationsInitialized) return;
+
+  try {
+    const heroContent = document.querySelector('.about-hero__content');
+    if (heroContent) {
+      GsapAnimations.fadeIn(heroContent, 1, 0.2);
+    }
+
     GsapAnimations.initScrollAnimations();
+    this.animationsInitialized = true;
+  } catch (error) {
+    console.warn('Animation initialization failed:', error);
   }
+}
 
-  private scrollToFragment(fragment: string): void {
+refreshAnimations(): void {
+  GsapAnimations.refresh();
+}
+
+private scrollToFragment(fragment: string): void {
+  // Wait for animations and DOM to be fully ready
+  setTimeout(() => {
     const element = document.getElementById(fragment);
     if (element) {
-      GsapAnimations.scrollToElement(`#${fragment}`, 1);
+      // Get header height for proper offset
+      const header = document.querySelector('header') || document.querySelector('.header');
+      const headerHeight = header ? header.offsetHeight : 80;
+      
+      // Use native scrolling with proper offset
+      const elementPosition = element.offsetTop;
+      const offsetPosition = elementPosition - headerHeight - 20; // Extra 20px padding
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
-  }
+  }, 500); // Increased delay to ensure animations complete
+}
 }

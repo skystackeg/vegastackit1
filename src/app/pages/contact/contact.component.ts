@@ -1,10 +1,13 @@
 // src/app/pages/contact/contact.component.ts
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { GsapAnimations } from '../../shared/animations/gsap-animations';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { GsapAnimations } from '../../shared/animations/gsap-animations';
+import { ContactService, ContactFormData } from '../../shared/services/contact.service';
 
 interface ContactInfo {
   title: string;
@@ -16,14 +19,21 @@ interface ContactInfo {
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  providers: [ContactService],
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
+  styleUrls: ['./contact.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContactComponent implements OnInit, AfterViewInit {
-  contactForm: FormGroup;
+export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
+  private animationsInitialized = false;
+  private queryParamsSubscription?: Subscription;
+  
+  contactForm!: FormGroup;
   isSubmitting = false;
   isSubmitted = false;
+  isConsultationRequest = false;
+  submitError: string | null = null;
   contactInfo: ContactInfo[] = [];
 
   services = [
@@ -34,10 +44,48 @@ export class ContactComponent implements OnInit, AfterViewInit {
     'Data Intelligence',
     'Quality Assurance',
     'Consulting',
+    'ERP Systems',
+    'Digital Transformation',
     'Other'
   ];
 
-  constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private route: ActivatedRoute) {
+  constructor(
+    private fb: FormBuilder, 
+    private sanitizer: DomSanitizer, 
+    private route: ActivatedRoute,
+    private contactService: ContactService,
+    private cdr: ChangeDetectorRef
+  ) {
+    GsapAnimations.init();
+    this.initializeForm();
+    this.initializeContactInfo();
+  }
+
+  ngOnInit(): void {
+    this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
+      if (params['service']) {
+        this.contactForm.patchValue({
+          service: params['service']
+        });
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    requestAnimationFrame(() => {
+      this.initializeAnimations();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
+    }
+    GsapAnimations.cleanup();
+  }
+
+  private initializeForm(): void {
     this.contactForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
@@ -45,11 +93,11 @@ export class ContactComponent implements OnInit, AfterViewInit {
       company: ['', Validators.required],
       phone: [''],
       service: ['', Validators.required],
-      budget: [''],
-      timeline: [''],
       message: ['', [Validators.required, Validators.minLength(10)]]
     });
+  }
 
+  private initializeContactInfo(): void {
     this.contactInfo = [
       {
         title: 'Email Us',
@@ -100,43 +148,124 @@ export class ContactComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  ngOnInit(): void {
-    // Component initialization
-    this.route.queryParams.subscribe(params => {
-    if (params['service']) {
-      this.contactForm.patchValue({
-        service: params['service']
-      });
+  private initializeAnimations(): void {
+    if (this.animationsInitialized) return;
+
+    try {
+      const heroContent = document.querySelector('.contact-hero__content');
+      if (heroContent) {
+        GsapAnimations.fadeIn(heroContent, 1, 0.2);
+      }
+
+      GsapAnimations.initScrollAnimations();
+      this.animationsInitialized = true;
+    } catch (error) {
+      console.warn('Animation initialization failed:', error);
     }
-  });
   }
 
-  ngAfterViewInit(): void {
-    GsapAnimations.fadeIn('.contact-hero__content', 1, 0.2);
-    GsapAnimations.initScrollAnimations();
+  refreshAnimations(): void {
+    GsapAnimations.refresh();
   }
 
   onSubmit(): void {
     if (this.contactForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
+      this.submitError = null;
       
-      // Simulate form submission
-      setTimeout(() => {
-        this.isSubmitting = false;
-        this.isSubmitted = true;
-        this.contactForm.reset();
-        
-        // Reset success message after 5 seconds
-        setTimeout(() => {
-          this.isSubmitted = false;
-        }, 5000);
-      }, 2000);
+      const formData: ContactFormData = this.contactForm.value;
+      
+      this.contactService.submitContactForm(formData).subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.isSubmitted = true;
+            this.isConsultationRequest = false;
+            this.contactForm.reset();
+            
+            // Reset success message after 8 seconds
+            setTimeout(() => {
+              this.isSubmitted = false;
+              this.cdr.detectChanges();
+            }, 8000);
+          } else {
+            this.submitError = response.error || 'Failed to send message. Please try again.';
+          }
+          this.isSubmitting = false;
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          this.submitError = error.message;
+          this.isSubmitting = false;
+          this.cdr.detectChanges();
+        }
+      });
     } else {
       // Mark all fields as touched to show validation errors
       Object.keys(this.contactForm.controls).forEach(key => {
         this.contactForm.get(key)?.markAsTouched();
       });
+      this.cdr.detectChanges();
     }
+  }
+
+  onConsultationRequest(): void {
+    // Validate required fields for consultation
+    const requiredFields = ['firstName', 'lastName', 'email', 'company', 'service'];
+    let isValid = true;
+    
+    requiredFields.forEach(field => {
+      const control = this.contactForm.get(field);
+      if (!control?.value) {
+        control?.markAsTouched();
+        isValid = false;
+      }
+    });
+
+    if (isValid && !this.isSubmitting) {
+      this.isSubmitting = true;
+      this.submitError = null;
+      
+      const formData: ContactFormData = {
+        ...this.contactForm.value,
+        message: this.contactForm.value.message || 'User requested a 30-minute consultation call.'
+      };
+      
+      this.contactService.submitConsultationRequest(formData).subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.isSubmitted = true;
+            this.isConsultationRequest = true;
+            this.contactForm.reset();
+            
+            // Reset success message after 8 seconds
+            setTimeout(() => {
+              this.isSubmitted = false;
+              this.isConsultationRequest = false;
+              this.cdr.detectChanges();
+            }, 8000);
+          } else {
+            this.submitError = response.error || 'Failed to send consultation request. Please try again.';
+          }
+          this.isSubmitting = false;
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          this.submitError = error.message;
+          this.isSubmitting = false;
+          this.cdr.detectChanges();
+        }
+      });
+    } else {
+      requiredFields.forEach(field => {
+        this.contactForm.get(field)?.markAsTouched();
+      });
+      this.cdr.detectChanges();
+    }
+  }
+
+  dismissError(): void {
+    this.submitError = null;
+    this.cdr.detectChanges();
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -147,10 +276,23 @@ export class ContactComponent implements OnInit, AfterViewInit {
   getFieldError(fieldName: string): string {
     const field = this.contactForm.get(fieldName);
     if (field?.errors) {
-      if (field.errors['required']) return `${fieldName} is required`;
+      if (field.errors['required']) return `${this.getFieldDisplayName(fieldName)} is required`;
       if (field.errors['email']) return 'Please enter a valid email address';
-      if (field.errors['minlength']) return `${fieldName} is too short`;
+      if (field.errors['minlength']) return `${this.getFieldDisplayName(fieldName)} is too short`;
     }
     return '';
+  }
+
+  private getFieldDisplayName(fieldName: string): string {
+    const displayNames: { [key: string]: string } = {
+      firstName: 'First name',
+      lastName: 'Last name',
+      email: 'Email',
+      company: 'Company',
+      phone: 'Phone',
+      service: 'Service',
+      message: 'Message'
+    };
+    return displayNames[fieldName] || fieldName;
   }
 }

@@ -1,5 +1,5 @@
 // src/app/pages/home/home.component.ts
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -12,13 +12,15 @@ import { GsapAnimations } from '../../shared/animations/gsap-animations';
   standalone: true,
   imports: [CommonModule, RouterModule, ServiceCardComponent],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+   changeDetection: ChangeDetectionStrategy.OnPush  // ADD this line
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
-  
+  private animationsInitialized = false;  // ADD this line
   services: Service[] = [];
 
   constructor(private sanitizer: DomSanitizer) {
+	 GsapAnimations.init();
     this.services = [
       {
         id: 'ai-solutions',
@@ -391,22 +393,70 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 </svg>
         `)
       }
+	,
+	 {
+        id: 'erp-systems',
+        title: 'ERP Systems',
+        description: 'Our ERP systems streamline core business processes, integrating finance, HR, supply chain, manufacturing, and customer relationship management for improved efficiency and decision-making.',
+        fragmentId: 'erp-systems',
+        icon: this.sanitizer.bypassSecurityTrustHtml(`<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg fill="#000000" width="70px" height="70px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title>enterprise</title><rect x="8" y="8" width="2" height="4"/><rect x="8" y="14" width="2" height="4"/><rect x="14" y="8" width="2" height="4"/><rect x="14" y="14" width="2" height="4"/><rect x="8" y="20" width="2" height="4"/><rect x="14" y="20" width="2" height="4"/><path d="M30,14a2,2,0,0,0-2-2H22V4a2,2,0,0,0-2-2H4A2,2,0,0,0,2,4V30H30ZM4,4H20V28H4ZM22,28V14h6V28Z"/><rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/></svg>`)
+      },
+	   {
+        id: 'digital-transformation',
+        title: 'Digital Transformation',
+        description: 'Our digital transformation services help businesses modernize legacy systems, automate processes, and implement innovative digital solutions, enhancing efficiency, cost reduction, and growth opportunities.',
+        fragmentId: 'digital-transformation',
+        icon: this.sanitizer.bypassSecurityTrustHtml(`<svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 32 32" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<path d="M30,28H2c-0.3,0-0.7-0.2-0.9-0.5c-0.2-0.3-0.2-0.7,0-1l2-3C3.3,23.2,3.6,23,4,23h24c0.4,0,0.7,0.2,0.9,0.6l2,3
+		c0.2,0.3,0.1,0.7,0,1C30.7,27.8,30.3,28,30,28z"/>
+</g>
+<path d="M27,5H5C4.4,5,4,5.4,4,6v14c0,0.6,0.4,1,1,1h22c0.6,0,1-0.4,1-1V6C28,5.4,27.6,5,27,5z M11.7,15.3c0.4,0.4,0.4,1,0,1.4
+	C11.5,16.9,11.3,17,11,17s-0.5-0.1-0.7-0.3l-3-3c-0.4-0.4-0.4-1,0-1.4l3-3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4L9.4,13L11.7,15.3z
+	 M18.9,9.4l-4,8C14.7,17.8,14.4,18,14,18c-0.2,0-0.3,0-0.4-0.1c-0.5-0.2-0.7-0.8-0.4-1.3l4-8c0.2-0.5,0.8-0.7,1.3-0.4
+	C18.9,8.4,19.1,9,18.9,9.4z M24.7,13.7l-3,3C21.5,16.9,21.3,17,21,17s-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l2.3-2.3l-2.3-2.3
+	c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l3,3C25.1,12.7,25.1,13.3,24.7,13.7z"/>
+</svg>`)
+      },
     ];
   }
 
-  ngAfterViewInit(): void {
+ngAfterViewInit(): void {
+  // Use requestAnimationFrame for better performance
+  requestAnimationFrame(() => {
+    this.initializeAnimations();
+  });
+}
+ ngOnDestroy(): void {
+  // Clean up GSAP animations
+  GsapAnimations.cleanup();
+}
+private initializeAnimations(): void {
+  if (this.animationsInitialized) return;
+
+  try {
     // Initialize hero animation
     GsapAnimations.heroAnimation();
     
     // Initialize scroll-triggered animations
     GsapAnimations.initScrollAnimations();
+    
+    this.animationsInitialized = true;
+  } catch (error) {
+    console.warn('Animation initialization failed:', error);
   }
-
-  ngOnDestroy(): void {
-    // Cleanup if needed
-  }
+}
 
   scrollToServices(): void {
-    GsapAnimations.scrollToElement('#services', 1);
-  }
+  GsapAnimations.scrollToElement('#services', 1, 80);
+}
+// Optional: Method to manually refresh animations if needed
+refreshAnimations(): void {
+  GsapAnimations.refresh();
+}
 }

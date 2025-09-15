@@ -13,23 +13,14 @@
             Transforming businesses through innovative AI solutions and cutting-edge technology. 
             We empower organizations to thrive in the digital future.
           </p>
-          <div class="footer__social">
-            <a href="#" class="footer__social-link" aria-label="LinkedIn">
-              <span [innerHTML]="socialIcons.linkedin"></span>
-            </a>
-            <a href="#" class="footer__social-link" aria-label="Twitter">
-              <span [innerHTML]="socialIcons.twitter"></span>
-            </a>
-            <a href="#" class="footer__social-link" aria-label="GitHub">
-              <span [innerHTML]="socialIcons.github"></span>
-            </a>
-          </div>
         </div>
 
         <div class="footer__links">
           <div class="footer__column">
             <h4 class="footer__column-title">Services</h4>
             <ul class="footer__column-list">
+              <li><a routerLink="/services" fragment="erp-systems" class="footer__column-link">ERP systems</a></li>
+              <li><a routerLink="/services" fragment="digital-transformation" class="footer__column-link">Digital Transformation</a></li>
               <li><a routerLink="/services" fragment="ai-solutions" class="footer__column-link">AI Solutions</a></li>
               <li><a routerLink="/services" fragment="cloud-infrastructure" class="footer__column-link">Cloud Infrastructure</a></li>
               <li><a routerLink="/services" fragment="app-development" class="footer__column-link">App Development</a></li>
@@ -45,8 +36,6 @@
               <li><a routerLink="/about" class="footer__column-link">About Us</a></li>
               <li><a routerLink="/about" fragment="vision" class="footer__column-link">Our Vision</a></li>
               <li><a routerLink="/about" fragment="approach" class="footer__column-link">Our Approach</a></li>
-              <li><a href="#" class="footer__column-link">Careers</a></li>
-              <li><a href="#" class="footer__column-link">Blog</a></li>
             </ul>
           </div>
 
@@ -69,9 +58,9 @@
             © {{ currentYear }} Vega Stack. All rights reserved.
           </p>
           <div class="footer__legal">
-            <a href="#" class="footer__legal-link">Privacy Policy</a>
-            <a href="#" class="footer__legal-link">Terms of Service</a>
-            <a href="#" class="footer__legal-link">Cookie Policy</a>
+            <a href="/PrivacyandPolicy" class="footer__legal-link">Privacy Policy</a>
+            <a href="/TermsandConditions" class="footer__legal-link">Terms and Conditions</a>
+
           </div>
         </div>
       </div>

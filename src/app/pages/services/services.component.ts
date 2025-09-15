@@ -1,5 +1,6 @@
 // src/app/pages/services/services.component.ts
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -11,14 +12,82 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './services.component.html',
-  styleUrls: ['./services.component.scss']
+  styleUrls: ['./services.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush  
 })
-export class ServicesComponent implements OnInit, AfterViewInit {
-
+export class ServicesComponent implements OnInit, AfterViewInit,OnDestroy  {
+private fragmentSubscription?: Subscription;  // ADD this
+  private animationsInitialized = false;        // ADD this
   services: Service[] = [];
 
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router) {
+	 GsapAnimations.init();
     this.services = [
+				      {
+         id: 'erp-systems',
+        title: 'ERP Systems',
+        description: 'Our ERP systems streamline core business processes, integrating finance, HR, supply chain, manufacturing, and customer relationship management for improved efficiency and decision-making.',
+        fragmentId: 'erp-systems',
+        detailedDescription: 'Our ERP solutions combine your main business operations into a unified platform. We create, deploy, and maintain custom ERP solutions that combine supply chain, manufacturing, finance, human resources, and customer relationship management to streamline operations, boost productivity, and offer real-time insights for improved decision-making.',
+        icon: this.sanitizer.bypassSecurityTrustHtml(`<svg fill="#000000" width="70px" height="70px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title>enterprise</title><rect x="8" y="8" width="2" height="4"/><rect x="8" y="14" width="2" height="4"/><rect x="14" y="8" width="2" height="4"/><rect x="14" y="14" width="2" height="4"/><rect x="8" y="20" width="2" height="4"/><rect x="14" y="20" width="2" height="4"/><path d="M30,14a2,2,0,0,0-2-2H22V4a2,2,0,0,0-2-2H4A2,2,0,0,0,2,4V30H30ZM4,4H20V28H4ZM22,28V14h6V28Z"/><rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/></svg>`)
+
+      },
+		      {
+          id: 'digital-transformation',
+        title: 'Digital Transformation',
+        description: 'Our digital transformation services help businesses modernize legacy systems, automate processes, and implement innovative digital solutions, enhancing efficiency, cost reduction, and growth opportunities.',
+        fragmentId: 'digital-transformation',
+        detailedDescription: 'Our digital transformation services help businesses modernize legacy systems, automate manual processes, and implement innovative digital solutions. We work with you to create a comprehensive digital strategy that drives efficiency, reduces costs, and creates new growth opportunities.',
+        icon: this.sanitizer.bypassSecurityTrustHtml(`
+    <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 32 32" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<path d="M30,28H2c-0.3,0-0.7-0.2-0.9-0.5c-0.2-0.3-0.2-0.7,0-1l2-3C3.3,23.2,3.6,23,4,23h24c0.4,0,0.7,0.2,0.9,0.6l2,3
+		c0.2,0.3,0.1,0.7,0,1C30.7,27.8,30.3,28,30,28z"/>
+</g>
+<path d="M27,5H5C4.4,5,4,5.4,4,6v14c0,0.6,0.4,1,1,1h22c0.6,0,1-0.4,1-1V6C28,5.4,27.6,5,27,5z M11.7,15.3c0.4,0.4,0.4,1,0,1.4
+	C11.5,16.9,11.3,17,11,17s-0.5-0.1-0.7-0.3l-3-3c-0.4-0.4-0.4-1,0-1.4l3-3c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4L9.4,13L11.7,15.3z
+	 M18.9,9.4l-4,8C14.7,17.8,14.4,18,14,18c-0.2,0-0.3,0-0.4-0.1c-0.5-0.2-0.7-0.8-0.4-1.3l4-8c0.2-0.5,0.8-0.7,1.3-0.4
+	C18.9,8.4,19.1,9,18.9,9.4z M24.7,13.7l-3,3C21.5,16.9,21.3,17,21,17s-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l2.3-2.3l-2.3-2.3
+	c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l3,3C25.1,12.7,25.1,13.3,24.7,13.7z"/>
+</svg>
+        `)
+      },
+	        {
+        id: 'software-engineering',
+        title: 'Software Engineering',
+        description: 'Complete software product development lifecycle from initial concept through deployment and maintenance.',
+        fragmentId: 'software-engineering',
+        detailedDescription: 'We offer full-cycle software product development services, from initial concept and requirements analysis through design, development, testing, deployment, and ongoing maintenance. Our engineering team follows industry best practices and agile methodologies to deliver robust, scalable software solutions.',
+        icon: this.sanitizer.bypassSecurityTrustHtml(`
+     <?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 width="800px" height="800px" viewBox="0 0 70 70" enable-background="new 0 0 70 70" xml:space="preserve">
+<g>
+	<path d="M62.817,2.583H6.026c-2.209,0-3.443,2.06-3.443,4.269v57c0,2.209,1.234,2.731,3.443,2.731h57
+		c2.209,0,3.557-0.522,3.557-2.731v-58C66.583,3.643,65.026,2.583,62.817,2.583z M62.583,6.583v9h-56v-9H62.583z M6.583,62.583v-45
+		h56v45H6.583z"/>
+	<path d="M10.417,12.583h2c0.553,0,1-0.447,1-1s-0.447-1-1-1h-2c-0.553,0-1,0.447-1,1S9.864,12.583,10.417,12.583z"/>
+	<path d="M16.417,12.583h2c0.553,0,1-0.447,1-1s-0.447-1-1-1h-2c-0.553,0-1,0.447-1,1S15.864,12.583,16.417,12.583z"/>
+	<path d="M22.417,12.583h2c0.553,0,1-0.447,1-1s-0.447-1-1-1h-2c-0.553,0-1,0.447-1,1S21.864,12.583,22.417,12.583z"/>
+	<path d="M26.109,33.077c-0.429-0.35-1.058-0.285-1.406,0.143l-5.944,7.283c-0.293,0.357-0.302,0.87-0.021,1.238l5.944,7.801
+		c0.196,0.258,0.494,0.394,0.796,0.394c0.211,0,0.424-0.066,0.605-0.205c0.438-0.334,0.523-0.962,0.188-1.401l-5.466-7.173
+		l5.445-6.673C26.602,34.056,26.538,33.426,26.109,33.077z"/>
+	<path d="M44.328,33.245c-0.333-0.438-0.96-0.525-1.401-0.188c-0.439,0.334-0.523,0.962-0.188,1.401l5.466,7.172l-5.445,6.674
+		c-0.35,0.428-0.286,1.058,0.143,1.406c0.186,0.152,0.409,0.226,0.631,0.226c0.29,0,0.578-0.126,0.775-0.368l5.944-7.284
+		c0.293-0.358,0.302-0.87,0.021-1.238L44.328,33.245z"/>
+	<path d="M31.241,31.734c-0.205-0.514-0.786-0.762-1.299-0.561c-0.514,0.204-0.764,0.786-0.561,1.299l7.916,19.918
+		c0.156,0.393,0.532,0.631,0.93,0.631c0.123,0,0.248-0.022,0.369-0.07c0.514-0.204,0.764-0.786,0.561-1.299L31.241,31.734z"/>
+</g>
+</svg>
+        `)
+      },
       {
         id: 'ai-solutions',
         title: 'AI Solutions',
@@ -399,27 +468,85 @@ export class ServicesComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  ngOnInit(): void {
-    this.route.fragment.subscribe(fragment => {
-      if (fragment) {
-        setTimeout(() => {
-          this.scrollToFragment(fragment);
-        }, 100);
-      }
-    });
-  }
+ngOnInit(): void {
+  // Subscribe to fragment changes
+  this.fragmentSubscription = this.route.fragment.subscribe(fragment => {
+    if (fragment) {
+      // Wait longer for view initialization and animations
+      setTimeout(() => {
+        this.scrollToFragment(fragment);
+      }, 100);
+    }
+  });
+}
 
-  ngAfterViewInit(): void {
-    GsapAnimations.fadeIn('.services-hero__content', 1, 0.2);
+ngAfterViewInit(): void {
+  // Initialize animations first
+  requestAnimationFrame(() => {
+    this.initializeAnimations();
+    
+    // Then handle any existing fragment after animations are set up
+    const fragment = this.route.snapshot.fragment;
+    if (fragment) {
+      setTimeout(() => {
+        this.scrollToFragment(fragment);
+      }, 800); // Wait for animations to complete
+    }
+  });
+}
+ngOnDestroy(): void {
+  // Clean up subscriptions and animations
+  if (this.fragmentSubscription) {
+    this.fragmentSubscription.unsubscribe();
+  }
+  
+  // Clean up GSAP animations
+  GsapAnimations.cleanup();
+}
+private initializeAnimations(): void {
+  if (this.animationsInitialized) return;
+
+  // Animate hero content with error handling
+  try {
+    const heroContent = document.querySelector('.services-hero__content');
+    if (heroContent) {
+      GsapAnimations.fadeIn(heroContent, 1, 0.2);
+    }
+
+    // Initialize scroll animations
     GsapAnimations.initScrollAnimations();
+    
+    this.animationsInitialized = true;
+  } catch (error) {
+    console.warn('Animation initialization failed:', error);
   }
+}
 
-  private scrollToFragment(fragment: string): void {
+// Optional: Method to manually refresh animations if needed
+refreshAnimations(): void {
+  GsapAnimations.refresh();
+}
+
+private scrollToFragment(fragment: string): void {
+  // Wait for animations and DOM to be fully ready
+  setTimeout(() => {
     const element = document.getElementById(fragment);
     if (element) {
-      GsapAnimations.scrollToElement(`#${fragment}`, 1);
+      // Get header height for proper offset
+      const header = document.querySelector('header') || document.querySelector('.header');
+      const headerHeight = header ? header.offsetHeight : 80;
+      
+      // Use native scrolling with proper offset
+      const elementPosition = element.offsetTop;
+      const offsetPosition = elementPosition - headerHeight - 20; // Extra 20px padding
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
-  }
+  }, 500); // Increased delay to ensure animations complete
+}
   navigateToContact(serviceTitle: string): void {
   this.router.navigate(['/contact'], { 
     queryParams: { service: serviceTitle } 

@@ -1,0 +1,211 @@
+<!-- src/app/pages/industries/industries.component.html -->
+
+<!-- Industries Hero Section -->
+<section class="industries-hero">
+  <div class="container">
+    <div class="industries-hero__content">
+      <h1 class="industries-hero__title">Industries We <span class="text-gradient">Transform</span></h1>
+      <p class="industries-hero__subtitle">
+        Delivering specialized AI solutions across diverse industries, helping organizations 
+        innovate, optimize, and achieve sustainable growth in their respective markets.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Industries Overview -->
+<section class="industries-overview section-padding">
+  <div class="container">
+    <div class="industries-overview__header animate-on-scroll">
+      <h2 class="industries-overview__title">Sector Expertise</h2>
+      <p class="industries-overview__subtitle">
+        Our deep industry knowledge combined with cutting-edge technology enables us to deliver 
+        solutions that address specific challenges and drive meaningful results.
+      </p>
+    </div>
+
+    <div class="industries-grid">
+      <div 
+        *ngFor="let industry of industries; let i = index" 
+        class="industry-card animate-on-scroll"
+        [class.reverse]="i % 2 === 1"
+      >
+        <div class="industry-card__content">
+          <div class="industry-card__header">
+            <div class="industry-card__icon" [innerHTML]="industry.icon"></div>
+            <h3 class="industry-card__title">{{ industry.title }}</h3>
+          </div>
+          <p class="industry-card__description">{{ industry.description }}</p>
+          
+          <div class="industry-card__details">
+            <div class="industry-challenges">
+              <h4>Key Challenges</h4>
+              <ul>
+                <li *ngFor="let challenge of industry.challenges">{{ challenge }}</li>
+              </ul>
+            </div>
+            
+            <div class="industry-solutions">
+              <h4>Our Solutions</h4>
+              <ul>
+                <li *ngFor="let solution of industry.solutions">{{ solution }}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="industry-card__cta">
+            <button class="btn-primary">Learn More</button>
+            <button class="btn-secondary">View Case Study</button>
+          </div>
+        </div>
+
+        <div class="industry-card__case-study" *ngIf="industry.caseStudy">
+          <div class="case-study">
+            <h4 class="case-study__title">{{ industry.caseStudy.title }}</h4>
+            <p class="case-study__description">{{ industry.caseStudy.description }}</p>
+            
+            <div class="case-study__results">
+              <h5>Key Results:</h5>
+              <div class="results-grid">
+                <div *ngFor="let result of industry.caseStudy.results" class="result-item">
+                  <div class="result-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                  </div>
+                  <span class="result-text">{{ result }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Industry Stats -->
+<section class="industry-stats section-padding bg-neutral-light">
+  <div class="container">
+    <div class="industry-stats__header animate-on-scroll">
+      <h2 class="industry-stats__title">Our Impact Across Industries</h2>
+      <p class="industry-stats__subtitle">
+        Measurable results that demonstrate our commitment to driving transformation 
+        and delivering value across diverse sectors.
+      </p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-card__number">150+</div>
+        <div class="stat-card__label">Projects Delivered</div>
+        <div class="stat-card__sublabel">Across all industries</div>
+      </div>
+
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-card__number">6</div>
+        <div class="stat-card__label">Core Industries</div>
+        <div class="stat-card__sublabel">Deep expertise focus</div>
+      </div>
+
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-card__number">95%</div>
+        <div class="stat-card__label">Client Satisfaction</div>
+        <div class="stat-card__sublabel">Long-term partnerships</div>
+      </div>
+
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-card__number">$50M+</div>
+        <div class="stat-card__label">Value Generated</div>
+        <div class="stat-card__sublabel">For our clients</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Industry Benefits -->
+<section class="industry-benefits section-padding">
+  <div class="container">
+    <div class="industry-benefits__content">
+      <div class="industry-benefits__text animate-on-scroll">
+        <h2 class="industry-benefits__title">Why Choose Vega Stack for Your Industry</h2>
+        <div class="benefits-list">
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Industry Expertise</h3>
+              <p>Deep understanding of sector-specific challenges, regulations, and opportunities.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Rapid Implementation</h3>
+              <p>Proven methodologies and frameworks that accelerate time-to-value.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Compliance Focus</h3>
+              <p>Solutions designed with industry regulations and compliance requirements in mind.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Scalable Solutions</h3>
+              <p>Architecture and design that grows with your business and industry evolution.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="industry-benefits__visual animate-on-scroll">
+        <div class="visual-grid">
+          <div class="visual-item" *ngFor="let industry of industries.slice(0, 6)">
+            <div class="visual-icon" [innerHTML]="industry.icon"></div>
+            <span class="visual-label">{{ industry.title.split(' ')[0] }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="industries-cta section-padding">
+  <div class="container">
+    <div class="industries-cta__content animate-on-scroll">
+      <h2 class="industries-cta__title">Ready to Transform Your Industry?</h2>
+      <p class="industries-cta__description">
+        Let's discuss how our industry-specific expertise and AI solutions can drive 
+        innovation and growth for your organization.
+      </p>
+      <div class="industries-cta__actions">
+        <button class="btn-primary">Schedule Consultation</button>
+        <button class="btn-secondary">View All Case Studies</button>
+      </div>
+    </div>
+  </div>
+</section>

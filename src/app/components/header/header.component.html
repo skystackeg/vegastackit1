@@ -21,6 +21,11 @@
               Services
             </a>
           </li>
+           <li class="header__nav-item">
+            <a routerLink="/industries" class="header__nav-link" routerLinkActive="active">
+              industries
+            </a>
+          </li>
           <li class="header__nav-item">
             <a routerLink="/about" class="header__nav-link" routerLinkActive="active">
               About
@@ -68,6 +73,11 @@
               Services
             </a>
           </li>
+            <li class="header__mobile-nav-item">
+            <a routerLink="/industries" class="header__mobile-nav-link" (click)="closeMobileMenu()" routerLinkActive="active">
+              industries
+            </a>
+          </li>
           <li class="header__mobile-nav-item">
             <a routerLink="/about" class="header__mobile-nav-link" (click)="closeMobileMenu()" routerLinkActive="active">
               About
@@ -78,6 +88,7 @@
               Contact
             </a>
           </li>
+
           <li class="header__mobile-nav-item">
             <button class="btn-primary w-full" (click)="navigateToSection()">
               Get Started

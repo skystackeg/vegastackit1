@@ -1,0 +1,616 @@
+// src/app/pages/industries/industries.component.scss
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+// Industries Hero Section
+.industries-hero {
+  padding: $spacing-32 0 $spacing-20 0;
+  background: linear-gradient(135deg, rgba($secondary, 0.05) 0%, rgba($primary, 0.05) 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -30%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba($secondary, 0.1) 0%, transparent 50%);
+    animation: rotate 30s linear infinite;
+  }
+
+  @include mobile {
+    padding: $spacing-24 0 $spacing-16 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.industries-hero__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.industries-hero__title {
+  @include heading-1;
+  margin-bottom: $spacing-6;
+  font-size: $font-size-5xl;
+
+  @include tablet {
+    font-size: $font-size-4xl;
+  }
+
+  @include mobile {
+    font-size: $font-size-3xl;
+  }
+}
+
+.industries-hero__subtitle {
+  @include body-large;
+  color: $text-secondary;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+// Industries Overview Section
+.industries-overview {
+  background: white;
+}
+
+.industries-overview__header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto $spacing-16 auto;
+
+  @include tablet {
+    margin-bottom: $spacing-12;
+  }
+}
+
+.industries-overview__title {
+  @include heading-2;
+  margin-bottom: $spacing-6;
+}
+
+.industries-overview__subtitle {
+  @include body-large;
+  color: $text-secondary;
+}
+
+.industries-grid {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-20;
+
+  @include mobile {
+    gap: $spacing-16;
+  }
+}
+
+.industry-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-16;
+  align-items: start;
+  padding: $spacing-12;
+  border-radius: $border-radius-2xl;
+  background: rgba($neutral-light, 0.3);
+  border: 1px solid rgba($primary, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-2xl;
+    border-color: rgba($primary, 0.2);
+  }
+
+  &.reverse {
+    grid-template-columns: 1fr 1fr;
+
+    .industry-card__content {
+      order: 2;
+    }
+
+    .industry-card__case-study {
+      order: 1;
+    }
+
+    @include tablet {
+      .industry-card__content {
+        order: 1;
+      }
+
+      .industry-card__case-study {
+        order: 2;
+      }
+    }
+  }
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: $spacing-12;
+    padding: $spacing-10;
+  }
+
+  @include mobile {
+    padding: $spacing-8;
+    gap: $spacing-8;
+  }
+}
+
+.industry-card__header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+  margin-bottom: $spacing-6;
+}
+
+.industry-card__icon {
+  width: 48px;
+  height: 48px;
+  color: $primary;
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  @include mobile {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.industry-card__title {
+  @include heading-3;
+  margin: 0;
+  color: $primary;
+
+  @include mobile {
+    font-size: $font-size-lg;
+  }
+}
+
+.industry-card__description {
+  @include body-base;
+  margin-bottom: $spacing-8;
+  color: $text-secondary;
+  line-height: 1.7;
+}
+
+.industry-card__details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-8;
+  margin-bottom: $spacing-8;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $spacing-6;
+  }
+}
+
+.industry-challenges,
+.industry-solutions {
+  h4 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-4;
+
+    @include mobile {
+      font-size: $font-size-base;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      position: relative;
+      padding-left: $spacing-6;
+      margin-bottom: $spacing-2;
+      font-size: $font-size-sm;
+      color: $text-secondary;
+      line-height: 1.5;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 6px;
+        height: 6px;
+        background: $primary;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+.industry-solutions ul li::before {
+  background: $secondary;
+}
+
+.industry-card__cta {
+  display: flex;
+  gap: $spacing-4;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+// Case Study Section
+.industry-card__case-study {
+  position: relative;
+}
+
+.case-study {
+  @include card-base;
+  padding: $spacing-8;
+  background: white;
+  border: 1px solid rgba($secondary, 0.2);
+
+  @include mobile {
+    padding: $spacing-6;
+  }
+}
+
+.case-study__title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $secondary;
+  margin-bottom: $spacing-4;
+
+  @include mobile {
+    font-size: $font-size-base;
+  }
+}
+
+.case-study__description {
+  @include body-base;
+  color: $text-secondary;
+  margin-bottom: $spacing-6;
+  font-size: $font-size-sm;
+}
+
+.case-study__results {
+  h5 {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-4;
+
+    @include mobile {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.results-grid {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+}
+
+.result-icon {
+  width: 20px;
+  height: 20px;
+  color: $secondary;
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.result-text {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  font-weight: $font-weight-medium;
+}
+
+// Industry Stats Section
+.industry-stats__header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto $spacing-16 auto;
+
+  @include tablet {
+    margin-bottom: $spacing-12;
+  }
+}
+
+.industry-stats__title {
+  @include heading-2;
+  margin-bottom: $spacing-6;
+}
+
+.industry-stats__subtitle {
+  @include body-large;
+  color: $text-secondary;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-8;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-6;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $spacing-6;
+  }
+}
+
+.stat-card {
+  @include card-base;
+  padding: $spacing-8;
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+  }
+
+  @include mobile {
+    padding: $spacing-6;
+  }
+}
+
+.stat-card__number {
+  font-family: $font-family-heading;
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  color: $primary;
+  margin-bottom: $spacing-2;
+
+  @include mobile {
+    font-size: $font-size-3xl;
+  }
+}
+
+.stat-card__label {
+  font-size: $font-size-base;
+  color: $text-primary;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-1;
+
+  @include mobile {
+    font-size: $font-size-sm;
+  }
+}
+
+.stat-card__sublabel {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+}
+
+// Industry Benefits Section
+.industry-benefits {
+  background: white;
+}
+
+.industry-benefits__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-16;
+  align-items: center;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: $spacing-12;
+  }
+}
+
+.industry-benefits__title {
+  @include heading-2;
+  margin-bottom: $spacing-8;
+}
+
+.benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.benefit-item {
+  display: flex;
+  gap: $spacing-4;
+  align-items: flex-start;
+}
+
+.benefit-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba($primary, 0.1);
+  border-radius: $border-radius;
+  @include flex-center;
+  color: $primary;
+  flex-shrink: 0;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @include mobile {
+    width: 32px;
+    height: 32px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.benefit-content {
+  h3 {
+    @include heading-3;
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-2;
+    color: $text-primary;
+
+    @include mobile {
+      font-size: $font-size-base;
+    }
+  }
+
+  p {
+    @include body-base;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+    margin: 0;
+    line-height: 1.6;
+  }
+}
+
+.industry-benefits__visual {
+  position: relative;
+}
+
+.visual-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-6;
+  
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-4;
+  }
+}
+
+.visual-item {
+  @include card-base;
+  padding: $spacing-6;
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: $shadow-lg;
+  }
+
+  @include mobile {
+    padding: $spacing-4;
+  }
+}
+
+.visual-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto $spacing-3 auto;
+  color: $primary;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  @include mobile {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.visual-label {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  font-weight: $font-weight-medium;
+}
+
+// Industries CTA Section
+.industries-cta {
+  background: $gradient-accent;
+  color: white;
+  text-align: center;
+}
+
+.industries-cta__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.industries-cta__title {
+  @include heading-2;
+  color: white;
+  margin-bottom: $spacing-6;
+}
+
+.industries-cta__description {
+  @include body-large;
+  color: rgba(white, 0.9);
+  margin-bottom: $spacing-8;
+}
+
+.industries-cta__actions {
+  display: flex;
+  gap: $spacing-4;
+  justify-content: center;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-secondary {
+    background: rgba(white, 0.1);
+    border-color: rgba(white, 0.3);
+    color: white;
+
+    &:hover {
+      background: white;
+      color: $accent;
+    }
+  }
+}
+
+// Animations
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive adjustments
+@include mobile {
+  .industry-card {
+    text-align: center;
+  }
+  
+  .industry-card__details {
+    text-align: left;
+  }
+  
+  .visual-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

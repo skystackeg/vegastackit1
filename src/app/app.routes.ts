@@ -18,6 +18,19 @@ export const routes: Routes = [
     path: 'contact',
     loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent)
   },
+    {
+    path: 'industries',
+    loadComponent: () => import('./pages/industries/industries.component').then(m => m.IndustriesComponent)
+  },
+     {
+    path: 'PrivacyandPolicy',
+    loadComponent: () => import('./pages/privacy-policy/privacy-policy.component').then(m => m.PrivacyPolicyComponent)
+  },
+    {
+    path: 'TermsandConditions',
+    loadComponent: () => import('./pages/terms-conditions/terms-conditions.component').then(m => m.TermsConditionsComponent)
+  },
+
   {
     path: '**',
     redirectTo: ''
