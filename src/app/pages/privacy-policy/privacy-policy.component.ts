@@ -19,8 +19,8 @@ export class PrivacyPolicyComponent implements OnInit, AfterViewInit, OnDestroy 
   
   lastUpdated = 'December 15, 2024';
   effectiveDate = 'December 15, 2024';
-  companyName = 'SkyStack';
-  contactEmail = 'privacy@sky-stack.ai';
+  companyName = 'Vega Sky';
+  contactEmail = 'info@vega-sky.com';
   
   sections = [
     {
@@ -97,18 +97,18 @@ export class PrivacyPolicyComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   private setMetaTags(): void {
-    this.title.setTitle('Privacy Policy - SkyStack | AI-Powered Digital Transformation');
+    this.title.setTitle('Privacy Policy - Vega Sky | AI-Powered Digital Transformation');
     this.meta.updateTag({ 
       name: 'description', 
-      content: 'Learn how SkyStack protects your privacy and handles your data. Our comprehensive privacy policy outlines our data collection, usage, and protection practices.' 
+      content: 'Learn how Vega Sky protects your privacy and handles your data. Our comprehensive privacy policy outlines our data collection, usage, and protection practices.' 
     });
     this.meta.updateTag({ name: 'robots', content: 'noindex, nofollow' });
     
     // Open Graph tags
-    this.meta.updateTag({ property: 'og:title', content: 'Privacy Policy - SkyStack' });
+    this.meta.updateTag({ property: 'og:title', content: 'Privacy Policy - Vega Sky' });
     this.meta.updateTag({ 
       property: 'og:description', 
-      content: 'Learn how SkyStack protects your privacy and handles your data responsibly.' 
+      content: 'Learn how Vega Sky protects your privacy and handles your data responsibly.' 
     });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
   }
@@ -151,7 +151,7 @@ export class PrivacyPolicyComponent implements OnInit, AfterViewInit, OnDestroy 
   onShare(): void {
     if (navigator.share) {
       navigator.share({
-        title: 'SkyStack Privacy Policy',
+        title: 'Vega Sky Privacy Policy',
         url: window.location.href,
       }).catch(console.error);
     } else {

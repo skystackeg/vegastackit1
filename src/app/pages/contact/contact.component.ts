@@ -101,8 +101,8 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
     this.contactInfo = [
       {
         title: 'Email Us',
-        value: 'hello@vegastack.com',
-        href: 'mailto:hello@vegastack.com',
+        value: 'info@vega-sky.com',
+        href: 'mailto:info@vega-sky.com',
         icon: this.sanitizer.bypassSecurityTrustHtml(`
           <svg viewBox="0 0 64 64" fill="none">
             <rect x="8" y="16" width="48" height="32" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
@@ -112,8 +112,8 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       {
         title: 'Call Us',
-        value: '+1 (555) 123-4567',
-        href: 'tel:+15551234567',
+        value: '+971 52 118 8488',
+        href: 'tel:+971521188488',
         icon: this.sanitizer.bypassSecurityTrustHtml(`
           <svg viewBox="0 0 64 64" fill="none">
             <path d="M16 8C12.6863 8 10 10.6863 10 14V50C10 53.3137 12.6863 56 16 56H48C51.3137 56 54 53.3137 54 50V14C54 10.6863 51.3137 8 48 8H16Z" stroke="currentColor" stroke-width="2" fill="none"/>
@@ -124,7 +124,7 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       {
         title: 'Visit Us',
-        value: 'Remote-First Company',
+        value: 'Dubai, Business Bay, Silver Tower, Office 2607',
         href: '#',
         icon: this.sanitizer.bypassSecurityTrustHtml(`
           <svg viewBox="0 0 64 64" fill="none">

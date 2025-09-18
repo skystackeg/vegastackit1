@@ -53,10 +53,6 @@
             </div>
           </div>
 
-          <div class="industry-card__cta">
-            <button class="btn-primary">Learn More</button>
-            <button class="btn-secondary">View Case Study</button>
-          </div>
         </div>
 
         <div class="industry-card__case-study" *ngIf="industry.caseStudy">
@@ -128,7 +124,7 @@
   <div class="container">
     <div class="industry-benefits__content">
       <div class="industry-benefits__text animate-on-scroll">
-        <h2 class="industry-benefits__title">Why Choose Vega Stack for Your Industry</h2>
+        <h2 class="industry-benefits__title">Why Choose Vega Sky for Your Industry</h2>
         <div class="benefits-list">
           <div class="benefit-item">
             <div class="benefit-icon">
@@ -203,8 +199,7 @@
         innovation and growth for your organization.
       </p>
       <div class="industries-cta__actions">
-        <button class="btn-primary">Schedule Consultation</button>
-        <button class="btn-secondary">View All Case Studies</button>
+        <button class="btn-primary" (click)="navigateToContact()">Schedule Consultation</button>
       </div>
     </div>
   </div>

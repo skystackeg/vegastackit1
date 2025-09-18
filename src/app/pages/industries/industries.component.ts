@@ -1,7 +1,8 @@
 // src/app/pages/industries/industries.component.ts
 import { Component, AfterViewInit, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
 import { Subscription } from 'rxjs';
 
@@ -16,7 +17,7 @@ interface Industry {
     description: string;
     results: string[];
   };
-  icon: string;
+  icon: SafeHtml;
   fragmentId: string;
 }
 
@@ -32,7 +33,14 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
   private fragmentSubscription?: Subscription;
   private animationsInitialized = false;
 
-  industries: Industry[] = [
+  industries: Industry[] = [];
+
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router) {
+    // Initialize GSAP early
+    GsapAnimations.init();
+
+    // Initialize industries with sanitized icons
+    this.industries = [
     {
       id: 'healthcare',
       title: 'Healthcare & Life Sciences',
@@ -59,11 +67,11 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
         ]
       },
       fragmentId: 'healthcare',
-      icon: `<svg viewBox="0 0 64 64" fill="none">
+      icon: this.sanitizer.bypassSecurityTrustHtml(`<svg viewBox="0 0 64 64" fill="none">
         <path d="M32 8C42.4934 8 51 16.5066 51 27V37C51 47.4934 42.4934 56 32 56C21.5066 56 13 47.4934 13 37V27C13 16.5066 21.5066 8 32 8Z" stroke="currentColor" stroke-width="2" fill="none"/>
         <path d="M32 20V44M20 32H44" stroke="currentColor" stroke-width="3"/>
         <circle cx="32" cy="32" r="3" stroke="currentColor" stroke-width="2" fill="currentColor"/>
-      </svg>`
+      </svg>`)
     },
     {
       id: 'fintech',
@@ -91,13 +99,13 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
         ]
       },
       fragmentId: 'fintech',
-      icon: `<svg viewBox="0 0 64 64" fill="none">
+      icon: this.sanitizer.bypassSecurityTrustHtml(`<svg viewBox="0 0 64 64" fill="none">
         <rect x="8" y="16" width="48" height="32" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
         <rect x="12" y="20" width="8" height="4" rx="1" stroke="currentColor" stroke-width="1" fill="currentColor"/>
         <path d="M12 28H28M12 32H24M12 36H20" stroke="currentColor" stroke-width="2"/>
         <circle cx="44" cy="32" r="8" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.7"/>
         <path d="M40 32L42 34L48 28" stroke="white" stroke-width="2"/>
-      </svg>`
+      </svg>`)
     },
     {
       id: 'ecommerce',
@@ -125,12 +133,12 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
         ]
       },
       fragmentId: 'ecommerce',
-      icon: `<svg viewBox="0 0 64 64" fill="none">
+      icon: this.sanitizer.bypassSecurityTrustHtml(`<svg viewBox="0 0 64 64" fill="none">
         <path d="M12 16H16L20 40H48L52 24H24" stroke="currentColor" stroke-width="2" fill="none"/>
         <circle cx="24" cy="48" r="4" stroke="currentColor" stroke-width="2" fill="currentColor"/>
         <circle cx="44" cy="48" r="4" stroke="currentColor" stroke-width="2" fill="currentColor"/>
         <path d="M20 40L48 40" stroke="currentColor" stroke-width="2"/>
-      </svg>`
+      </svg>`)
     },
     {
       id: 'education',
@@ -158,12 +166,12 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
         ]
       },
       fragmentId: 'education',
-      icon: `<svg viewBox="0 0 64 64" fill="none">
+      icon: this.sanitizer.bypassSecurityTrustHtml(`<svg viewBox="0 0 64 64" fill="none">
         <path d="M8 32L32 16L56 32L32 48L8 32Z" stroke="currentColor" stroke-width="2" fill="none"/>
         <path d="M32 16V48" stroke="currentColor" stroke-width="2"/>
         <path d="M16 36V44C16 44 24 48 32 48C40 48 48 44 48 44V36" stroke="currentColor" stroke-width="2" fill="none"/>
         <circle cx="32" cy="32" r="3" stroke="currentColor" stroke-width="2" fill="currentColor"/>
-      </svg>`
+      </svg>`)
     },
     {
       id: 'manufacturing',
@@ -191,13 +199,13 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
         ]
       },
       fragmentId: 'manufacturing',
-      icon: `<svg viewBox="0 0 64 64" fill="none">
+      icon: this.sanitizer.bypassSecurityTrustHtml(`<svg viewBox="0 0 64 64" fill="none">
         <rect x="8" y="24" width="48" height="24" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
         <circle cx="20" cy="36" r="6" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.7"/>
         <circle cx="32" cy="36" r="6" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.5"/>
         <circle cx="44" cy="36" r="6" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.3"/>
         <path d="M8 16H56L52 24H12L8 16Z" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.2"/>
-      </svg>`
+      </svg>`)
     },
     {
       id: 'energy',
@@ -225,17 +233,13 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
         ]
       },
       fragmentId: 'energy',
-      icon: `<svg viewBox="0 0 64 64" fill="none">
+      icon: this.sanitizer.bypassSecurityTrustHtml(`<svg viewBox="0 0 64 64" fill="none">
         <path d="M32 8L40 28H28L36 56L28 36H40L32 8Z" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.7"/>
         <circle cx="32" cy="32" r="20" stroke="currentColor" stroke-width="2" fill="none" opacity="0.3"/>
         <circle cx="32" cy="32" r="12" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5"/>
-      </svg>`
+      </svg>`)
     }
-  ];
-
-  constructor(private route: ActivatedRoute) {
-    // Initialize GSAP early
-    GsapAnimations.init();
+    ];
   }
 
   ngOnInit(): void {
@@ -307,5 +311,10 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
   // Optional: Method to manually refresh animations if needed
   refreshAnimations(): void {
     GsapAnimations.refresh();
+  }
+
+  // Navigation method for Schedule Consultation button
+  navigateToContact(): void {
+    this.router.navigate(['/contact']);
   }
 }
