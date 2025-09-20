@@ -1,6 +1,6 @@
 // src/app/components/header/header.component.ts
-import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
 
@@ -17,24 +17,31 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   isMobileMenuOpen = false;
   private scrollListener?: () => void;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngAfterViewInit(): void {
-    this.setupScrollEffect();
-    this.animateHeader();
+    if (isPlatformBrowser(this.platformId)) {
+      this.setupScrollEffect();
+      this.animateHeader();
+    }
   }
 
   ngOnDestroy(): void {
-    if (this.scrollListener) {
+    if (isPlatformBrowser(this.platformId) && this.scrollListener) {
       window.removeEventListener('scroll', this.scrollListener);
     }
   }
 
   private setupScrollEffect(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     this.scrollListener = () => {
       const header = this.headerElement.nativeElement;
       const scrollY = window.scrollY;
-      
+
       if (scrollY > 50) {
         header.classList.add('scrolled');
       } else {

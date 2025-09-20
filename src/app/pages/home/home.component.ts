@@ -1,11 +1,12 @@
 // src/app/pages/home/home.component.ts
-import { Component, AfterViewInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ServiceCardComponent } from '../../components/service-card/service-card.component';
 import { Service } from '../../shared/models/service.interface';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
+import { SEOService } from '../../shared/services/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +16,14 @@ import { GsapAnimations } from '../../shared/animations/gsap-animations';
   styleUrls: ['./home.component.scss'],
    changeDetection: ChangeDetectionStrategy.OnPush  // ADD this line
 })
-export class HomeComponent implements AfterViewInit, OnDestroy {
-  private animationsInitialized = false;  // ADD this line
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+  private animationsInitialized = false;
   services: Service[] = [];
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(
+    private sanitizer: DomSanitizer,
+    private seoService: SEOService
+  ) {
 	 GsapAnimations.init();
     this.services = [
       {
@@ -426,6 +430,18 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     ];
   }
 
+  ngOnInit(): void {
+    this.seoService.updateSEO({
+      title: 'Home',
+      description: 'Transform your business with cutting-edge AI solutions, cloud infrastructure, and digital innovation services. Expert technology consulting for modern enterprises.',
+      keywords: 'AI solutions, cloud infrastructure, digital transformation, software development, technology consulting, machine learning, automation, enterprise solutions',
+      ogTitle: 'Vega Sky - AI-Powered Technology Solutions',
+      ogDescription: 'Transform your business with cutting-edge AI solutions, cloud infrastructure, and digital innovation services. Expert technology consulting for modern enterprises.',
+      ogImage: 'https://vega-sky.com/assets/images/og-image.jpg',
+      structuredData: this.seoService.getOrganizationStructuredData()
+    });
+  }
+
 ngAfterViewInit(): void {
   // Use requestAnimationFrame for better performance
   requestAnimationFrame(() => {
@@ -448,7 +464,9 @@ private initializeAnimations(): void {
     
     this.animationsInitialized = true;
   } catch (error) {
-    console.warn('Animation initialization failed:', error);
+    if (typeof console !== 'undefined' && console.warn) {
+      console.warn('Animation initialization failed:', error);
+    }
   }
 }
 

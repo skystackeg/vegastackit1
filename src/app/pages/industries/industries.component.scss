@@ -2,210 +2,515 @@
 @import '../../assets/styles/variables';
 @import '../../assets/styles/mixins';
 
-// Industries Hero Section
+// ===== INDUSTRIES HERO SECTION =====
 .industries-hero {
-  padding: $spacing-32 0 $spacing-20 0;
-  background: linear-gradient(135deg, rgba($secondary, 0.05) 0%, rgba($primary, 0.05) 100%);
-  text-align: center;
   position: relative;
   overflow: hidden;
+  @include flex-center;
+  background: linear-gradient(135deg, rgba($secondary, 0.05) 0%, rgba($primary, 0.05) 100%);
+  text-align: center;
 
+  // Margin top for mobile and tablet (header clearance)
+  margin-top: $header-height-mobile;
+  @include tablet {
+    margin-top: $header-height-tablet;
+  }
+  @include desktop {
+    margin-top: 0; // Remove margin on desktop
+  }
+
+  // Responsive padding
+  padding: $spacing-16 0 $spacing-10 0;
+  @include mobile-sm {
+    padding: $spacing-18 0 $spacing-12 0;
+  }
+  @include mobile-md {
+    padding: $spacing-20 0 $spacing-14 0;
+  }
+  @include mobile-lg {
+    padding: $spacing-24 0 $spacing-16 0;
+  }
+  @include tablet {
+    padding: $spacing-28 0 $spacing-18 0;
+  }
+  @include desktop {
+    padding: $spacing-32 0 $spacing-20 0;
+  }
+
+  // Animated background element
   &::before {
     content: '';
     position: absolute;
-    top: -30%;
-    right: -30%;
-    width: 150%;
-    height: 150%;
-    background: radial-gradient(circle, rgba($secondary, 0.1) 0%, transparent 50%);
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba($secondary, 0.08) 0%, transparent 50%);
     animation: rotate 30s linear infinite;
-  }
 
-  @include mobile {
-    padding: $spacing-24 0 $spacing-16 0;
+    @include mobile-sm {
+      top: -40%;
+      left: -40%;
+      width: 180%;
+      height: 180%;
+      background: radial-gradient(circle, rgba($secondary, 0.06) 0%, transparent 60%);
+    }
+
+    @include tablet {
+      background: radial-gradient(circle, rgba($secondary, 0.1) 0%, transparent 50%);
+    }
   }
 
   .container {
     position: relative;
     z-index: 2;
+    @include center-content(1200px);
   }
 }
 
 .industries-hero__content {
-  max-width: 800px;
+  // Responsive max-width
+  max-width: 100%;
   margin: 0 auto;
+
+  @include mobile-lg {
+    max-width: 90%;
+  }
+
+  @include tablet {
+    max-width: 85%;
+  }
+
+  @include desktop {
+    max-width: 800px;
+  }
 }
 
 .industries-hero__title {
   @include heading-1;
-  margin-bottom: $spacing-6;
-  font-size: $font-size-5xl;
+  margin-bottom: $spacing-4;
 
-  @include tablet {
-    font-size: $font-size-4xl;
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
   }
 
-  @include mobile {
-    font-size: $font-size-3xl;
+  @include mobile-md {
+    margin-bottom: $spacing-6;
+  }
+
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+
+  @include desktop {
+    margin-bottom: $spacing-6;
   }
 }
 
 .industries-hero__subtitle {
   @include body-large;
   color: $text-secondary;
-  max-width: 600px;
+  line-height: 1.7;
+
+  // Responsive max-width for readability
+  max-width: 100%;
   margin: 0 auto;
+
+  @include mobile-lg {
+    max-width: 85%;
+    line-height: 1.75;
+  }
+
+  @include tablet {
+    max-width: 75%;
+    font-size: $font-size-xl;
+  }
+
+  @include desktop {
+    max-width: 600px;
+  }
 }
 
-// Industries Overview Section
+// ===== INDUSTRIES OVERVIEW SECTION =====
 .industries-overview {
   background: white;
+  @include section-padding;
 }
 
 .industries-overview__header {
   text-align: center;
-  max-width: 800px;
-  margin: 0 auto $spacing-16 auto;
+  margin-bottom: $spacing-10;
 
-  @include tablet {
+  @include mobile-sm {
     margin-bottom: $spacing-12;
   }
+
+  @include mobile-md {
+    margin-bottom: $spacing-14;
+  }
+
+  @include mobile-lg {
+    margin-bottom: $spacing-16;
+  }
+
+  @include tablet {
+    margin-bottom: $spacing-16;
+  }
+
+  @include desktop {
+    margin-bottom: $spacing-16;
+  }
+
+  // Responsive max-width
+  max-width: 100%;
+
+  @include mobile-lg {
+    max-width: 90%;
+  }
+
+  @include tablet {
+    max-width: 85%;
+  }
+
+  @include desktop {
+    max-width: 800px;
+  }
+
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .industries-overview__title {
   @include heading-2;
-  margin-bottom: $spacing-6;
+  margin-bottom: $spacing-4;
+
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
+  }
+
+  @include mobile-md {
+    margin-bottom: $spacing-6;
+  }
+
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+
+  @include desktop {
+    margin-bottom: $spacing-6;
+  }
 }
 
 .industries-overview__subtitle {
   @include body-large;
   color: $text-secondary;
+  line-height: 1.7;
+
+  // Responsive max-width for readability
+  max-width: 100%;
+  margin: 0 auto;
+
+  @include mobile-lg {
+    max-width: 85%;
+    line-height: 1.75;
+  }
+
+  @include tablet {
+    max-width: 75%;
+    font-size: $font-size-xl;
+  }
+
+  @include desktop {
+    max-width: 600px;
+  }
 }
 
 .industries-grid {
   display: flex;
   flex-direction: column;
-  gap: $spacing-20;
 
-  @include mobile {
+  // Responsive gap
+  gap: $spacing-10;
+  @include mobile-sm {
+    gap: $spacing-12;
+  }
+  @include mobile-md {
+    gap: $spacing-14;
+  }
+  @include mobile-lg {
     gap: $spacing-16;
+  }
+  @include tablet {
+    gap: $spacing-18;
+  }
+  @include desktop {
+    gap: $spacing-20;
   }
 }
 
 .industry-card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $spacing-16;
   align-items: start;
-  padding: $spacing-12;
-  border-radius: $border-radius-2xl;
-  background: rgba($neutral-light, 0.3);
+  border-radius: $border-radius-xl;
+  background: rgba($neutral-light, 0.5);
   border: 1px solid rgba($primary, 0.1);
-  transition: all 0.3s ease;
+  transition: $transition-all;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: $shadow-2xl;
-    border-color: rgba($primary, 0.2);
+  // Responsive grid layout and padding
+  grid-template-columns: 1fr;
+  gap: $spacing-4;
+  padding: $spacing-6;
+  text-align: center;
+
+  @include mobile-sm {
+    gap: $spacing-5;
+    padding: $spacing-7;
   }
 
-  &.reverse {
-    grid-template-columns: 1fr 1fr;
+  @include mobile-md {
+    gap: $spacing-6;
+    padding: $spacing-8;
+  }
 
-    .industry-card__content {
-      order: 2;
-    }
-
-    .industry-card__case-study {
-      order: 1;
-    }
-
-    @include tablet {
-      .industry-card__content {
-        order: 1;
-      }
-
-      .industry-card__case-study {
-        order: 2;
-      }
-    }
+  @include mobile-lg {
+    gap: $spacing-6;
+    padding: $spacing-9;
   }
 
   @include tablet {
-    grid-template-columns: 1fr;
-    gap: $spacing-12;
+    gap: $spacing-8;
     padding: $spacing-10;
+    grid-template-columns: 1fr;
   }
 
-  @include mobile {
-    padding: $spacing-8;
-    gap: $spacing-8;
+  @include desktop {
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-16;
+    padding: $spacing-12;
+    text-align: left;
+  }
+
+  @include desktop-lg {
+    gap: $spacing-18;
+    padding: $spacing-14;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+    border-color: rgba($primary, 0.2);
+
+    @include desktop {
+      transform: translateY(-4px);
+      box-shadow: $shadow-xl;
+    }
+  }
+
+  &.reverse {
+    @include desktop {
+      .industry-card__content {
+        order: 2;
+      }
+
+      .industry-card__case-study {
+        order: 1;
+      }
+    }
   }
 }
 
 .industry-card__header {
   display: flex;
   align-items: center;
-  gap: $spacing-4;
-  margin-bottom: $spacing-6;
+  justify-content: center;
+  gap: $spacing-3;
+  margin-bottom: $spacing-4;
+
+  @include mobile-sm {
+    gap: $spacing-4;
+    margin-bottom: $spacing-5;
+  }
+
+  @include mobile-md {
+    margin-bottom: $spacing-6;
+  }
+
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+
+  @include desktop {
+    justify-content: flex-start;
+    margin-bottom: $spacing-6;
+  }
 }
 
 .industry-card__icon {
-  width: 48px;
-  height: 48px;
-  color: $primary;
+  @include flex-center;
   flex-shrink: 0;
+  background: white;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-md;
+  color: $primary;
 
-  svg {
-    width: 100%;
-    height: 100%;
+  // Responsive sizing
+  width: 60px;
+  height: 60px;
+  padding: $spacing-3;
+
+  @include mobile-sm {
+    width: 70px;
+    height: 70px;
+    padding: $spacing-4;
+    box-shadow: $shadow-lg;
   }
 
-  @include mobile {
-    width: 40px;
-    height: 40px;
+  @include mobile-md {
+    width: 80px;
+    height: 80px;
+    padding: $spacing-4;
+  }
+
+  @include mobile-lg {
+    width: 90px;
+    height: 90px;
+    padding: $spacing-5;
+  }
+
+  @include tablet {
+    width: 100px;
+    height: 100px;
+    padding: $spacing-5;
+  }
+
+  @include desktop {
+    width: 120px;
+    height: 120px;
+    padding: $spacing-6;
+  }
+
+  :global(svg) {
+    fill: $primary;
+    stroke: $primary;
+
+    // Responsive SVG sizing
+    width: 24px;
+    height: 24px;
+
+    @include mobile-sm {
+      width: 28px;
+      height: 28px;
+    }
+
+    @include mobile-md {
+      width: 32px;
+      height: 32px;
+    }
+
+    @include mobile-lg {
+      width: 36px;
+      height: 36px;
+    }
+
+    @include tablet {
+      width: 48px;
+      height: 48px;
+    }
+
+    @include desktop {
+      width: 60px;
+      height: 60px;
+    }
+
+    @include desktop-lg {
+      width: 80px;
+      height: 80px;
+    }
   }
 }
 
 .industry-card__title {
   @include heading-3;
-  margin: 0;
   color: $primary;
+  margin: 0;
 
-  @include mobile {
+  @include mobile-sm {
     font-size: $font-size-lg;
+  }
+
+  @include tablet {
+    @include heading-2;
+  }
+
+  @include desktop {
+    @include heading-3;
   }
 }
 
 .industry-card__description {
   @include body-base;
-  margin-bottom: $spacing-8;
   color: $text-secondary;
   line-height: 1.7;
+  margin-bottom: $spacing-6;
+
+  @include mobile-md {
+    line-height: 1.75;
+  }
+
+  @include tablet {
+    @include body-large;
+    margin-bottom: $spacing-7;
+  }
+
+  @include desktop {
+    margin-bottom: $spacing-8;
+  }
 }
 
 .industry-card__details {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $spacing-8;
-  margin-bottom: $spacing-8;
+  gap: $spacing-6;
+  margin-bottom: $spacing-5;
 
-  @include mobile {
+  // Responsive grid columns
+  grid-template-columns: 1fr;
+
+  @include mobile-md {
     grid-template-columns: 1fr;
     gap: $spacing-6;
+  }
+
+  @include tablet {
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-7;
+    margin-bottom: $spacing-6;
+  }
+
+  @include desktop {
+    gap: $spacing-8;
+    margin-bottom: $spacing-8;
   }
 }
 
 .industry-challenges,
 .industry-solutions {
   h4 {
-    font-size: $font-size-lg;
+    font-family: $font-family-heading;
     font-weight: $font-weight-semibold;
     color: $text-primary;
-    margin-bottom: $spacing-4;
+    margin-bottom: $spacing-2;
 
-    @include mobile {
-      font-size: $font-size-base;
+    // Responsive font sizing
+    font-size: $font-size-base;
+
+    @include mobile-sm {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-3;
+    }
+
+    @include tablet {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-4;
     }
   }
 
@@ -213,31 +518,71 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    display: grid;
+    gap: $spacing-2;
+
+    // Responsive grid columns
+    grid-template-columns: 1fr;
+
+    @include mobile-md {
+      grid-template-columns: 1fr;
+      gap: $spacing-2;
+    }
+
+    @include tablet {
+      gap: $spacing-3;
+    }
+
+    @include desktop {
+      gap: $spacing-2;
+    }
 
     li {
       position: relative;
-      padding-left: $spacing-6;
-      margin-bottom: $spacing-2;
-      font-size: $font-size-sm;
+      padding-left: $spacing-5;
       color: $text-secondary;
-      line-height: 1.5;
+
+      // Responsive font sizing
+      font-size: $font-size-xs;
+
+      @include mobile-sm {
+        font-size: $font-size-sm;
+        padding-left: $spacing-6;
+      }
+
+      @include tablet {
+        font-size: $font-size-sm;
+      }
 
       &::before {
         content: '';
         position: absolute;
         left: 0;
-        top: 8px;
-        width: 6px;
-        height: 6px;
-        background: $primary;
+        top: 50%;
+        transform: translateY(-50%);
+        background: $gradient-primary;
         border-radius: 50%;
+
+        // Responsive dot sizing
+        width: 12px;
+        height: 12px;
+
+        @include mobile-sm {
+          width: 14px;
+          height: 14px;
+        }
+
+        @include tablet {
+          width: 16px;
+          height: 16px;
+        }
       }
     }
   }
 }
 
 .industry-solutions ul li::before {
-  background: $secondary;
+  background: $gradient-secondary;
 }
 
 .industry-card__cta {
@@ -328,164 +673,224 @@
   font-weight: $font-weight-medium;
 }
 
-// Industry Stats Section
-.industry-stats__header {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto $spacing-16 auto;
 
-  @include tablet {
-    margin-bottom: $spacing-12;
-  }
-}
-
-.industry-stats__title {
-  @include heading-2;
-  margin-bottom: $spacing-6;
-}
-
-.industry-stats__subtitle {
-  @include body-large;
-  color: $text-secondary;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: $spacing-8;
-
-  @include tablet {
-    grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-6;
-  }
-
-  @include mobile {
-    grid-template-columns: 1fr;
-    gap: $spacing-6;
-  }
-}
-
-.stat-card {
-  @include card-base;
-  padding: $spacing-8;
-  text-align: center;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: $shadow-xl;
-  }
-
-  @include mobile {
-    padding: $spacing-6;
-  }
-}
-
-.stat-card__number {
-  font-family: $font-family-heading;
-  font-size: $font-size-4xl;
-  font-weight: $font-weight-bold;
-  color: $primary;
-  margin-bottom: $spacing-2;
-
-  @include mobile {
-    font-size: $font-size-3xl;
-  }
-}
-
-.stat-card__label {
-  font-size: $font-size-base;
-  color: $text-primary;
-  font-weight: $font-weight-semibold;
-  margin-bottom: $spacing-1;
-
-  @include mobile {
-    font-size: $font-size-sm;
-  }
-}
-
-.stat-card__sublabel {
-  font-size: $font-size-xs;
-  color: $text-secondary;
-}
-
-// Industry Benefits Section
+// ===== INDUSTRY BENEFITS SECTION =====
 .industry-benefits {
   background: white;
+  @include section-padding;
 }
 
 .industry-benefits__content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $spacing-16;
-  align-items: center;
+  align-items: start;
+
+  // Responsive grid layout and gap
+  grid-template-columns: 1fr;
+  gap: $spacing-10;
+
+  @include mobile-sm {
+    gap: $spacing-12;
+  }
+
+  @include mobile-md {
+    gap: $spacing-14;
+  }
+
+  @include mobile-lg {
+    gap: $spacing-16;
+  }
 
   @include tablet {
+    gap: $spacing-14;
     grid-template-columns: 1fr;
-    gap: $spacing-12;
+  }
+
+  @include desktop {
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-16;
+    align-items: center;
+  }
+
+  @include desktop-lg {
+    gap: $spacing-20;
   }
 }
 
 .industry-benefits__title {
   @include heading-2;
-  margin-bottom: $spacing-8;
+  margin-bottom: $spacing-6;
+  text-align: center;
+
+  @include mobile-sm {
+    margin-bottom: $spacing-7;
+  }
+
+  @include mobile-md {
+    margin-bottom: $spacing-8;
+  }
+
+  @include tablet {
+    margin-bottom: $spacing-8;
+  }
+
+  @include desktop {
+    text-align: left;
+    margin-bottom: $spacing-8;
+  }
 }
 
 .benefits-list {
   display: flex;
   flex-direction: column;
-  gap: $spacing-6;
+
+  // Responsive gap
+  gap: $spacing-4;
+
+  @include mobile-sm {
+    gap: $spacing-5;
+  }
+
+  @include mobile-md {
+    gap: $spacing-6;
+  }
+
+  @include tablet {
+    gap: $spacing-6;
+  }
+
+  @include desktop {
+    gap: $spacing-6;
+  }
 }
 
 .benefit-item {
   display: flex;
-  gap: $spacing-4;
   align-items: flex-start;
+  text-align: left;
+
+  // Responsive gap
+  gap: $spacing-3;
+
+  @include mobile-sm {
+    gap: $spacing-4;
+  }
+
+  @include tablet {
+    gap: $spacing-4;
+  }
+
+  @include desktop {
+    gap: $spacing-4;
+  }
 }
 
 .benefit-icon {
-  width: 40px;
-  height: 40px;
-  background: rgba($primary, 0.1);
-  border-radius: $border-radius;
   @include flex-center;
+  background: rgba($primary, 0.1);
+  border-radius: $border-radius-xl;
   color: $primary;
   flex-shrink: 0;
+  box-shadow: $shadow-sm;
 
-  svg {
-    width: 20px;
-    height: 20px;
+  // Responsive sizing
+  width: 32px;
+  height: 32px;
+
+  @include mobile-sm {
+    width: 36px;
+    height: 36px;
   }
 
-  @include mobile {
-    width: 32px;
-    height: 32px;
+  @include mobile-md {
+    width: 40px;
+    height: 40px;
+  }
 
-    svg {
-      width: 16px;
-      height: 16px;
+  @include tablet {
+    width: 44px;
+    height: 44px;
+  }
+
+  @include desktop {
+    width: 48px;
+    height: 48px;
+  }
+
+  svg {
+    // Responsive SVG sizing
+    width: 16px;
+    height: 16px;
+
+    @include mobile-sm {
+      width: 18px;
+      height: 18px;
+    }
+
+    @include mobile-md {
+      width: 20px;
+      height: 20px;
+    }
+
+    @include tablet {
+      width: 22px;
+      height: 22px;
+    }
+
+    @include desktop {
+      width: 24px;
+      height: 24px;
     }
   }
 }
 
 .benefit-content {
+  min-width: 0;
+
   h3 {
     @include heading-3;
-    font-size: $font-size-lg;
-    margin-bottom: $spacing-2;
     color: $text-primary;
+    margin-bottom: $spacing-2;
 
-    @include mobile {
-      font-size: $font-size-base;
+    // Responsive font sizing
+    font-size: $font-size-base;
+
+    @include mobile-sm {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-3;
+    }
+
+    @include tablet {
+      font-size: $font-size-lg;
+    }
+
+    @include desktop {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-2;
     }
   }
 
   p {
     @include body-base;
     color: $text-secondary;
-    font-size: $font-size-sm;
     margin: 0;
     line-height: 1.6;
+
+    // Responsive font sizing
+    font-size: $font-size-xs;
+
+    @include mobile-sm {
+      font-size: $font-size-sm;
+      line-height: 1.65;
+    }
+
+    @include tablet {
+      font-size: $font-size-sm;
+      line-height: 1.7;
+    }
+
+    @include desktop {
+      font-size: $font-size-sm;
+    }
   }
 }
 
@@ -495,122 +900,327 @@
 
 .visual-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-6;
-  
-  @include mobile {
+  justify-items: center;
+
+  // Responsive grid columns and gap
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-3;
+
+  @include mobile-sm {
     grid-template-columns: repeat(2, 1fr);
     gap: $spacing-4;
+  }
+
+  @include mobile-md {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-4;
+  }
+
+  @include mobile-lg {
+    gap: $spacing-5;
+  }
+
+  @include tablet {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-6;
+  }
+
+  @include desktop {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-6;
   }
 }
 
 .visual-item {
   @include card-base;
-  padding: $spacing-6;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: $transition-all;
+  border-radius: $border-radius-xl;
+  background: rgba($neutral-light, 0.3);
+  border: 1px solid rgba($primary, 0.1);
 
-  &:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: $shadow-lg;
+  // Responsive padding
+  padding: $spacing-3;
+
+  @include mobile-sm {
+    padding: $spacing-4;
   }
 
-  @include mobile {
-    padding: $spacing-4;
+  @include mobile-md {
+    padding: $spacing-5;
+  }
+
+  @include tablet {
+    padding: $spacing-6;
+  }
+
+  @include desktop {
+    padding: $spacing-6;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+    border-color: rgba($primary, 0.2);
+
+    @include desktop {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: $shadow-xl;
+    }
   }
 }
 
 .visual-icon {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto $spacing-3 auto;
   color: $primary;
+  margin: 0 auto $spacing-2 auto;
+
+  // Responsive sizing
+  width: 28px;
+  height: 28px;
+
+  @include mobile-sm {
+    width: 32px;
+    height: 32px;
+    margin-bottom: $spacing-3;
+  }
+
+  @include mobile-md {
+    width: 36px;
+    height: 36px;
+  }
+
+  @include tablet {
+    width: 40px;
+    height: 40px;
+  }
+
+  @include desktop {
+    width: 48px;
+    height: 48px;
+    margin-bottom: $spacing-3;
+  }
 
   svg {
     width: 100%;
     height: 100%;
   }
-
-  @include mobile {
-    width: 36px;
-    height: 36px;
-  }
 }
 
 .visual-label {
-  font-size: $font-size-xs;
   color: $text-secondary;
   font-weight: $font-weight-medium;
+  line-height: 1.4;
+
+  // Responsive font sizing
+  font-size: $font-size-2xs;
+
+  @include mobile-sm {
+    font-size: $font-size-xs;
+  }
+
+  @include tablet {
+    font-size: $font-size-xs;
+  }
+
+  @include desktop {
+    font-size: $font-size-xs;
+  }
 }
 
-// Industries CTA Section
+// ===== INDUSTRIES CTA SECTION =====
 .industries-cta {
-  background: $gradient-accent;
+  background: $gradient-primary;
   color: white;
   text-align: center;
+  @include section-padding;
 }
 
 .industries-cta__content {
-  max-width: 800px;
-  margin: 0 auto;
+  @include center-content(900px);
+
+  // Responsive max-width
+  max-width: 100%;
+
+  @include mobile-lg {
+    max-width: 90%;
+  }
+
+  @include tablet {
+    max-width: 85%;
+  }
+
+  @include desktop {
+    max-width: 800px;
+  }
 }
 
 .industries-cta__title {
   @include heading-2;
   color: white;
-  margin-bottom: $spacing-6;
+  margin-bottom: $spacing-4;
+
+  @include mobile-sm {
+    margin-bottom: $spacing-5;
+  }
+
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+
+  @include desktop {
+    margin-bottom: $spacing-6;
+  }
 }
 
 .industries-cta__description {
   @include body-large;
   color: rgba(white, 0.9);
-  margin-bottom: $spacing-8;
+  line-height: 1.7;
+  margin-bottom: $spacing-6;
+
+  @include mobile-sm {
+    margin-bottom: $spacing-7;
+  }
+
+  @include mobile-md {
+    line-height: 1.75;
+  }
+
+  @include tablet {
+    margin-bottom: $spacing-8;
+    font-size: $font-size-xl;
+  }
+
+  @include desktop {
+    margin-bottom: $spacing-8;
+  }
 }
 
 .industries-cta__actions {
   display: flex;
-  gap: $spacing-4;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: $spacing-3;
 
-  @include mobile {
+  @include mobile-sm {
+    gap: $spacing-4;
+  }
+
+  @include tablet {
+    gap: $spacing-6;
+  }
+
+  // Stack buttons on very small screens
+  @include mobile-xs-only {
     flex-direction: column;
     align-items: stretch;
+    gap: $spacing-3;
   }
 
   .btn-secondary {
     background: rgba(white, 0.1);
     border-color: rgba(white, 0.3);
     color: white;
+    backdrop-filter: blur(10px);
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: white;
-      color: $accent;
+      color: $primary;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
     }
   }
 }
 
-// Animations
+// ===== ANIMATIONS =====
 @keyframes rotate {
   from {
     transform: rotate(0deg);
+    opacity: 0.06;
+  }
+  25% {
+    opacity: 0.08;
+  }
+  50% {
+    transform: rotate(180deg);
+    opacity: 0.06;
+  }
+  75% {
+    opacity: 0.08;
   }
   to {
     transform: rotate(360deg);
+    opacity: 0.06;
   }
 }
 
-// Responsive adjustments
-@include mobile {
+// ===== PERFORMANCE OPTIMIZATIONS =====
+.industries-hero,
+.industries-hero::before,
+.industry-card,
+.visual-item {
+  @include hardware-accelerated;
+}
+
+// ===== ACCESSIBILITY ENHANCEMENTS =====
+@include reduced-motion {
+  .industries-hero::before {
+    animation: none;
+  }
+
+  .industry-card:hover,
+  .visual-item:hover {
+    transform: none;
+  }
+
+  .industries-cta__actions .btn-secondary:hover {
+    transform: none;
+  }
+}
+
+// ===== ULTRA-WIDE SCREEN OPTIMIZATIONS =====
+@include desktop-lg {
+  .industries-hero {
+    .container {
+      max-width: $container-4xl;
+    }
+  }
+
+  .industries-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
   .industry-card {
-    text-align: center;
+    padding: $spacing-16;
+    gap: $spacing-20;
   }
-  
-  .industry-card__details {
-    text-align: left;
+}
+
+// ===== SCROLL PADDING FOR FRAGMENT LINKS =====
+.industry-card {
+  scroll-margin-top: 80px;
+
+  @include tablet {
+    scroll-margin-top: 90px;
   }
-  
-  .visual-grid {
-    grid-template-columns: repeat(2, 1fr);
+
+  @include desktop {
+    scroll-margin-top: 100px;
+  }
+}
+
+// ===== PRINT STYLES =====
+@media print {
+  .industries-hero::before,
+  .industry-card__icon,
+  .visual-item:hover,
+  .industry-card:hover {
+    @include print-hidden;
+  }
+
+  .industry-card {
+    break-inside: avoid;
+    margin-bottom: $spacing-8;
   }
 }

@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
 import { ContactService, ContactFormData } from '../../shared/services/contact.service';
+import { SEOService } from '../../shared/services/seo.service';
 
 interface ContactInfo {
   title: string;
@@ -30,10 +31,12 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
   private queryParamsSubscription?: Subscription;
   
   contactForm!: FormGroup;
-  isSubmitting = false;
+  isSubmittingMessage = false;
+  isSubmittingConsultation = false;
   isSubmitted = false;
   isConsultationRequest = false;
   submitError: string | null = null;
+  validationErrors: string[] = [];
   contactInfo: ContactInfo[] = [];
 
   services = [
@@ -50,11 +53,12 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   constructor(
-    private fb: FormBuilder, 
-    private sanitizer: DomSanitizer, 
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private contactService: ContactService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private seoService: SEOService
   ) {
     GsapAnimations.init();
     this.initializeForm();
@@ -62,6 +66,19 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.seoService.updateSEO({
+      title: 'Contact Us',
+      description: 'Get in touch with Vega Sky for AI solutions, cloud infrastructure, and digital transformation services. Contact our technology experts today.',
+      keywords: 'contact Vega Sky, AI consultation, technology support, cloud services contact, digital transformation inquiry',
+      ogTitle: 'Contact Vega Sky - AI & Technology Solutions',
+      ogDescription: 'Get in touch with Vega Sky for AI solutions, cloud infrastructure, and digital transformation services. Contact our technology experts today.',
+      structuredData: this.seoService.getWebPageStructuredData(
+        'Contact Vega Sky - AI & Technology Solutions',
+        'Get in touch with Vega Sky for AI solutions, cloud infrastructure, and digital transformation services. Contact our technology experts today.',
+        'https://vega-sky.com/contact'
+      )
+    });
+
     this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
       if (params['service']) {
         this.contactForm.patchValue({
@@ -160,7 +177,9 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
       GsapAnimations.initScrollAnimations();
       this.animationsInitialized = true;
     } catch (error) {
-      console.warn('Animation initialization failed:', error);
+      if (typeof console !== 'undefined' && console.warn) {
+        console.warn('Animation initialization failed:', error);
+      }
     }
   }
 
@@ -169,19 +188,22 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSubmit(): void {
-    if (this.contactForm.valid && !this.isSubmitting) {
-      this.isSubmitting = true;
-      this.submitError = null;
-      
+    // Clear previous errors
+    this.submitError = null;
+    this.validationErrors = [];
+
+    if (this.contactForm.valid && !this.isSubmittingMessage) {
+      this.isSubmittingMessage = true;
+
       const formData: ContactFormData = this.contactForm.value;
-      
+
       this.contactService.submitContactForm(formData).subscribe({
         next: (response) => {
           if (response.success) {
             this.isSubmitted = true;
             this.isConsultationRequest = false;
             this.contactForm.reset();
-            
+
             // Reset success message after 8 seconds
             setTimeout(() => {
               this.isSubmitted = false;
@@ -190,29 +212,37 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
           } else {
             this.submitError = response.error || 'Failed to send message. Please try again.';
           }
-          this.isSubmitting = false;
+          this.isSubmittingMessage = false;
           this.cdr.detectChanges();
         },
         error: (error) => {
           this.submitError = error.message;
-          this.isSubmitting = false;
+          this.isSubmittingMessage = false;
           this.cdr.detectChanges();
         }
       });
     } else {
-      // Mark all fields as touched to show validation errors
+      // Collect all validation errors for the toaster
+      this.validationErrors = this.collectAllValidationErrors();
+
+      // Mark all fields as touched to show individual field errors
       Object.keys(this.contactForm.controls).forEach(key => {
         this.contactForm.get(key)?.markAsTouched();
       });
+
       this.cdr.detectChanges();
     }
   }
 
   onConsultationRequest(): void {
+    // Clear previous errors
+    this.submitError = null;
+    this.validationErrors = [];
+
     // Validate required fields for consultation
     const requiredFields = ['firstName', 'lastName', 'email', 'company', 'service'];
     let isValid = true;
-    
+
     requiredFields.forEach(field => {
       const control = this.contactForm.get(field);
       if (!control?.value) {
@@ -221,22 +251,21 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    if (isValid && !this.isSubmitting) {
-      this.isSubmitting = true;
-      this.submitError = null;
-      
+    if (isValid && !this.isSubmittingConsultation) {
+      this.isSubmittingConsultation = true;
+
       const formData: ContactFormData = {
         ...this.contactForm.value,
         message: this.contactForm.value.message || 'User requested a 30-minute consultation call.'
       };
-      
+
       this.contactService.submitConsultationRequest(formData).subscribe({
         next: (response) => {
           if (response.success) {
             this.isSubmitted = true;
             this.isConsultationRequest = true;
             this.contactForm.reset();
-            
+
             // Reset success message after 8 seconds
             setTimeout(() => {
               this.isSubmitted = false;
@@ -246,16 +275,19 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
           } else {
             this.submitError = response.error || 'Failed to send consultation request. Please try again.';
           }
-          this.isSubmitting = false;
+          this.isSubmittingConsultation = false;
           this.cdr.detectChanges();
         },
         error: (error) => {
           this.submitError = error.message;
-          this.isSubmitting = false;
+          this.isSubmittingConsultation = false;
           this.cdr.detectChanges();
         }
       });
     } else {
+      // Collect validation errors for consultation request
+      this.validationErrors = this.collectConsultationValidationErrors(requiredFields);
+
       requiredFields.forEach(field => {
         this.contactForm.get(field)?.markAsTouched();
       });
@@ -265,6 +297,7 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
 
   dismissError(): void {
     this.submitError = null;
+    this.validationErrors = [];
     this.cdr.detectChanges();
   }
 
@@ -294,5 +327,63 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
       message: 'Message'
     };
     return displayNames[fieldName] || fieldName;
+  }
+
+  private collectAllValidationErrors(): string[] {
+    const errors: string[] = [];
+    const fieldsToCheck = ['firstName', 'lastName', 'email', 'company', 'service', 'message'];
+
+    fieldsToCheck.forEach(fieldName => {
+      const field = this.contactForm.get(fieldName);
+      if (field && field.invalid) {
+        const fieldDisplayName = this.getFieldDisplayName(fieldName);
+
+        if (field.errors?.['required']) {
+          errors.push(`${fieldDisplayName} is required`);
+        } else if (field.errors?.['email']) {
+          errors.push('Please enter a valid email address');
+        } else if (field.errors?.['minlength']) {
+          const requiredLength = field.errors['minlength'].requiredLength;
+          const actualLength = field.errors['minlength'].actualLength;
+          if (fieldName === 'message') {
+            errors.push(`Message must be at least ${requiredLength} characters (currently ${actualLength})`);
+          } else {
+            errors.push(`${fieldDisplayName} is too short (minimum ${requiredLength} characters)`);
+          }
+        }
+      }
+    });
+
+    if (errors.length === 0) {
+      errors.push('Please check all required fields and try again');
+    }
+
+    return errors;
+  }
+
+  private collectConsultationValidationErrors(requiredFields: string[]): string[] {
+    const errors: string[] = [];
+
+    requiredFields.forEach(fieldName => {
+      const field = this.contactForm.get(fieldName);
+      if (field && field.invalid) {
+        const fieldDisplayName = this.getFieldDisplayName(fieldName);
+
+        if (field.errors?.['required'] || !field.value) {
+          errors.push(`${fieldDisplayName} is required for consultation booking`);
+        } else if (field.errors?.['email']) {
+          errors.push('Please enter a valid email address for consultation booking');
+        } else if (field.errors?.['minlength']) {
+          const requiredLength = field.errors['minlength'].requiredLength;
+          errors.push(`${fieldDisplayName} is too short (minimum ${requiredLength} characters)`);
+        }
+      }
+    });
+
+    if (errors.length === 0) {
+      errors.push('Please complete all required fields to schedule a consultation');
+    }
+
+    return errors;
   }
 }

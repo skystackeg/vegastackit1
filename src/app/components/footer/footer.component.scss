@@ -113,39 +113,35 @@
 }
 
 .footer__logo-image {
-  height: 28px;
-  width: auto;
-  transform: scale(4);
-  margin-left: 3rem;
+  height: 40px;
+  width: 120px;
+  max-width: none;
+  object-fit: contain;
+  display: block;
 
   @media (min-width: 375px) {
-    height: 32px;
-    transform: scale(4.5);
-    margin-left: 3.5rem;
+    height: 42px;
+    width: 126px;
   }
 
   @media (min-width: 480px) {
-    height: 36px;
-    transform: scale(5);
-    margin-left: 4rem;
+    height: 44px;
+    width: 132px;
   }
 
   @media (min-width: 768px) {
-    height: 38px;
-    transform: scale(5.5);
-    margin-left: 5rem;
+    height: 46px;
+    width: 138px;
   }
 
   @media (min-width: 1024px) {
-    height: 40px;
-    transform: scale(6);
-    margin-left: 5.8rem;
+    height: 48px;
+    width: 144px;
   }
 
   @media (min-width: 1200px) {
-    height: 42px;
-    transform: scale(6.2);
-    margin-left: 6rem;
+    height: 50px;
+    width: 150px;
   }
 }
 

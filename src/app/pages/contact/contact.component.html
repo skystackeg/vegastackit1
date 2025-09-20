@@ -34,8 +34,45 @@
               </svg>
             </div>
             <div class="success-message__content">
-              <h3>Message Sent Successfully!</h3>
-              <p>Thank you for reaching out. We'll get back to you soon.</p>
+              <h3 *ngIf="!isConsultationRequest">Message Sent Successfully!</h3>
+              <h3 *ngIf="isConsultationRequest">Consultation Scheduled!</h3>
+              <p *ngIf="!isConsultationRequest">Thank you for reaching out. We'll get back to you within 24 hours.</p>
+              <p *ngIf="isConsultationRequest">Thank you for scheduling a consultation. We'll contact you soon to confirm the details.</p>
+            </div>
+          </div>
+
+          <!-- Error Message Toaster -->
+          <div *ngIf="submitError || validationErrors.length > 0" class="error-toaster">
+            <div class="error-toaster__header">
+              <div class="error-toaster__icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                  <path d="M15 9L9 15M9 9L15 15" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="error-toaster__title">
+                <h4 *ngIf="submitError">Submission Failed</h4>
+                <h4 *ngIf="!submitError && validationErrors.length > 0">Please Fix the Following Issues</h4>
+              </div>
+              <button class="error-toaster__dismiss" (click)="dismissError()" aria-label="Dismiss error">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </button>
+            </div>
+            <div class="error-toaster__content">
+              <!-- Network/Server Error -->
+              <p *ngIf="submitError" class="error-toaster__message">{{ submitError }}</p>
+
+              <!-- Validation Errors -->
+              <ul *ngIf="validationErrors.length > 0" class="error-toaster__list">
+                <li *ngFor="let error of validationErrors" class="error-toaster__item">
+                  <svg viewBox="0 0 16 16" fill="none" class="error-toaster__bullet">
+                    <circle cx="8" cy="8" r="2" fill="currentColor"/>
+                  </svg>
+                  {{ error }}
+                </li>
+              </ul>
             </div>
           </div>
 
@@ -151,14 +188,14 @@
               </span>
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               class="btn-primary form-submit"
-              [disabled]="isSubmitting"
-              [class.loading]="isSubmitting"
+              [disabled]="isSubmittingMessage"
+              [class.loading]="isSubmittingMessage"
             >
-              <span *ngIf="!isSubmitting">Send Message</span>
-              <span *ngIf="isSubmitting">Sending...</span>
+              <span *ngIf="!isSubmittingMessage">Send Message</span>
+              <span *ngIf="isSubmittingMessage">Sending...</span>
             </button>
           </form>
         </div>
@@ -185,14 +222,15 @@
           <div class="contact-info__cta">
             <h4>Prefer to schedule a call?</h4>
             <p>Book a free 30-minute consultation to discuss your project.</p>
-            <button 
-  class="btn-secondary" 
-  (click)="onConsultationRequest()"
-  [disabled]="isSubmitting"
-  [class.loading]="isSubmitting">
-  <span *ngIf="!isSubmitting">Schedule Consultation</span>
-  <span *ngIf="isSubmitting">Scheduling...</span>
-</button>
+            <button
+              class="btn-secondary"
+              (click)="onConsultationRequest()"
+              [disabled]="isSubmittingConsultation"
+              [class.loading]="isSubmittingConsultation"
+            >
+              <span *ngIf="!isSubmittingConsultation">Schedule Consultation</span>
+              <span *ngIf="isSubmittingConsultation">Scheduling...</span>
+            </button>
           </div>
         </div>
       </div>

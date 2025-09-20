@@ -7,6 +7,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Service } from '../../shared/models/service.interface';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
 import { Router } from '@angular/router';
+import { SEOService } from '../../shared/services/seo.service';
 @Component({
   selector: 'app-services',
   standalone: true,
@@ -20,7 +21,12 @@ private fragmentSubscription?: Subscription;  // ADD this
   private animationsInitialized = false;        // ADD this
   services: Service[] = [];
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private router: Router,
+    private seoService: SEOService
+  ) {
 	 GsapAnimations.init();
     this.services = [
 				      {
@@ -469,6 +475,19 @@ private fragmentSubscription?: Subscription;  // ADD this
   }
 
 ngOnInit(): void {
+  this.seoService.updateSEO({
+    title: 'Our Services',
+    description: 'Explore our comprehensive range of AI solutions, cloud infrastructure, app development, software engineering, data intelligence, and quality assurance services.',
+    keywords: 'AI solutions, cloud infrastructure, app development, software engineering, data intelligence, quality assurance, ERP systems, digital transformation',
+    ogTitle: 'Vega Sky Services - AI, Cloud & Software Solutions',
+    ogDescription: 'Explore our comprehensive range of AI solutions, cloud infrastructure, app development, software engineering, data intelligence, and quality assurance services.',
+    structuredData: this.seoService.getWebPageStructuredData(
+      'Vega Sky Services - AI, Cloud & Software Solutions',
+      'Explore our comprehensive range of AI solutions, cloud infrastructure, app development, software engineering, data intelligence, and quality assurance services.',
+      'https://vega-sky.com/services'
+    )
+  });
+
   // Subscribe to fragment changes
   this.fragmentSubscription = this.route.fragment.subscribe(fragment => {
     if (fragment) {
@@ -518,7 +537,9 @@ private initializeAnimations(): void {
     
     this.animationsInitialized = true;
   } catch (error) {
-    console.warn('Animation initialization failed:', error);
+    if (typeof console !== 'undefined' && console.warn) {
+      console.warn('Animation initialization failed:', error);
+    }
   }
 }
 

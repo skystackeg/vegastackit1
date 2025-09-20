@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
+import { SEOService } from '../../shared/services/seo.service';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -16,6 +17,7 @@ export class PrivacyPolicyComponent implements OnInit, AfterViewInit, OnDestroy 
   private router = inject(Router);
   private meta = inject(Meta);
   private title = inject(Title);
+  private seoService = inject(SEOService);
   
   lastUpdated = 'December 15, 2024';
   effectiveDate = 'December 15, 2024';
@@ -81,6 +83,19 @@ export class PrivacyPolicyComponent implements OnInit, AfterViewInit, OnDestroy 
   ];
 
   ngOnInit(): void {
+    this.seoService.updateSEO({
+      title: 'Privacy Policy',
+      description: 'Read Vega Sky\'s privacy policy to understand how we collect, use, and protect your personal information when using our AI and technology services.',
+      keywords: 'privacy policy, data protection, personal information, Vega Sky privacy, user data',
+      ogTitle: 'Privacy Policy - Vega Sky',
+      ogDescription: 'Read Vega Sky\'s privacy policy to understand how we collect, use, and protect your personal information when using our AI and technology services.',
+      structuredData: this.seoService.getWebPageStructuredData(
+        'Privacy Policy - Vega Sky',
+        'Read Vega Sky\'s privacy policy to understand how we collect, use, and protect your personal information.',
+        'https://vega-sky.com/PrivacyandPolicy'
+      )
+    });
+
     this.setMetaTags();
     GsapAnimations.init();
   }
@@ -153,12 +168,18 @@ export class PrivacyPolicyComponent implements OnInit, AfterViewInit, OnDestroy 
       navigator.share({
         title: 'Vega Sky Privacy Policy',
         url: window.location.href,
-      }).catch(console.error);
+      }).catch((error) => {
+        if (typeof console !== 'undefined' && console.error) {
+          console.error(error);
+        }
+      });
     } else {
       // Fallback: copy to clipboard
       navigator.clipboard.writeText(window.location.href).then(() => {
         // You could show a toast notification here
-        console.log('URL copied to clipboard');
+        if (typeof console !== 'undefined' && console.log) {
+          console.log('URL copied to clipboard');
+        }
       });
     }
   }

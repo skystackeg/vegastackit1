@@ -86,32 +86,41 @@
 }
 
 .header__logo-image {
-  height: auto;
-  width: 100px;
+  height: 40px;
+  width: 120px;
+  max-width: none;
+  object-fit: contain;
+  display: block;
   
-  // Responsive logo sizing
+  // Responsive logo sizing with fixed dimensions
   @include mobile-xs {
-    width: 100px;
-  }
-  
-  @include mobile-sm {
+    height: 35px;
     width: 105px;
   }
-  
+
+  @include mobile-sm {
+    height: 36px;
+    width: 108px;
+  }
+
   @include mobile-md {
-    width: 110px;
+    height: 38px;
+    width: 114px;
   }
-  
+
   @include mobile-lg {
-    width: 115px;
+    height: 39px;
+    width: 117px;
   }
-  
+
   @include tablet {
-    width: 120px;
+    height: 42px;
+    width: 126px;
   }
-  
+
   @include desktop {
-    width: 125px;
+    height: 45px;
+    width: 135px;
   }
   
   @include desktop-lg {
@@ -422,16 +431,7 @@
 
 // ===== MEDIA QUERY OPTIMIZATIONS =====
 
-// Extra small screens (320px - 374px)
-@include mobile-xs-only {
-  .header-content {
-    padding: $spacing-2-5 0;
-  }
-  
-  .header__logo-image {
-    width: 26px;
-  }
-}
+
 
 // Large tablets and small desktops (768px - 1023px)
 @include tablet-range {

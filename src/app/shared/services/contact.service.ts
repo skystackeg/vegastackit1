@@ -64,7 +64,9 @@ export class ContactService {
       }
     }
 
-    console.error('Contact service error:', error);
+    if (typeof console !== 'undefined' && console.error) {
+      console.error('Contact service error:', error);
+    }
     return throwError(() => new Error(errorMessage));
   }
 }

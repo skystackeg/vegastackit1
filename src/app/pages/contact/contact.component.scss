@@ -316,6 +316,185 @@
   }
 }
 
+// ===== ERROR TOASTER =====
+.error-toaster {
+  background: rgba($danger, 0.05);
+  border: 1px solid rgba($danger, 0.2);
+  border-radius: $border-radius-lg;
+  margin-bottom: $spacing-6;
+  animation: slideInDown 0.3s ease-out;
+
+  // Responsive padding
+  padding: $spacing-4;
+
+  @include mobile-sm {
+    padding: $spacing-5;
+  }
+
+  @include tablet {
+    padding: $spacing-6;
+  }
+
+  @include desktop {
+    padding: $spacing-6;
+  }
+}
+
+.error-toaster__header {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-3;
+  margin-bottom: $spacing-3;
+
+  @include mobile-sm {
+    gap: $spacing-4;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.error-toaster__icon {
+  flex-shrink: 0;
+  color: $danger;
+
+  // Responsive icon sizing
+  width: 20px;
+  height: 20px;
+
+  @include mobile-sm {
+    width: 22px;
+    height: 22px;
+  }
+
+  @include tablet {
+    width: 24px;
+    height: 24px;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.error-toaster__title {
+  flex: 1;
+  min-width: 0;
+
+  h4 {
+    font-weight: $font-weight-semibold;
+    color: $danger;
+    margin: 0;
+
+    // Responsive font sizing
+    font-size: $font-size-base;
+
+    @include mobile-sm {
+      font-size: $font-size-lg;
+    }
+
+    @include tablet {
+      font-size: $font-size-lg;
+    }
+  }
+}
+
+.error-toaster__dismiss {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: $danger;
+  cursor: pointer;
+  padding: $spacing-1;
+  border-radius: $border-radius;
+  transition: $transition-all;
+
+  // Responsive sizing
+  width: 24px;
+  height: 24px;
+
+  @include mobile-sm {
+    width: 28px;
+    height: 28px;
+  }
+
+  &:hover {
+    background: rgba($danger, 0.1);
+    transform: scale(1.1);
+  }
+
+  &:focus {
+    outline: 2px solid rgba($danger, 0.3);
+    outline-offset: 2px;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.error-toaster__content {
+  .error-toaster__message {
+    color: $danger;
+    margin: 0;
+    font-weight: $font-weight-medium;
+
+    // Responsive font sizing
+    font-size: $font-size-sm;
+
+    @include mobile-sm {
+      font-size: $font-size-base;
+    }
+  }
+
+  .error-toaster__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+
+    @include mobile-sm {
+      gap: $spacing-3;
+    }
+  }
+
+  .error-toaster__item {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-2;
+    color: $text-primary;
+
+    // Responsive font sizing
+    font-size: $font-size-xs;
+
+    @include mobile-sm {
+      font-size: $font-size-sm;
+      gap: $spacing-3;
+    }
+
+    @include tablet {
+      font-size: $font-size-sm;
+    }
+  }
+
+  .error-toaster__bullet {
+    flex-shrink: 0;
+    color: $danger;
+    margin-top: 0.25em; // Align with first line of text
+
+    // Responsive sizing
+    width: 12px;
+    height: 12px;
+
+    @include mobile-sm {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
 // ===== FORM STYLES =====
 .contact-form {
   display: flex;
@@ -870,6 +1049,17 @@
   75% {
     transform: translateY(-5px) scale(1.02);
     opacity: 0.12;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 

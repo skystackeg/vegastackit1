@@ -6,6 +6,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
 import { OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { SEOService } from '../../shared/services/seo.service';
 
 interface Value {
   id: string;
@@ -38,7 +39,11 @@ private fragmentSubscription?: Subscription;
     { number: '5+', label: 'Years Experience' }
   ];
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+  constructor(
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private seoService: SEOService
+  ) {
     GsapAnimations.init();  // ADD this line
     this.values = [
       {
@@ -169,6 +174,19 @@ private fragmentSubscription?: Subscription;
   }
 
 ngOnInit(): void {
+  this.seoService.updateSEO({
+    title: 'About Us',
+    description: 'Learn about Vega Sky\'s mission, values, and expertise in AI solutions, cloud infrastructure, and digital transformation. Meet our team of technology experts.',
+    keywords: 'about Vega Sky, AI company, cloud experts, digital transformation team, technology consulting mission, values',
+    ogTitle: 'About Vega Sky - AI & Technology Experts',
+    ogDescription: 'Learn about Vega Sky\'s mission, values, and expertise in AI solutions, cloud infrastructure, and digital transformation. Meet our team of technology experts.',
+    structuredData: this.seoService.getWebPageStructuredData(
+      'About Vega Sky - AI & Technology Experts',
+      'Learn about Vega Sky\'s mission, values, and expertise in AI solutions, cloud infrastructure, and digital transformation.',
+      'https://vega-sky.com/about'
+    )
+  });
+
   this.fragmentSubscription = this.route.fragment.subscribe(fragment => {
     if (fragment) {
       // Wait longer for view initialization and animations
@@ -212,31 +230,34 @@ private initializeAnimations(): void {
     GsapAnimations.initScrollAnimations();
     this.animationsInitialized = true;
   } catch (error) {
-    console.warn('Animation initialization failed:', error);
+    if (typeof console !== 'undefined' && console.warn) {
+      console.warn('Animation initialization failed:', error);
+    }
   }
 }
 
 refreshAnimations(): void {
   GsapAnimations.refresh();
 }
-
 private scrollToFragment(fragment: string): void {
   // Wait for animations and DOM to be fully ready
   setTimeout(() => {
     const element = document.getElementById(fragment);
     if (element) {
-      // Get header height for proper offset
+      // Optimize: batch layout reads to prevent forced reflow
       const header = document.querySelector('header') || document.querySelector('.header');
-      const headerHeight = header ? header.offsetHeight : 80;
+
+      // Use requestAnimationFrame to batch DOM reads
+      requestAnimationFrame(() => {
+        const headerHeight = header ? header.offsetHeight : 80;
+        const elementPosition = element.offsetTop;
+        const offsetPosition = elementPosition - headerHeight - 20; // Extra 20px padding
       
-      // Use native scrolling with proper offset
-      const elementPosition = element.offsetTop;
-      const offsetPosition = elementPosition - headerHeight - 20; // Extra 20px padding
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }); // <-- Missing closing brace and parenthesis were here
     }
   }, 500); // Increased delay to ensure animations complete
 }

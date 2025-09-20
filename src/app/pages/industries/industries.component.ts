@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
 import { Subscription } from 'rxjs';
+import { SEOService } from '../../shared/services/seo.service';
 
 interface Industry {
   id: string;
@@ -35,7 +36,12 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   industries: Industry[] = [];
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private router: Router,
+    private seoService: SEOService
+  ) {
     // Initialize GSAP early
     GsapAnimations.init();
 
@@ -243,6 +249,19 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.seoService.updateSEO({
+      title: 'Industries We Serve',
+      description: 'Discover how Vega Sky delivers specialized AI and technology solutions across healthcare, fintech, e-commerce, manufacturing, education, and retail industries.',
+      keywords: 'healthcare technology, fintech solutions, e-commerce AI, manufacturing automation, education technology, retail innovation, industry solutions',
+      ogTitle: 'Industries We Serve - Vega Sky Technology Solutions',
+      ogDescription: 'Discover how Vega Sky delivers specialized AI and technology solutions across healthcare, fintech, e-commerce, manufacturing, education, and retail industries.',
+      structuredData: this.seoService.getWebPageStructuredData(
+        'Industries We Serve - Vega Sky Technology Solutions',
+        'Discover how Vega Sky delivers specialized AI and technology solutions across healthcare, fintech, e-commerce, manufacturing, education, and retail industries.',
+        'https://vega-sky.com/industries'
+      )
+    });
+
     // Subscribe to fragment changes
     this.fragmentSubscription = this.route.fragment.subscribe(fragment => {
       if (fragment) {
@@ -286,7 +305,9 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
       
       this.animationsInitialized = true;
     } catch (error) {
-      console.warn('Animation initialization failed:', error);
+      if (typeof console !== 'undefined' && console.warn) {
+        console.warn('Animation initialization failed:', error);
+      }
     }
   }
 

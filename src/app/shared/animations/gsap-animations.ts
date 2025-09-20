@@ -6,12 +6,17 @@ export class GsapAnimations {
   private static initialized = false;
   private static scrollTriggers: ScrollTrigger[] = [];
 
+  // Check if we're running in browser environment
+  private static isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof document !== 'undefined';
+  }
+
   // Initialize GSAP with performance optimizations
   static init() {
-    if (this.initialized) return;
-    
+    if (this.initialized || !this.isBrowser()) return;
+
     gsap.registerPlugin(ScrollTrigger);
-    
+
     // Configure GSAP for better performance
     gsap.config({
       force3D: true,
@@ -38,6 +43,8 @@ export class GsapAnimations {
 
   // Clear all ScrollTriggers
   static cleanup() {
+    if (!this.isBrowser()) return;
+
     this.scrollTriggers.forEach(st => st.kill());
     this.scrollTriggers = [];
     ScrollTrigger.killAll();
@@ -45,6 +52,8 @@ export class GsapAnimations {
 
   // Fade in animation with will-change optimization
   static fadeIn(element: string | Element, duration: number = 1, delay: number = 0) {
+    if (!this.isBrowser()) return null;
+
     const targets = gsap.utils.toArray(element);
     if (!targets.length) return null;
 
@@ -76,6 +85,8 @@ export class GsapAnimations {
 
   // Scale in animation
   static scaleIn(element: string | Element, duration: number = 0.8, delay: number = 0) {
+    if (!this.isBrowser()) return null;
+
     const targets = gsap.utils.toArray(element);
     if (!targets.length) return null;
 
@@ -103,6 +114,8 @@ export class GsapAnimations {
 
   // Slide in from left
   static slideInLeft(element: string | Element, duration: number = 1, delay: number = 0) {
+    if (!this.isBrowser()) return null;
+
     const targets = gsap.utils.toArray(element);
     if (!targets.length) return null;
 
@@ -130,6 +143,8 @@ export class GsapAnimations {
 
   // Slide in from right
   static slideInRight(element: string | Element, duration: number = 1, delay: number = 0) {
+    if (!this.isBrowser()) return null;
+
     const targets = gsap.utils.toArray(element);
     if (!targets.length) return null;
 
@@ -157,6 +172,8 @@ export class GsapAnimations {
 
   // Optimized stagger animation
   static staggerFadeIn(elements: string | Element[], duration: number = 1, stagger: number = 0.2) {
+    if (!this.isBrowser()) return null;
+
     const targets = gsap.utils.toArray(elements);
     if (!targets.length) return null;
 
@@ -187,6 +204,8 @@ export class GsapAnimations {
 
   // Optimized hero animation
   static heroAnimation() {
+    if (!this.isBrowser()) return null;
+
     const heroTitle = document.querySelector('.hero-title');
     const heroSubtitle = document.querySelector('.hero-subtitle');
     const heroCta = document.querySelector('.hero-cta');
@@ -230,6 +249,8 @@ export class GsapAnimations {
 
   // Optimized card hover animations
   static cardHover(element: string | Element) {
+    if (!this.isBrowser()) return;
+
     const target = gsap.utils.toArray(element)[0];
     if (!target) return;
 
@@ -244,6 +265,8 @@ export class GsapAnimations {
   }
 
   static cardHoverOut(element: string | Element) {
+    if (!this.isBrowser()) return;
+
     const target = gsap.utils.toArray(element)[0];
     if (!target) return;
 
@@ -261,6 +284,8 @@ export class GsapAnimations {
 
   // Highly optimized scroll animations
   static initScrollAnimations() {
+    if (!this.isBrowser()) return;
+
     this.init();
 
     // Wait for DOM to be fully loaded
@@ -274,6 +299,8 @@ export class GsapAnimations {
   }
 
   private static setupScrollAnimations() {
+    if (!this.isBrowser()) return;
+
     // Clear existing ScrollTriggers
     this.cleanup();
 
@@ -359,6 +386,8 @@ export class GsapAnimations {
 
   // Enhanced smooth scroll
   static scrollToElement(target: string, duration: number = 1, offset: number = 80) {
+    if (!this.isBrowser()) return;
+
     const element = document.querySelector(target);
     if (!element) return;
 
@@ -385,12 +414,14 @@ export class GsapAnimations {
 
   // Refresh ScrollTriggers manually
   static refresh() {
+    if (!this.isBrowser()) return;
+
     requestAnimationFrame(() => {
       ScrollTrigger.refresh();
     });
   }
 
-  // Check if element is in viewport (fallback)
+  // Check if element is in viewport (optimized with batched reads)
   static isInViewport(element: Element): boolean {
     const rect = element.getBoundingClientRect();
     return (

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
+import { SEOService } from '../../shared/services/seo.service';
 
 @Component({
   selector: 'app-terms-conditions',
@@ -16,6 +17,7 @@ export class TermsConditionsComponent implements OnInit, AfterViewInit, OnDestro
   private router = inject(Router);
   private meta = inject(Meta);
   private title = inject(Title);
+  private seoService = inject(SEOService);
   
   lastUpdated = 'December 15, 2024';
   effectiveDate = 'December 15, 2024';
@@ -112,6 +114,19 @@ export class TermsConditionsComponent implements OnInit, AfterViewInit, OnDestro
   ];
 
   ngOnInit(): void {
+    this.seoService.updateSEO({
+      title: 'Terms & Conditions',
+      description: 'Read Vega Sky\'s terms and conditions governing the use of our AI solutions, cloud infrastructure, and technology services.',
+      keywords: 'terms and conditions, terms of service, legal agreement, Vega Sky terms, service agreement',
+      ogTitle: 'Terms & Conditions - Vega Sky',
+      ogDescription: 'Read Vega Sky\'s terms and conditions governing the use of our AI solutions, cloud infrastructure, and technology services.',
+      structuredData: this.seoService.getWebPageStructuredData(
+        'Terms & Conditions - Vega Sky',
+        'Read Vega Sky\'s terms and conditions governing the use of our AI solutions, cloud infrastructure, and technology services.',
+        'https://vega-sky.com/TermsandConditions'
+      )
+    });
+
     this.setMetaTags();
     GsapAnimations.init();
   }
@@ -185,10 +200,16 @@ export class TermsConditionsComponent implements OnInit, AfterViewInit, OnDestro
       navigator.share({
         title: 'Vega Sky Terms & Conditions',
         url: window.location.href,
-      }).catch(console.error);
+      }).catch((error) => {
+        if (typeof console !== 'undefined' && console.error) {
+          console.error(error);
+        }
+      });
     } else {
       navigator.clipboard.writeText(window.location.href).then(() => {
-        console.log('URL copied to clipboard');
+        if (typeof console !== 'undefined' && console.log) {
+          console.log('URL copied to clipboard');
+        }
       });
     }
   }
