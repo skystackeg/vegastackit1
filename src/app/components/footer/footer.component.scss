@@ -1,12 +1,35 @@
 // src/app/components/footer/footer.component.scss
 @import '../../assets/styles/variables';
 @import '../../assets/styles/mixins';
+// Add this at the top of your footer component styles
+.footer {
+  // Force font loading and prevent layout shifts
+  font-display: swap;
+  
+  // Reserve space for fonts before they load
+  &, * {
+    font-display: swap;
+  }
+}
 
+// Prevent font loading shifts
+.footer__logo-text,
+.footer__column-title {
+  // Reserve minimum height before fonts load
+  min-height: 1.2em;
+  
+  // Prevent text jumping during font loading
+  font-display: swap;
+  text-rendering: optimizeSpeed;
+}
 .footer {
   background: $gradient-primary;
   color: white;
   position: relative;
   overflow: hidden;
+  
+  // Add will-change to prepare for animation
+  will-change: transform;
 
   &::before {
     content: '';
@@ -17,29 +40,13 @@
     bottom: 0;
     background: rgba(black, 0.1);
     z-index: 1;
-  }
-
-  .container {
-    position: relative;
-    z-index: 2;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 $spacing-4;
-
-    @media (min-width: 768px) {
-      padding: 0 $spacing-6;
-    }
-
-    @media (min-width: 1024px) {
-      padding: 0 $spacing-8;
-    }
-
-    @media (min-width: 1200px) {
-      padding: 0 $spacing-10;
-    }
+    
+    // ADD THESE PROPERTIES to prevent layout shift:
+    transform: translateZ(0); // Force hardware acceleration
+    will-change: auto; // Prepare for GPU rendering
+    backface-visibility: hidden; // Prevent flickering
   }
 }
-
 .footer-content {
   @include section-padding;
   
