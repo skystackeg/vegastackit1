@@ -501,17 +501,31 @@ ngOnInit(): void {
 
 ngAfterViewInit(): void {
   // Initialize animations first
-  requestAnimationFrame(() => {
-    this.initializeAnimations();
-    
-    // Then handle any existing fragment after animations are set up
-    const fragment = this.route.snapshot.fragment;
-    if (fragment) {
-      setTimeout(() => {
-        this.scrollToFragment(fragment);
-      }, 800); // Wait for animations to complete
-    }
-  });
+  if (typeof requestAnimationFrame !== 'undefined') {
+    requestAnimationFrame(() => {
+      this.initializeAnimations();
+
+      // Then handle any existing fragment after animations are set up
+      const fragment = this.route.snapshot.fragment;
+      if (fragment) {
+        setTimeout(() => {
+          this.scrollToFragment(fragment);
+        }, 800); // Wait for animations to complete
+      }
+    });
+  } else {
+    // Fallback for SSR
+    setTimeout(() => {
+      this.initializeAnimations();
+
+      const fragment = this.route.snapshot.fragment;
+      if (fragment) {
+        setTimeout(() => {
+          this.scrollToFragment(fragment);
+        }, 800);
+      }
+    }, 16);
+  }
 }
 ngOnDestroy(): void {
   // Clean up subscriptions and animations
@@ -525,6 +539,9 @@ ngOnDestroy(): void {
 private initializeAnimations(): void {
   if (this.animationsInitialized) return;
 
+  // Only initialize animations in browser environment
+  if (typeof document === 'undefined') return;
+
   // Animate hero content with error handling
   try {
     const heroContent = document.querySelector('.services-hero__content');
@@ -534,7 +551,7 @@ private initializeAnimations(): void {
 
     // Initialize scroll animations
     GsapAnimations.initScrollAnimations();
-    
+
     this.animationsInitialized = true;
   } catch (error) {
     if (typeof console !== 'undefined' && console.warn) {
@@ -556,15 +573,16 @@ private scrollToFragment(fragment: string): void {
       // Get header height for proper offset
       const header = document.querySelector('header') || document.querySelector('.header');
       const headerHeight = header ? header.offsetHeight : 80;
-      
-      // Use native scrolling with proper offset
-      const elementPosition = element.offsetTop;
-      const offsetPosition = elementPosition - headerHeight - 20; // Extra 20px padding
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+
+      // Use improved GSAP scrollToElement with proper fallback
+      GsapAnimations.scrollToElement(`#${fragment}`, 1, headerHeight + 20)
+        .catch(() => {
+          // Fallback to native scrollIntoView if GSAP fails
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        });
     }
   }, 500); // Increased delay to ensure animations complete
 }

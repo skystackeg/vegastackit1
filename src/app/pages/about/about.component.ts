@@ -1,7 +1,7 @@
 // src/app/pages/about/about.component.ts
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { GsapAnimations } from '../../shared/animations/gsap-animations';
 import { OnDestroy, ChangeDetectionStrategy } from '@angular/core';
@@ -41,6 +41,7 @@ private fragmentSubscription?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private sanitizer: DomSanitizer,
     private seoService: SEOService
   ) {
@@ -199,17 +200,31 @@ ngOnInit(): void {
 
 ngAfterViewInit(): void {
   // Initialize animations first
-  requestAnimationFrame(() => {
-    this.initializeAnimations();
-    
-    // Then handle any existing fragment after animations are set up
-    const fragment = this.route.snapshot.fragment;
-    if (fragment) {
-      setTimeout(() => {
-        this.scrollToFragment(fragment);
-      }, 800); // Wait for animations to complete
-    }
-  });
+  if (typeof requestAnimationFrame !== 'undefined') {
+    requestAnimationFrame(() => {
+      this.initializeAnimations();
+
+      // Then handle any existing fragment after animations are set up
+      const fragment = this.route.snapshot.fragment;
+      if (fragment) {
+        setTimeout(() => {
+          this.scrollToFragment(fragment);
+        }, 800); // Wait for animations to complete
+      }
+    });
+  } else {
+    // Fallback for SSR
+    setTimeout(() => {
+      this.initializeAnimations();
+
+      const fragment = this.route.snapshot.fragment;
+      if (fragment) {
+        setTimeout(() => {
+          this.scrollToFragment(fragment);
+        }, 800);
+      }
+    }, 16);
+  }
 }
 ngOnDestroy(): void {
   if (this.fragmentSubscription) {
@@ -220,6 +235,9 @@ ngOnDestroy(): void {
 
 private initializeAnimations(): void {
   if (this.animationsInitialized) return;
+
+  // Only initialize animations in browser environment
+  if (typeof document === 'undefined') return;
 
   try {
     const heroContent = document.querySelector('.about-hero__content');
@@ -244,21 +262,44 @@ private scrollToFragment(fragment: string): void {
   setTimeout(() => {
     const element = document.getElementById(fragment);
     if (element) {
-      // Optimize: batch layout reads to prevent forced reflow
+      // Get header height for proper offset
       const header = document.querySelector('header') || document.querySelector('.header');
 
       // Use requestAnimationFrame to batch DOM reads
-      requestAnimationFrame(() => {
-        const headerHeight = header ? header.offsetHeight : 80;
-        const elementPosition = element.offsetTop;
-        const offsetPosition = elementPosition - headerHeight - 20; // Extra 20px padding
-      
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
+      if (typeof requestAnimationFrame !== 'undefined') {
+        requestAnimationFrame(() => {
+          const headerHeight = header ? header.offsetHeight : 80;
+
+          // Use improved GSAP scrollToElement with proper fallback
+          GsapAnimations.scrollToElement(`#${fragment}`, 1, headerHeight + 20)
+            .catch(() => {
+              // Fallback to native scrollIntoView if GSAP fails
+              element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            });
         });
-      }); // <-- Missing closing brace and parenthesis were here
+      } else {
+        // Fallback for SSR
+        const headerHeight = header ? header.offsetHeight : 80;
+        GsapAnimations.scrollToElement(`#${fragment}`, 1, headerHeight + 20)
+          .catch(() => {
+            element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          });
+      }
     }
   }, 500); // Increased delay to ensure animations complete
+}
+
+navigateToContact(): void {
+  this.router.navigate(['/contact']);
+}
+
+navigateToServices(): void {
+  this.router.navigate(['/services']);
 }
 }

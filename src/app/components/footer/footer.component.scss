@@ -39,8 +39,8 @@
     right: 0;
     bottom: 0;
     background: rgba(black, 0.1);
-    z-index: 1;
-    
+    z-index: -1; // Move behind content to not block clicks
+
     // ADD THESE PROPERTIES to prevent layout shift:
     transform: translateZ(0); // Force hardware acceleration
     will-change: auto; // Prepare for GPU rendering

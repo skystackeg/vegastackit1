@@ -1,6 +1,7 @@
 // src/app/shared/animations/gsap-animations.ts
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 export class GsapAnimations {
   private static initialized = false;
@@ -11,11 +12,21 @@ export class GsapAnimations {
     return typeof window !== 'undefined' && typeof document !== 'undefined';
   }
 
+  // Safe requestAnimationFrame for SSR
+  private static safeRequestAnimationFrame(callback: FrameRequestCallback): number {
+    if (this.isBrowser() && typeof requestAnimationFrame !== 'undefined') {
+      return requestAnimationFrame(callback);
+    } else {
+      // Fallback for SSR - use setTimeout
+      return setTimeout(callback, 16) as any; // 16ms ≈ 60fps
+    }
+  }
+
   // Initialize GSAP with performance optimizations
   static init() {
     if (this.initialized || !this.isBrowser()) return;
 
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     // Configure GSAP for better performance
     gsap.config({
@@ -60,17 +71,17 @@ export class GsapAnimations {
     // Add will-change for better performance
     gsap.set(targets, { willChange: "transform, opacity" });
 
-    const tl = gsap.fromTo(targets, 
-      { 
-        opacity: 0, 
-        y: 30,
-        force3D: true 
+    const tl = gsap.fromTo(targets,
+      {
+        opacity: 0,
+        y: -30,
+        force3D: true
       },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration, 
-        delay, 
+      {
+        opacity: 1,
+        y: 0,
+        duration,
+        delay,
         ease: "power2.out",
         force3D: true,
         onComplete: () => {
@@ -180,19 +191,19 @@ export class GsapAnimations {
     gsap.set(targets, { willChange: "transform, opacity" });
 
     return gsap.fromTo(targets,
-      { 
-        opacity: 0, 
-        y: 30,
-        force3D: true 
+      {
+        opacity: 0,
+        y: -30,
+        force3D: true
       },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration, 
+      {
+        opacity: 1,
+        y: 0,
+        duration,
         stagger: {
           amount: stagger * (targets.length - 1),
           from: "start"
-        }, 
+        },
         ease: "power2.out",
         force3D: true,
         onComplete: () => {
@@ -216,8 +227,8 @@ export class GsapAnimations {
     
     if (heroTitle) {
       gsap.set(heroTitle, { willChange: "transform, opacity" });
-      tl.fromTo(heroTitle, 
-        { opacity: 0, y: 50, force3D: true },
+      tl.fromTo(heroTitle,
+        { opacity: 0, y: -50, force3D: true },
         { opacity: 1, y: 0, duration: 1.2, ease: "power2.out", force3D: true }
       );
     }
@@ -225,7 +236,7 @@ export class GsapAnimations {
     if (heroSubtitle) {
       gsap.set(heroSubtitle, { willChange: "transform, opacity" });
       tl.fromTo(heroSubtitle,
-        { opacity: 0, y: 30, force3D: true },
+        { opacity: 0, y: -30, force3D: true },
         { opacity: 1, y: 0, duration: 1, ease: "power2.out", force3D: true },
         "-=0.8"
       );
@@ -309,12 +320,12 @@ export class GsapAnimations {
     
     if (animateElements.length > 0) {
       animateElements.forEach((element: Element) => {
-        // Set initial state
-        gsap.set(element, { 
-          opacity: 0, 
-          y: 50, 
+        // Set initial state - animate from top to bottom
+        gsap.set(element, {
+          opacity: 0,
+          y: -50,
           force3D: true,
-          willChange: "transform, opacity" 
+          willChange: "transform, opacity"
         });
 
         const st = ScrollTrigger.create({
@@ -345,13 +356,13 @@ export class GsapAnimations {
     
     if (serviceCards.length > 0) {
       serviceCards.forEach((element: Element, index: number) => {
-        // Set initial state
-        gsap.set(element, { 
-          opacity: 0, 
-          y: 30, 
-          scale: 0.95, 
+        // Set initial state - animate from top to bottom
+        gsap.set(element, {
+          opacity: 0,
+          y: -30,
+          scale: 0.95,
           force3D: true,
-          willChange: "transform, opacity" 
+          willChange: "transform, opacity"
         });
 
         const st = ScrollTrigger.create({
@@ -379,36 +390,47 @@ export class GsapAnimations {
     }
 
     // Manually refresh ScrollTrigger after setup
-    requestAnimationFrame(() => {
+    this.safeRequestAnimationFrame(() => {
       ScrollTrigger.refresh();
     });
   }
 
   // Enhanced smooth scroll
   static scrollToElement(target: string, duration: number = 1, offset: number = 80) {
-    if (!this.isBrowser()) return;
+    if (!this.isBrowser()) return Promise.resolve();
 
     const element = document.querySelector(target);
-    if (!element) return;
+    if (!element) return Promise.resolve();
 
-    // Use native scrollIntoView for better performance on mobile
-    if (window.innerWidth <= 768) {
-      element.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start'
-      });
-      return;
-    }
+    // Initialize GSAP if not already done
+    this.init();
 
-    // Use GSAP for desktop
-    gsap.to(window, {
-      duration,
-      scrollTo: { 
-        y: target, 
-        offsetY: offset,
-        autoKill: false
-      },
-      ease: "power2.inOut"
+    // Get the target position with header offset
+    const header = document.querySelector('header') || document.querySelector('.header');
+    const headerHeight = header ? (header as HTMLElement).offsetHeight : 80;
+    const targetPosition = (element as HTMLElement).offsetTop - headerHeight - 20;
+
+    // Use GSAP for smooth scrolling with correct direction
+    return new Promise<void>((resolve) => {
+      try {
+        gsap.to(window, {
+          duration: duration,
+          scrollTo: {
+            y: targetPosition,
+            autoKill: false
+          },
+          ease: "power2.out",
+          onComplete: resolve,
+          onInterrupt: resolve
+        });
+      } catch (error) {
+        console.warn('GSAP scrollTo failed, falling back to native scroll:', error);
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        resolve();
+      }
     });
   }
 
@@ -416,7 +438,7 @@ export class GsapAnimations {
   static refresh() {
     if (!this.isBrowser()) return;
 
-    requestAnimationFrame(() => {
+    this.safeRequestAnimationFrame(() => {
       ScrollTrigger.refresh();
     });
   }

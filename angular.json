@@ -58,7 +58,8 @@
             ],
             "scripts": [
               "node_modules/gsap/dist/gsap.min.js",
-              "node_modules/gsap/dist/ScrollTrigger.min.js"
+              "node_modules/gsap/dist/ScrollTrigger.min.js",
+              "node_modules/gsap/dist/ScrollToPlugin.min.js"
             ],
             "server": "src/main.server.ts",
             "prerender": true,
@@ -143,9 +144,16 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "Vegastackit-website:build"
+          },
           "configurations": {
-            "production": {},
-            "development": {}
+            "production": {
+              "buildTarget": "Vegastackit-website:build:production"
+            },
+            "development": {
+              "buildTarget": "Vegastackit-website:build:development"
+            }
           },
           "defaultConfiguration": "development"
         },
