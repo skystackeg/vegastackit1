@@ -90,9 +90,15 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    requestAnimationFrame(() => {
-      this.initializeAnimations();
-    });
+    if (typeof requestAnimationFrame !== 'undefined') {
+      requestAnimationFrame(() => {
+        this.initializeAnimations();
+      });
+    } else {
+      setTimeout(() => {
+        this.initializeAnimations();
+      }, 16);
+    }
   }
 
   ngOnDestroy(): void {
@@ -167,6 +173,9 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private initializeAnimations(): void {
     if (this.animationsInitialized) return;
+
+    // Only initialize animations in browser environment
+    if (typeof document === 'undefined') return;
 
     try {
       const heroContent = document.querySelector('.contact-hero__content');

@@ -1,7 +1,7 @@
 // src/app/pages/home/home.component.ts
 import { Component, AfterViewInit, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ServiceCardComponent } from '../../components/service-card/service-card.component';
 import { Service } from '../../shared/models/service.interface';
@@ -22,7 +22,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private seoService: SEOService
+    private seoService: SEOService,
+    private router: Router
   ) {
 	 GsapAnimations.init();
     this.services = [
@@ -444,9 +445,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 ngAfterViewInit(): void {
   // Use requestAnimationFrame for better performance
-  requestAnimationFrame(() => {
-    this.initializeAnimations();
-  });
+  if (typeof requestAnimationFrame !== 'undefined') {
+    requestAnimationFrame(() => {
+      this.initializeAnimations();
+    });
+  } else {
+    // Fallback for SSR
+    setTimeout(() => {
+      this.initializeAnimations();
+    }, 16);
+  }
 }
  ngOnDestroy(): void {
   // Clean up GSAP animations
@@ -454,6 +462,9 @@ ngAfterViewInit(): void {
 }
 private initializeAnimations(): void {
   if (this.animationsInitialized) return;
+
+  // Only initialize animations in browser environment
+  if (typeof document === 'undefined') return;
 
   try {
     // Initialize hero animation
@@ -472,6 +483,10 @@ private initializeAnimations(): void {
 
   scrollToServices(): void {
   GsapAnimations.scrollToElement('#services', 1, 80);
+}
+
+navigateToContact(): void {
+  this.router.navigate(['/contact']);
 }
 // Optional: Method to manually refresh animations if needed
 refreshAnimations(): void {
