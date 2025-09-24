@@ -30,7 +30,7 @@ export class ContactService {
   constructor(private http: HttpClient) {}
 
   submitContactForm(formData: ContactFormData): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.apiUrl}/contact`, formData)
+    return this.http.post<ApiResponse>(`${this.apiUrl}/api/contact`, formData)
       .pipe(
         timeout(30000), // 30 second timeout
         catchError(this.handleError)
@@ -38,7 +38,7 @@ export class ContactService {
   }
 
   submitConsultationRequest(formData: ContactFormData): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.apiUrl}/consultation`, formData)
+    return this.http.post<ApiResponse>(`${this.apiUrl}/api/consultation`, formData)
       .pipe(
         timeout(30000), // 30 second timeout
         catchError(this.handleError)
