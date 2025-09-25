@@ -566,7 +566,7 @@ refreshAnimations(): void {
 }
 
 private scrollToFragment(fragment: string): void {
-  // Wait for animations and DOM to be fully ready
+  // Wait for animations and DOM to be fully ready, plus extra time since we start from top
   setTimeout(() => {
     const element = document.getElementById(fragment);
     if (element) {
@@ -574,8 +574,8 @@ private scrollToFragment(fragment: string): void {
       const header = document.querySelector('header') || document.querySelector('.header');
       const headerHeight = header ? header.offsetHeight : 80;
 
-      // Use improved GSAP scrollToElement with proper fallback
-      GsapAnimations.scrollToElement(`#${fragment}`, 1, headerHeight + 20)
+      // Use GSAP scrollToElement with fromTop=true for scroll-from-top behavior
+      GsapAnimations.scrollToElement(`#${fragment}`, 0.8, headerHeight + 20, true)
         .catch(() => {
           // Fallback to native scrollIntoView if GSAP fails
           element.scrollIntoView({
@@ -584,7 +584,7 @@ private scrollToFragment(fragment: string): void {
           });
         });
     }
-  }, 500); // Increased delay to ensure animations complete
+  }, 800); // Increased delay since we're scrolling from top
 }
   navigateToContact(serviceTitle: string): void {
   this.router.navigate(['/contact'], { 

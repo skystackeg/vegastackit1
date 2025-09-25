@@ -24,16 +24,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    // Handle route changes - scroll to top unless there's a fragment
+    // Handle route changes - always scroll to top first
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      const tree = this.router.parseUrl(event.url);
-      // Only scroll to top if there's no fragment
-      // Let individual components handle fragment scrolling
-      if (!tree.fragment) {
-        this.viewportScroller.scrollToPosition([0, 0]);
-      }
+      // Always scroll to top first, even with fragments
+      // Individual components will handle scrolling down to fragments after a delay
+      this.viewportScroller.scrollToPosition([0, 0]);
     });
   }
 
