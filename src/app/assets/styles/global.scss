@@ -10,7 +10,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Remove scroll-behavior: smooth to prevent conflicts with GSAP animations */
 }
 
 body {
@@ -272,33 +272,152 @@ a {
   }
 }
 
-// Scrollbar styling
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: $neutral-light;
-}
-
-::-webkit-scrollbar-thumb {
-  background: $primary;
-  border-radius: $border-radius-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: darken($primary, 10%);
-}
-
-// Hide y-axis scrollbar between 320px and 768px
-@media (min-width: 320px) and (max-width: 767px) {
-  ::-webkit-scrollbar {
-    width: 0px;
+// Cross-browser scrollbar styling for desktop
+@media (min-width: 768px) {
+  * {
+    // Modern browsers (Chrome 89+, Firefox 87+)
+    scrollbar-width: auto;
+    scrollbar-color: $primary $neutral-light;
   }
 
-  // Firefox scrollbar hiding
-  html {
-    scrollbar-width: none;
+  // WebKit browsers (Safari, older Chrome)
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; // For horizontal scrollbars
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $neutral-light;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $primary;
+    border-radius: $border-radius-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: darken($primary, 10%);
+  }
+}
+
+// Hide ALL scrollbars on mobile (both X and Y axis)
+@media (max-width: 767px) {
+  * {
+    // Modern browsers - hide both horizontal and vertical scrollbars
+    scrollbar-width: none !important;
+    // IE/Edge - hide both scrollbars
+    -ms-overflow-style: none !important;
+  }
+
+  // WebKit browsers - hide both horizontal and vertical scrollbars
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 0px !important;
+    height: 0px !important;
+  }
+
+  ::-webkit-scrollbar-track {
+    display: none !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    display: none !important;
+  }
+
+  ::-webkit-scrollbar-corner {
+    display: none !important;
+  }
+
+  // Additional webkit scrollbar hiding for all elements
+  html, body {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden; // Prevent horizontal scrollbars
+  }
+
+  // Hide scrollbars on all common scrollable elements
+  html, body, div, section, article, main, aside, nav, header, footer, ul, ol, li, p, span, a {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+
+    &::-webkit-scrollbar {
+      display: none !important;
+      width: 0px !important;
+      height: 0px !important;
+    }
+
+    &::-webkit-scrollbar-track {
+      display: none !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      display: none !important;
+    }
+
+    &::-webkit-scrollbar-corner {
+      display: none !important;
+    }
+  }
+
+  // Ensure no horizontal overflow on mobile
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  // Prevent horizontal scrollbars on containers
+  .container, .container-fluid {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+}
+
+// Utility class to completely hide scrollbars on any element
+.hide-scrollbars {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+
+  &::-webkit-scrollbar {
+    display: none !important;
+    width: 0px !important;
+    height: 0px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    display: none !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    display: none !important;
+  }
+
+  &::-webkit-scrollbar-corner {
+    display: none !important;
+  }
+}
+
+// Mobile-only scrollbar hiding utility
+@media (max-width: 767px) {
+  .hide-scrollbars-mobile {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+
+    &::-webkit-scrollbar {
+      display: none !important;
+      width: 0px !important;
+      height: 0px !important;
+    }
+
+    &::-webkit-scrollbar-track {
+      display: none !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      display: none !important;
+    }
+
+    &::-webkit-scrollbar-corner {
+      display: none !important;
+    }
   }
 }
 

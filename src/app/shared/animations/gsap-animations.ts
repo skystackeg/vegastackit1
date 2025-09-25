@@ -395,7 +395,7 @@ export class GsapAnimations {
     });
   }
 
-  // Enhanced smooth scroll with option to start from top
+  // Cross-browser smooth scroll with consistent behavior
   static scrollToElement(target: string, duration: number = 0.5, offset: number = 80, fromTop: boolean = false) {
     if (!this.isBrowser()) return Promise.resolve();
 
@@ -408,34 +408,35 @@ export class GsapAnimations {
     // Get the target position with header offset
     const header = document.querySelector('header') || document.querySelector('.header');
     const headerHeight = header ? (header as HTMLElement).offsetHeight : 80;
-    const targetPosition = (element as HTMLElement).offsetTop - headerHeight - 20;
+    const targetPosition = (element as HTMLElement).offsetTop - headerHeight - offset;
 
-    // Use GSAP for smooth scrolling
+    // Use GSAP for consistent cross-browser scrolling
     return new Promise<void>((resolve) => {
       try {
         if (fromTop) {
-          // First ensure we're at the top, then scroll to target
-          gsap.set(window, { scrollTo: { y: 0 } });
+          // Create a timeline for precise control
+          const tl = gsap.timeline();
 
-          // Add a small delay to ensure the top scroll is complete
-          setTimeout(() => {
-            gsap.to(window, {
-              duration: duration,
-              scrollTo: {
-                y: targetPosition,
-                autoKill: false
-              },
-              ease: "power2.out",
-              onComplete: resolve,
-              onInterrupt: resolve
-            });
-          }, 50);
+          // First scroll to top instantly
+          tl.set(window, { scrollTo: { y: 0 } });
+
+          // Then scroll to target with animation
+          tl.to(window, {
+            duration: duration,
+            scrollTo: {
+              y: Math.max(0, targetPosition), // Ensure we don't scroll to negative values
+              autoKill: false
+            },
+            ease: "power2.out",
+            onComplete: resolve,
+            onInterrupt: resolve
+          }, 0.1); // Small delay to ensure top scroll is processed
         } else {
           // Direct scroll to target
           gsap.to(window, {
             duration: duration,
             scrollTo: {
-              y: targetPosition,
+              y: Math.max(0, targetPosition), // Ensure we don't scroll to negative values
               autoKill: false
             },
             ease: "power2.out",
@@ -444,12 +445,49 @@ export class GsapAnimations {
           });
         }
       } catch (error) {
-        console.warn('GSAP scrollTo failed, falling back to native scroll:', error);
-        element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-        resolve();
+        console.warn('GSAP scrollTo failed, using manual scroll implementation:', error);
+
+        // Custom cross-browser scroll implementation as fallback
+        this.manualScrollTo(targetPosition, duration, fromTop).then(resolve);
+      }
+    });
+  }
+
+  // Manual scroll implementation for maximum browser compatibility
+  private static manualScrollTo(targetPosition: number, duration: number, fromTop: boolean): Promise<void> {
+    return new Promise<void>((resolve) => {
+      const startPosition = window.scrollY;
+      const distance = Math.max(0, targetPosition) - (fromTop ? 0 : startPosition);
+      const startTime = performance.now();
+
+      const animateScroll = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / (duration * 1000), 1);
+
+        // Easing function (power2.out equivalent)
+        const easeOut = 1 - Math.pow(1 - progress, 2);
+
+        const currentPosition = fromTop
+          ? Math.max(0, targetPosition) * easeOut
+          : startPosition + (distance * easeOut);
+
+        window.scrollTo(0, currentPosition);
+
+        if (progress < 1) {
+          requestAnimationFrame(animateScroll);
+        } else {
+          resolve();
+        }
+      };
+
+      if (fromTop) {
+        // First scroll to top, then animate to target
+        window.scrollTo(0, 0);
+        setTimeout(() => {
+          requestAnimationFrame(animateScroll);
+        }, 50);
+      } else {
+        requestAnimationFrame(animateScroll);
       }
     });
   }
