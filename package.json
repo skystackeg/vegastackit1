@@ -6,10 +6,13 @@
     "start": "ng serve",
     "build": "ng build",
     "build:ssr": "ng build --configuration production",
-    "serve:ssr": "node dist/vegastackit-website/server/server.mjs",
+    "build:deploy": "node scripts/deploy.js",
+    "serve:ssr": "node scripts/serve.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:Vegastackit-website": "node dist/vegastackit-website/server/server.mjs"
+    "serve:ssr:Vegastackit-website": "node dist/vegastackit-website/server/server.mjs",
+    "clear-cache": "node scripts/clear-cache.js",
+    "deploy:prod": "npm run build:deploy && npm run serve:ssr"
   },
   "private": true,
   "dependencies": {
