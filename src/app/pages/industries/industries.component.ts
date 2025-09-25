@@ -327,7 +327,7 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private scrollToFragment(fragment: string): void {
-    // Add small delay to ensure DOM is ready
+    // Wait for animations and DOM to be fully ready, plus extra time since we start from top
     setTimeout(() => {
       const element = document.getElementById(fragment);
       if (element) {
@@ -335,7 +335,8 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
         const header = document.querySelector('header') || document.querySelector('.header');
         const headerHeight = header ? header.offsetHeight : 80;
 
-        GsapAnimations.scrollToElement(`#${fragment}`, 1, headerHeight + 20)
+        // Use GSAP scrollToElement with fromTop=true for scroll-from-top behavior
+        GsapAnimations.scrollToElement(`#${fragment}`, 0.8, headerHeight + 20, true)
           .catch(() => {
             // Fallback to native scrolling if GSAP fails
             const elementPosition = element.offsetTop;
@@ -354,11 +355,11 @@ export class IndustriesComponent implements OnInit, AfterViewInit, OnDestroy {
             const header = document.querySelector('header') || document.querySelector('.header');
             const headerHeight = header ? header.offsetHeight : 80;
 
-            GsapAnimations.scrollToElement(`#${fragment}`, 1, headerHeight + 20);
+            GsapAnimations.scrollToElement(`#${fragment}`, 0.8, headerHeight + 20, true);
           }
-        }, 300);
+        }, 500);
       }
-    }, 150);
+    }, 800); // Increased delay since we're scrolling from top
   }
 
   // Optional: Method to manually refresh animations if needed

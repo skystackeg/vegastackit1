@@ -62,7 +62,7 @@ export class GsapAnimations {
   }
 
   // Fade in animation with will-change optimization
-  static fadeIn(element: string | Element, duration: number = 1, delay: number = 0) {
+  static fadeIn(element: string | Element, duration: number = 0.5, delay: number = 0) {
     if (!this.isBrowser()) return null;
 
     const targets = gsap.utils.toArray(element);
@@ -95,7 +95,7 @@ export class GsapAnimations {
   }
 
   // Scale in animation
-  static scaleIn(element: string | Element, duration: number = 0.8, delay: number = 0) {
+  static scaleIn(element: string | Element, duration: number = 0.4, delay: number = 0) {
     if (!this.isBrowser()) return null;
 
     const targets = gsap.utils.toArray(element);
@@ -124,7 +124,7 @@ export class GsapAnimations {
   }
 
   // Slide in from left
-  static slideInLeft(element: string | Element, duration: number = 1, delay: number = 0) {
+  static slideInLeft(element: string | Element, duration: number = 0.5, delay: number = 0) {
     if (!this.isBrowser()) return null;
 
     const targets = gsap.utils.toArray(element);
@@ -153,7 +153,7 @@ export class GsapAnimations {
   }
 
   // Slide in from right
-  static slideInRight(element: string | Element, duration: number = 1, delay: number = 0) {
+  static slideInRight(element: string | Element, duration: number = 0.5, delay: number = 0) {
     if (!this.isBrowser()) return null;
 
     const targets = gsap.utils.toArray(element);
@@ -182,7 +182,7 @@ export class GsapAnimations {
   }
 
   // Optimized stagger animation
-  static staggerFadeIn(elements: string | Element[], duration: number = 1, stagger: number = 0.2) {
+  static staggerFadeIn(elements: string | Element[], duration: number = 0.5, stagger: number = 0.1) {
     if (!this.isBrowser()) return null;
 
     const targets = gsap.utils.toArray(elements);
@@ -229,7 +229,7 @@ export class GsapAnimations {
       gsap.set(heroTitle, { willChange: "transform, opacity" });
       tl.fromTo(heroTitle,
         { opacity: 0, y: -50, force3D: true },
-        { opacity: 1, y: 0, duration: 1.2, ease: "power2.out", force3D: true }
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", force3D: true }
       );
     }
 
@@ -237,7 +237,7 @@ export class GsapAnimations {
       gsap.set(heroSubtitle, { willChange: "transform, opacity" });
       tl.fromTo(heroSubtitle,
         { opacity: 0, y: -30, force3D: true },
-        { opacity: 1, y: 0, duration: 1, ease: "power2.out", force3D: true },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", force3D: true },
         "-=0.8"
       );
     }
@@ -246,7 +246,7 @@ export class GsapAnimations {
       gsap.set(heroCta, { willChange: "transform, opacity" });
       tl.fromTo(heroCta,
         { opacity: 0, scale: 0.9, force3D: true },
-        { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)", force3D: true },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.7)", force3D: true },
         "-=0.5"
       );
     }
@@ -269,7 +269,7 @@ export class GsapAnimations {
     gsap.to(target, {
       y: -10,
       scale: 1.03,
-      duration: 0.3,
+      duration: 0.2,
       ease: "power2.out",
       force3D: true
     });
@@ -284,7 +284,7 @@ export class GsapAnimations {
     gsap.to(target, {
       y: 0,
       scale: 1,
-      duration: 0.3,
+      duration: 0.2,
       ease: "power2.out",
       force3D: true,
       onComplete: () => {
@@ -337,7 +337,7 @@ export class GsapAnimations {
             gsap.to(element, {
               opacity: 1,
               y: 0,
-              duration: 1,
+              duration: 0.5,
               ease: "power2.out",
               force3D: true,
               onComplete: () => {
@@ -374,7 +374,7 @@ export class GsapAnimations {
               opacity: 1,
               y: 0,
               scale: 1,
-              duration: 0.8,
+              duration: 0.4,
               delay: Math.min(index * 0.1, 0.5), // Cap the delay
               ease: "power2.out",
               force3D: true,
@@ -395,8 +395,8 @@ export class GsapAnimations {
     });
   }
 
-  // Enhanced smooth scroll
-  static scrollToElement(target: string, duration: number = 1, offset: number = 80) {
+  // Enhanced smooth scroll with option to start from top
+  static scrollToElement(target: string, duration: number = 0.5, offset: number = 80, fromTop: boolean = false) {
     if (!this.isBrowser()) return Promise.resolve();
 
     const element = document.querySelector(target);
@@ -410,19 +410,39 @@ export class GsapAnimations {
     const headerHeight = header ? (header as HTMLElement).offsetHeight : 80;
     const targetPosition = (element as HTMLElement).offsetTop - headerHeight - 20;
 
-    // Use GSAP for smooth scrolling with correct direction
+    // Use GSAP for smooth scrolling
     return new Promise<void>((resolve) => {
       try {
-        gsap.to(window, {
-          duration: duration,
-          scrollTo: {
-            y: targetPosition,
-            autoKill: false
-          },
-          ease: "power2.out",
-          onComplete: resolve,
-          onInterrupt: resolve
-        });
+        if (fromTop) {
+          // First ensure we're at the top, then scroll to target
+          gsap.set(window, { scrollTo: { y: 0 } });
+
+          // Add a small delay to ensure the top scroll is complete
+          setTimeout(() => {
+            gsap.to(window, {
+              duration: duration,
+              scrollTo: {
+                y: targetPosition,
+                autoKill: false
+              },
+              ease: "power2.out",
+              onComplete: resolve,
+              onInterrupt: resolve
+            });
+          }, 50);
+        } else {
+          // Direct scroll to target
+          gsap.to(window, {
+            duration: duration,
+            scrollTo: {
+              y: targetPosition,
+              autoKill: false
+            },
+            ease: "power2.out",
+            onComplete: resolve,
+            onInterrupt: resolve
+          });
+        }
       } catch (error) {
         console.warn('GSAP scrollTo failed, falling back to native scroll:', error);
         element.scrollIntoView({

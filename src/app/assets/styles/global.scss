@@ -290,6 +290,18 @@ a {
   background: darken($primary, 10%);
 }
 
+// Hide y-axis scrollbar between 320px and 768px
+@media (min-width: 320px) and (max-width: 767px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  // Firefox scrollbar hiding
+  html {
+    scrollbar-width: none;
+  }
+}
+
 // Selection styling
 ::selection {
   background-color: rgba($primary, 0.2);

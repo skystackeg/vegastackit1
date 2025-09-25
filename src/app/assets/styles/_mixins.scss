@@ -685,7 +685,7 @@
 @mixin fade-in-left {
   opacity: 0;
   transform: translateX(-30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 
   &.animate {
     opacity: 1;
@@ -696,7 +696,7 @@
 @mixin fade-in-right {
   opacity: 0;
   transform: translateX(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 
   &.animate {
     opacity: 1;
@@ -707,7 +707,7 @@
 @mixin scale-in {
   opacity: 0;
   transform: scale(0.9);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 
   &.animate {
     opacity: 1;
@@ -1015,7 +1015,7 @@
 @mixin fade-in-up {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 
   &.animate {
     opacity: 1;

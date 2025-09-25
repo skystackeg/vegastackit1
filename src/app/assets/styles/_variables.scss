@@ -165,10 +165,10 @@ $grid-columns: 12;
 $grid-gutter-width: $spacing-6;
 
 // Transition and animation settings
-$transition-fast: 0.15s;
-$transition-base: 0.3s;
-$transition-slow: 0.5s;
-$transition-slower: 0.75s;
+$transition-fast: 0.1s;
+$transition-base: 0.2s;
+$transition-slow: 0.3s;
+$transition-slower: 0.4s;
 
 $transition-timing-function: ease-in-out;
 $transition-timing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
