@@ -715,13 +715,22 @@
   }
 }
 
-// Gradient text
+// Cross-browser gradient text
 @mixin gradient-text($gradient: $gradient-primary) {
   background: $gradient;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
+  // Modern browsers (Chrome 120+, Firefox 100+, Safari 15.4+)
   background-clip: text;
+  -webkit-background-clip: text;
   color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  // Fallback for unsupported browsers
+  @supports not (background-clip: text) {
+    // Extract primary color from gradient as fallback
+    color: $primary;
+    background: none;
+  }
 }
 
 // Glass morphism effect
@@ -990,27 +999,61 @@
 // ===== CUSTOM SCROLLBAR =====
 
 @mixin custom-scrollbar($width: 8px, $track-color: $neutral-light, $thumb-color: $primary) {
-  &::-webkit-scrollbar {
-    width: $width;
+  // Desktop only - show custom scrollbars
+  @media (min-width: 768px) {
+    // Modern browsers (Chrome 89+, Firefox 87+)
+    scrollbar-width: thin;
+    scrollbar-color: $thumb-color $track-color;
+
+    // WebKit browsers (Safari, older Chrome)
+    &::-webkit-scrollbar {
+      width: $width;
+      height: $width; // For horizontal scrollbars
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $track-color;
+      border-radius: $border-radius-full;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $thumb-color;
+      border-radius: $border-radius-full;
+
+      &:hover {
+        background: darken($thumb-color, 10%);
+      }
+    }
+
+    // IE/Edge
+    -ms-overflow-style: auto;
   }
 
-  &::-webkit-scrollbar-track {
-    background: $track-color;
-    border-radius: $border-radius-full;
-  }
+  // Mobile - hide all scrollbars completely
+  @media (max-width: 767px) {
+    // Modern browsers
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
 
-  &::-webkit-scrollbar-thumb {
-    background: $thumb-color;
-    border-radius: $border-radius-full;
-    
-    &:hover {
-      background: darken($thumb-color, 10%);
+    // WebKit browsers
+    &::-webkit-scrollbar {
+      display: none !important;
+      width: 0px !important;
+      height: 0px !important;
+    }
+
+    &::-webkit-scrollbar-track {
+      display: none !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      display: none !important;
+    }
+
+    &::-webkit-scrollbar-corner {
+      display: none !important;
     }
   }
-
-  // Firefox
-  scrollbar-width: thin;
-  scrollbar-color: $thumb-color $track-color;
 }
 @mixin fade-in-up {
   opacity: 0;
