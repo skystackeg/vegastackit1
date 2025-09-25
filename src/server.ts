@@ -33,19 +33,36 @@ app.use(compression({
 }));
 
 /**
- * Security and performance headers
+ * Security and performance headers with cache busting
  */
 app.use((req, res, next) => {
-  // Enable browser caching for static assets
-  if (req.url.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
+  // Cache busting for HTML files (force revalidation)
+  if (req.url.match(/\.html?$/) || req.url === '/' || !req.url.includes('.')) {
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('Surrogate-Control', 'no-store');
+  }
+  // Long-term caching for hashed assets (JS, CSS with hashes)
+  else if (req.url.match(/\.[a-f0-9]{8,}\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
   }
-  
+  // Short-term caching for other static assets (non-hashed)
+  else if (req.url.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
+    res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
+  }
+
+  // Add build information headers for cache validation
+  const buildTimestamp = process.env['BUILD_TIMESTAMP'] || Date.now().toString();
+  const buildHash = process.env['BUILD_HASH'] || 'unknown';
+  res.setHeader('X-Build-Timestamp', buildTimestamp);
+  res.setHeader('X-Build-Hash', buildHash);
+
   // Security headers
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('X-XSS-Protection', '1; mode=block');
-  
+
   next();
 });
 
@@ -95,9 +112,17 @@ app.get('**', (req, res, next) => {
       providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
     })
     .then((html) => {
-      // Set headers for HTML responses
+      // Set headers for HTML responses with cache busting
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
-      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, proxy-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      res.setHeader('Surrogate-Control', 'no-store');
+
+      // Add ETag based on build info for proper cache invalidation
+      const buildInfo = `${process.env['BUILD_TIMESTAMP']}-${process.env['BUILD_HASH']}`;
+      res.setHeader('ETag', `"${buildInfo}"`);
+
       res.send(html);
     })
     .catch((err) => next(err));
