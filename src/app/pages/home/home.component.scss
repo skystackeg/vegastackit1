@@ -651,18 +651,23 @@
   justify-content: center;
   gap: $spacing-3;
   
-  @include mobile-sm {
-    gap: $spacing-4;
-  }
+  // @include mobile-sm {
+ 
+  //   gap: $spacing-3;
+  // }
   
   @include tablet {
+    
     gap: $spacing-6;
   }
-  
 
-
-  // Stack on very small screens
-  @include mobile-xs-only {
+  // Stack buttons on very small screens
+  @include mobile-xs-only  {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $spacing-3;
+  }
+    @include mobile-sm-only  {
     flex-direction: column;
     align-items: stretch;
     gap: $spacing-3;
